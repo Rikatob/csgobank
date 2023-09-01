@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class VaultController {
-    @GetMapping
+    @GetMapping("/test")
     public String test(@RequestParam(name = "name", defaultValue = "World") String name) {
         return String.format("Hello %s!", name);
     }
