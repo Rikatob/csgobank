@@ -1,12 +1,16 @@
 package com.pg3402.csgobank.item;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     private long id;
     private String type;
     private String name;
     private int floatValue;
     private int price;
-    private int wearValue;
     private WearCategory wearCategory;
 
     public long getId() {
@@ -47,14 +51,6 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getWearValue() {
-        return wearValue;
-    }
-
-    public void setWearValue(int wearValue) {
-        this.wearValue = wearValue;
     }
 
     public WearCategory getWearCategory() {
