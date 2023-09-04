@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Vault {
+}
+class VaultController{}
+interface VaultRepository{}
+interface VaultService{}
+class VaultServiceImpl{}
+
+Vault -- VaultController
+Vault -- VaultRepository
+Vault -- VaultService
+
+class User{}
+class UserController{}
+interface UserRepository{}
+interface UserService{}
+class UserServiceImpl{}
+
+User -- UserController
+User -- UserRepository
+User -- UserService
+
+User - Vault
+
+
+class Item{}
+class ItemController{}
+interface ItemRepository{}
+interface ItemService{}
+class ItemServiceImpl{}
+
+Item -- ItemController
+Item -- ItemRepository
+Item -- ItemService
+
+Vault - Item
+@enduml
