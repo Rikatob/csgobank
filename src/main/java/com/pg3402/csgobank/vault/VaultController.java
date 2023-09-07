@@ -2,8 +2,6 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.WearCategory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
