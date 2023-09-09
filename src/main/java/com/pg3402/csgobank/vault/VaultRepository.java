@@ -1,4 +1,8 @@
 package com.pg3402.csgobank.vault;
 
-public class VaultRepository {
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface VaultRepository extends CrudRepository<Vault, Long> {
 }
