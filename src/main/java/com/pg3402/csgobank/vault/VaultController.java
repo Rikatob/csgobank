@@ -1,7 +1,9 @@
 package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.item.Item;
+import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.item.WearCategory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,8 +13,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/vault")
 public class VaultController {
+    @Autowired
+    private ItemRepository itemRepository;
 
-    @GetMapping
+
+    @GetMapping("/items")
+    public @ResponseBody Iterable<Item> getAllItems(){
+        return itemRepository.findAll();
+    }
+
+  /*  @GetMapping
     Vault getVault(@RequestParam(name = "id", defaultValue = "1") String id) {
 
         Item testItem = new Item(1, "AK", "Fireserpent", 233, 1000, WearCategory.MINIMAL_WEAR);
@@ -26,8 +36,5 @@ public class VaultController {
 
         return testVault;
     }
-
-    public String test(@RequestParam(name = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
+*/
 }
