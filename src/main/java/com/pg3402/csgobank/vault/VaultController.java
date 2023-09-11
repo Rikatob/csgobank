@@ -3,6 +3,9 @@ package com.pg3402.csgobank.vault;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,8 +27,12 @@ public class VaultController {
     }
 
     @GetMapping
-    public @ResponseBody Optional<Vault> getVault(@RequestParam(name = "id", defaultValue = "1") String id) {
-        return vaultRepository.findById(Long.parseLong(id));
+    public @ResponseBody ResponseEntity<Vault> getVault(@RequestParam(name = "id", defaultValue = "1") long id) {
+        Optional<Vault> optionalVault = vaultRepository.findById(id);
+
+        return optionalVault
+                .map(Vault -> ResponseEntity.status(HttpStatus.OK).body(Vault))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping("/new")
