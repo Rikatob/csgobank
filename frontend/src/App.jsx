@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("http://localhost:8080/vault");
+      const data = await fetch(ApiClient.SERVER_URL+ApiClient.GET_ITEMS);
       setVault(await JSON.parse(await data.text()));
       setLoading(false);
     }
@@ -26,7 +26,7 @@ function App() {
     <>
       <h1>CSGO VAULT</h1>
       <div>
-        {vault.items.map((i) => (
+        {vault.map((i) => (
           <div>
             <div>
               <label>ID</label>

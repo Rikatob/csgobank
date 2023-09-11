@@ -19,13 +19,21 @@ public class VaultController {
 
     // TODO: 9/9/2023  Should i make these endpoints return ResponseEntity instead because of Http status codes?? 
     @GetMapping("/items")
-    public @ResponseBody Iterable<Item> getAllItems(){
+    public @ResponseBody Iterable<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
     @GetMapping
     public @ResponseBody Optional<Vault> getVault(@RequestParam(name = "id", defaultValue = "1") String id) {
-    return vaultRepository.findById(Long.parseLong(id));
+        return vaultRepository.findById(Long.parseLong(id));
+    }
+
+    @PostMapping("/new")
+    public Vault createVault(VaultDto vaultDto) {
+        Vault vault = new Vault();
+        vault.setOwnerName(vaultDto.ownerName());
+        vault.setTotalValue(vaultDto.totalValue());
+        return vaultRepository.save(vault);
     }
 
 }
