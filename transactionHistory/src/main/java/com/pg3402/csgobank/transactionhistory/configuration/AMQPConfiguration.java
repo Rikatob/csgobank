@@ -1,4 +1,5 @@
 package com.pg3402.csgobank.transactionhistory.configuration;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.amqp.core.*;
@@ -13,20 +14,30 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 @Configuration
 public class AMQPConfiguration {
 
+
+    @Value("${amqp.queue.transactionHistory}")
+    private String queueName;
+    @Value("${amqp.exchange.transactions}")
+    private String exchangeName;
+    @Value("${amqp.routing.key}")
+    private String routingKey;
+
     @Bean
-    public TopicExchange transactionHistoryExchange(@Value("${amqp.exchange.transactions}") final String exchangeName) {
+    public TopicExchange transactionHistoryExchange() {
         return ExchangeBuilder.topicExchange(exchangeName).durable(true).build();
     }
 
     @Bean
-    public Queue transactionHistoryQueue(@Value("${amqp.queue.transactionHistory}") final String queueName) {
+    public Queue transactionHistoryQueue() {
         return QueueBuilder.durable(queueName).build();
-
     }
 
     @Bean
-    public Binding transactionCompleteBinding(final Queue transactionHistoryQueue, final TopicExchange transactionHistoryExchange) {
-        return BindingBuilder.bind(transactionHistoryQueue).to(transactionHistoryExchange).with("transaction.complete");
+    public Binding transactionCompleteBinding() {
+        return BindingBuilder
+                .bind(transactionHistoryQueue())
+                .to(transactionHistoryExchange())
+                .with(routingKey);
     }
 
     @Bean
