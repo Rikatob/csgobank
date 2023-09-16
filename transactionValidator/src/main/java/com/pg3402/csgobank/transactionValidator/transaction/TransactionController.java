@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.transaction.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

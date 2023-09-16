@@ -24,7 +24,9 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Sending message...");
-        rabbitTemplate.convertAndSend(ost, "transaction.complete", "Hello from RabbitMQ!");
+        var event = new TransactionHistoryEvent(100, "Freedrik", "Amund");
+        System.out.println("brøl");
+        rabbitTemplate.convertAndSend(ost, "transaction.complete", event);
     }
 
 }

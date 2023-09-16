@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionValidator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

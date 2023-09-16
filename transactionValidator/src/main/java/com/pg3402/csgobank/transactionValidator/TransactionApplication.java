@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionValidator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
