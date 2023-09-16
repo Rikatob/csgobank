@@ -14,14 +14,16 @@ public class TransactionHistoryEventHandler {
 
     TransactionHistoryService transactionHistoryService;
     @RabbitListener(queues = "${amqp.queue.transactionHistory}")
-    void handleMultiplicationSolved(final TransactionHistoryEvent event) {
-        log.info("Challenge Solved Event received: {}", event.getAttemptId());
-        try {
-            transactionHistoryService.newAttemptForUser(event);
-        } catch (final Exception e) {
-            log.error("Error when trying to process ChallengeSolvedEvent", e);
-            // Avoids the event to be re-queued and reprocessed.
-            throw new AmqpRejectAndDontRequeueException(e);
-        }
+    void handleMultiplicationSolved(String message) {
+        System.out.println(message);
+//        log.info("Challenge Solved Event received:{ {}", event.getAttemptId());
+//        try {
+//            transactionHistoryService.newAttemptForUser(event);
+//        } catch (final Exception e) {
+//            log.error("Error when trying to process ChallengeSolvedEvent", e);
+//            // Avoids the event to be re-queued and reprocessed.
+//            throw new AmqpRejectAndDontRequeueException(e);
+//        }
     }
-}
+    }
+
