@@ -9,7 +9,7 @@ public class AmundFact {
 
     @Override
     public String toString() {
-        return "CatFact{" +
+        return "AmundFact{" +
                 "fact='" + fact + '\'' +
                 ", length=" + length +
                 '}';
