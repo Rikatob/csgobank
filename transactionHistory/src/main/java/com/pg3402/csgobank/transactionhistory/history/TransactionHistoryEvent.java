@@ -11,5 +11,5 @@ public class TransactionHistoryEvent implements Serializable {
     String sellerID;
     String buyerID;
 
-
+    boolean isComplete;
 }
