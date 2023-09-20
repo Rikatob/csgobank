@@ -1,6 +1,7 @@
 package com.pg3402.csgobank.vault;
 
 
+import com.pg3402.csgobank.transaction.TransactionEvent;
 import lombok.Data;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -19,14 +20,12 @@ public class VaultService {
         WebClient.Builder builder = WebClient.builder();
 
 
-        Boolean validation = builder.build()
+        return builder.build()
                 .get()
                 .uri(transactionUrl)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
-
-        return validation;
     }
 
 }
