@@ -7,7 +7,7 @@
 ## Project
 
 * [ ] Vault publisher to transaction history.
-* [ ] Restructure project package structure.
+* [x] Restructure project package structure.
 
 ## Gateway
 
