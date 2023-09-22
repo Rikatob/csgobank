@@ -1,12 +1,9 @@
 package com.pg3402.csgobank.transactionhistory.configuration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +13,6 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 
 @Configuration
 public class AMQPConfiguration {
-
 
     @Value("${amqp.queue.transactionHistory}")
     private String queueName;
@@ -56,6 +52,4 @@ public class AMQPConfiguration {
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
     }
-
-
 }
