@@ -8,7 +8,9 @@
 
 * [ ] Vault publisher to transaction history.
 * [x] Restructure project package structure.
-
+* [ ] TODO's.
+  * [ ] VaultController.
+  * [ ] VaultService.
 ## Gateway
 
 * [ ] Gateway
