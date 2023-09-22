@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionhistory.transaction;
 
 import lombok.Value;
 

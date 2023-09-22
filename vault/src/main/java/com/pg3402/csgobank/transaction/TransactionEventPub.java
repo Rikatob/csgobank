@@ -18,8 +18,7 @@ public class TransactionEventPub {
     public void transactionComplete(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 
-        String routingKey = "transaction." + (event.isComplete() ? "complete" : "failed");
-
+        String routingKey = "transaction." + (event.isCompleted() ? "complete" : "failed");
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 
