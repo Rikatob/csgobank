@@ -2,7 +2,7 @@
 
 ## Report
 
-* [ ] Prettify report with drawings and decisions about RabbitMQ.
+* [x] Prettify report with drawings and decisions about RabbitMQ.
 
 ## Project
 
