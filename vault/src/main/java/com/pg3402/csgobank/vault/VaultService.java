@@ -1,38 +1,51 @@
 package com.pg3402.csgobank.vault;
-
-
 import com.pg3402.csgobank.transaction.Transaction;
 import com.pg3402.csgobank.transaction.TransactionEventPub;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@RequiredArgsConstructor
+@Slf4j
 @Service
 public class VaultService {
+
+    public VaultService(TransactionEventPub transactionEventPub) {
+        this.transactionEventPub = transactionEventPub;
+    }
 
     private final TransactionEventPub transactionEventPub;
     @Value("${transaction.validator.url}")
     private String transactionValidatorURL;
 
-    // MONO single or no object.
-    // FLUX list or no object.
+
+    /**
+     * Starts a connection and sends a GET request to the validator.
+     * @return Answer from the GET request (true or false), returns false also if GET request fails.
+     */
     public Boolean validateTransaction() {
-        // TODO: 9/18/2023 Should we take the url in as a parameter?
-        // TODO: 9/18/2023 Need to check what happens if it fails to get validation, should be "standalone".
 
         WebClient.Builder builder = WebClient.builder();
+        try {
 
-
-        return builder.build()
-                .get()
-                .uri(transactionValidatorURL)
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
+            return builder.build()
+                    .get()
+                    .uri(transactionValidatorURL)
+                    .retrieve()
+                    .bodyToMono(Boolean.class)
+                    .block();
+        } catch (Exception e) {
+            log.warn("Could not validate transaction");
+            e.printStackTrace();
+            return false;
+        }
     }
 
+    /**
+     * Create transaction.
+     * Runs the validation.
+     * Publish the event.
+     */
     public void transferItem() {
         Transaction transaction = new Transaction();
         transaction.setItemID(100);

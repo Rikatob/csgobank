@@ -6,11 +6,12 @@
 
 ## Project
 
-* [ ] Vault publisher to transaction history.
+* [x] Vault publisher to transaction history.
 * [x] Restructure project package structure.
 * [ ] TODO's.
   * [ ] VaultController.
-  * [ ] VaultService.
+  * [x] VaultService.
+  
 ## Gateway
 
 * [ ] Gateway
