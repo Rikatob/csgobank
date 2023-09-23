@@ -19,6 +19,8 @@ public class VaultController {
 
     @Autowired
     private VaultRepository vaultRepository;
+    @Autowired
+    private VaultService vaultService;
 
     // TODO: 9/9/2023  Should i make these endpoints return ResponseEntity instead because of Http status codes?? 
     @GetMapping("/items")
@@ -33,6 +35,12 @@ public class VaultController {
         return optionalVault
                 .map(Vault -> ResponseEntity.status(HttpStatus.OK).body(Vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/transfer")
+    public String transferItem() {
+        vaultService.transferItem();
+        return "hei";
     }
 
     @PostMapping("/new")

@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.transactionhistory.history;
+package com.pg3402.csgobank.transactionhistory.transaction;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionHistoryEventHandler {
 
+
     @RabbitListener(queues = "${amqp.queue.transactionHistory}")
-    void handleMultiplicationSolved(TransactionHistoryEvent event) {
+    void handleMultiplicationSolved(TransactionEvent event) {
         log.info("Buyer ID:{ {} }", event.getBuyerID());
         log.info("Seller ID:{ {} }", event.getSellerID());
+        log.info("Item ID:{ {} }", event.getItemID());
         try {
             System.out.println("Stuff");
         } catch (final Exception e) {
