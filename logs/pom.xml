@@ -17,14 +17,15 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<spring-boot.version>3.1.4</spring-boot.version>
+		<micrometer-tracing.version>1.1.1</micrometer-tracing.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<groupId>io.micrometer</groupId>
+				<artifactId>micrometer-tracing-bom</artifactId>
+				<version>${micrometer-tracing.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -63,10 +64,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
-			<version>2.2.8.RELEASE</version>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing</artifactId>
+			<version>${micrometer-tracing.version}</version>
 		</dependency>
+
 
 	</dependencies>
 
