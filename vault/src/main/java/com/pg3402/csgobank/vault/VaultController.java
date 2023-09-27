@@ -2,6 +2,7 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.ItemRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/vault")
+@Slf4j
 public class VaultController {
     @Autowired
     private ItemRepository itemRepository;
@@ -36,10 +38,10 @@ public class VaultController {
                 .map(Vault -> ResponseEntity.status(HttpStatus.OK).body(Vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
     @GetMapping("/transfer")
-    public String transferItem() {
+        public String transferItem() {
         vaultService.transferItem();
+        log.warn("HEIAAAAAAA");
         return "hei";
     }
 

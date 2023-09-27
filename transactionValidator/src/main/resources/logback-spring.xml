@@ -19,7 +19,7 @@
             <pattern>[%-15marker] [%X{traceId:-},%X{spanId:-}] %highlight(%-5level) %msg%n</pattern>
         </layout>
 
-        <applicationId>vault</applicationId>
+        <applicationId>transactionValidator</applicationId>
         <host>${rabbitMQHost:-localhost}</host>
         <routingKeyPattern>%property{applicationId}.%p</routingKeyPattern>
         <exchangeName>logs.topic</exchangeName>

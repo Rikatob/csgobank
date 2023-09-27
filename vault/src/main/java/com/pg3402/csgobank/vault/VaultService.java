@@ -1,4 +1,5 @@
 package com.pg3402.csgobank.vault;
+
 import com.pg3402.csgobank.transaction.Transaction;
 import com.pg3402.csgobank.transaction.TransactionEventPub;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class VaultService {
 
     /**
      * Starts a connection and sends a GET request to the validator.
+     *
      * @return Answer from the GET request (true or false), returns false also if GET request fails.
      */
     public Boolean validateTransaction() {
@@ -57,7 +59,7 @@ public class VaultService {
         } else {
             transaction.setCompleted(false);
         }
-
+        log.warn("AMUND IN TRANSFER");
         transactionEventPub.transactionComplete(transaction);
     }
 }
