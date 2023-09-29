@@ -1,9 +1,10 @@
 package com.pg3402.csgobank.transaction;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class TransactionEventPub {
 
@@ -16,6 +17,8 @@ public class TransactionEventPub {
     }
 
     public void transactionComplete(final Transaction transaction) {
+        log.warn("starting to publish event to rabbitMQ. (transactionComplete)");
+
         TransactionEvent event = buildEvent(transaction);
 
         String routingKey = "transaction." + (event.isCompleted() ? "complete" : "failed");

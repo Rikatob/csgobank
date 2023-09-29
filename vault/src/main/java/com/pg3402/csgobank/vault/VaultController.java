@@ -40,8 +40,9 @@ public class VaultController {
     }
     @GetMapping("/transfer")
         public String transferItem() {
+        log.warn("Starting to transfer item. (Controller)");
         vaultService.transferItem();
-        log.warn("HEIAAAAAAA");
+        log.warn("Item is transferred. (Controller)");
         return "hei";
     }
 

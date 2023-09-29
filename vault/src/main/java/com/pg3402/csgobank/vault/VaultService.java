@@ -27,6 +27,7 @@ public class VaultService {
      */
     public Boolean validateTransaction() {
 
+        log.warn("Start to validate transaction. (validateTransaction)");
         WebClient.Builder builder = WebClient.builder();
         try {
 
@@ -41,6 +42,7 @@ public class VaultService {
             e.printStackTrace();
             return false;
         }
+
     }
 
     /**
@@ -49,6 +51,7 @@ public class VaultService {
      * Publish the event.
      */
     public void transferItem() {
+        log.warn("Starting to transfer Item. (transferItem)");
         Transaction transaction = new Transaction();
         transaction.setItemID(100);
         transaction.setSellerID("Amund");
@@ -56,10 +59,14 @@ public class VaultService {
         transaction.setValidated(validateTransaction());
         if (transaction.isValidated()) {
             transaction.setCompleted(true);
+            log.warn("Transaction is validated. (transferItem)");
         } else {
             transaction.setCompleted(false);
+            log.warn("Transaction is not validated. (transferItem)");
         }
-        log.warn("AMUND IN TRANSFER");
+
         transactionEventPub.transactionComplete(transaction);
+
+        log.warn("Transaction is done. (transferItem)");
     }
 }
