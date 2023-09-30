@@ -15,11 +15,11 @@ spring:
     gateway:
       routes:
         - id: vault
-          uri: http://localhost:8082/
+          uri: lb://vault/
           predicates:
             - Path=/vault/**
         - id: transactionValidator
-          uri: http://localhost:8081/
+          uri: lb://transactionValidator/
           predicates:
             - Path=/transaction
       globalcors:
