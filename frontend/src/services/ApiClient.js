@@ -1,6 +1,6 @@
 class ApiClient {
 
-  static SERVER_URL = 'http://localhost:8080';
+  static SERVER_URL = 'http://localhost:8000';
   static GET_VAULT = '/vault';
   static GET_ITEMS = '/vault/items';
 
