@@ -4,9 +4,11 @@ import com.pg3402.csgobank.vault.AmundFact;
 import com.pg3402.csgobank.vault.VaultService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
+@EnableFeignClients
 public class CsGoBankApplication {
 
 	public static void main(String[] args) {
