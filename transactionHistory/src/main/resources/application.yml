@@ -1,0 +1,22 @@
+amqp:
+    exchange:
+        transactions: transactions.topic
+    queue:
+        transactionHistory: transactionHistory.queue
+    routing:
+        key: transaction.complete
+logging:
+    level:
+        org:
+            springframework:
+                amqp:
+                    rabbit:
+                        core:
+                            RabbitAdmin: DEBUG
+management:
+    tracing:
+        sampling:
+            probability: 1.0
+spring:
+    application:
+        name: transactionHistory

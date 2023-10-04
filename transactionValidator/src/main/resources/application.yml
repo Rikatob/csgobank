@@ -1,0 +1,9 @@
+management:
+    tracing:
+        sampling:
+            probability: 1.0
+server:
+    port: 8081
+spring:
+    application:
+        name: transactionValidator
