@@ -5,10 +5,6 @@ amqp:
         transactionHistory: transactionHistory.queue
     routing:
         key: transaction.complete
-management:
-    tracing:
-        sampling:
-            probability: 1.0
 server:
     port: 8082
 spring:

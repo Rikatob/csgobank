@@ -13,10 +13,6 @@ logging:
                     rabbit:
                         core:
                             RabbitAdmin: DEBUG
-management:
-    tracing:
-        sampling:
-            probability: 1.0
 spring:
     application:
         name: transactionHistory
