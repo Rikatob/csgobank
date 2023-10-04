@@ -4,3 +4,7 @@ server:
 spring:
     application:
         name: transactionValidator
+management:
+    tracing:
+        sampling:
+            probability: 1.0

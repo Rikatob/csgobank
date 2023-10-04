@@ -24,3 +24,7 @@ spring:
 transaction:
     validator:
         url: http://localhost:8081/transaction
+management:
+    tracing:
+        sampling:
+            probability: 1.0

@@ -36,7 +36,10 @@ spring:
           args:
             retries: 3
             methods: GET,POST
-
+management:
+  tracing:
+    sampling:
+      probability: 1.0
 
 # Uncomment the configuration below if you want to enable route matching logs
 #logging:
