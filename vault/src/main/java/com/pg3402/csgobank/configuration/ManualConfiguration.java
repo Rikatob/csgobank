@@ -12,8 +12,8 @@ public class ManualConfiguration {
     RabbitTemplate rabbitTemplate;
 
 
-    @PostConstruct
+   /* @PostConstruct
     void setup(){
         this.rabbitTemplate.setObservationEnabled(true);
-    }
+    }*/
 }

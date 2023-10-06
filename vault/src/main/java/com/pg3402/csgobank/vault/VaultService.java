@@ -2,7 +2,10 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.transaction.Transaction;
 import com.pg3402.csgobank.transaction.TransactionEventPub;
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,6 +22,8 @@ public class VaultService {
     @Value("${transaction.validator.url}")
     private String transactionValidatorURL;
 
+    @Autowired
+    private Tracer tracer;
 
     /**
      * Starts a connection and sends a GET request to the validator.
@@ -29,11 +34,19 @@ public class VaultService {
 
         log.warn("Start to validate transaction. (validateTransaction)");
         WebClient.Builder builder = WebClient.builder();
+
+        // Get the current trace context
+        Span currentSpan = tracer.currentSpan();
+        String traceId = currentSpan.context().traceId();
+        String spanId = currentSpan.context().spanId();
+
         try {
 
             return builder.build()
                     .get()
                     .uri(transactionValidatorURL)
+                    .header("traceId", traceId) // Pass traceId as a header
+                    .header("spanId", spanId)   // Pass spanId as a header
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
