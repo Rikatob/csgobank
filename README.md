@@ -15,6 +15,11 @@
 ### Zipkin
 * ``docker run -d -p 9411:9411 openzipkin/zipkin``
 
+
+### Build consul importer image
+* ``docker build -t consul-importer:1.0``
+
+
 ## Report
 
 * [x] Prettify report with drawings and decisions about RabbitMQ.
