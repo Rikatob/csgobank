@@ -29,13 +29,13 @@
   
 ## Gateway
 
-* [ ] Gateway
+* [x] Gateway
     * [x] Service Discovery
         * [x] Spring-cloud-starter-consul-discovery (Discovery server)
         * [x] Spring-boot-starter-actuator (Health check)
-    * [ ] Load Balancer.
-        * [ ] Spring-cloud-load-balancer
+    * [x] Load Balancer.
+        * [x] Spring-cloud-load-balancer
     * [x] Routing.
         * [x] Spring-cloud-starter-gateway
-* [ ] Centralized Configuration.
-    * [ ] Consul config server. ( bootstrap.yml)
+* [x] Centralized Configuration.
+    * [x] Consul config server. ( bootstrap.yml)
