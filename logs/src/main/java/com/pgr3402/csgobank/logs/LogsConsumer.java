@@ -25,13 +25,13 @@ public class LogsConsumer {
 
         // Check if traceId header is present before using it.
         if (traceId == null) {
-            traceId = "N/A"; // Provide a default value or handle the absence accordingly.
+            traceId = ""; // Provide a default value or handle the absence correct.
         }
         MDC.put("traceId", traceId);
 
         // Same for spanId.
         if (spanId == null) {
-            spanId = "N/A";
+            spanId = "";
         }
         MDC.put("spanId", spanId);
 
