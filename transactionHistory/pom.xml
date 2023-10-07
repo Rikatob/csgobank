@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pg3402.csgobank</groupId>
-    <artifactId>transactionHistory</artifactId>
+    <artifactId>transaction-history</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>transactionHistory</name>
     <description>transactionHistory</description>
