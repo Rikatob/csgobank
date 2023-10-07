@@ -21,6 +21,4 @@ spring:
         hibernate:
             ddl-auto: update
         show-sql: true
-transaction:
-    validator:
-        url: http://localhost:8081/transaction
+

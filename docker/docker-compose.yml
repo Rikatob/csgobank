@@ -7,6 +7,42 @@ services:
 #    image: react:latest
 #    ports:
 #      - "5000:5173"
+
+  rabbitmq-dev:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - microservices
+
+  zipkin-dev:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - '9411:9411'
+    networks:
+      - microservices
+
+
+  consul-dev:
+    image: consul:1.15.4
+    container_name: consul
+    ports:
+      - '8500:8500'
+      - '8600:8600/udp'
+    command: 'agent -dev -node=csgoBank -client=0.0.0.0 -log-level=INFO'
+    networks:
+      - microservices
+
+  consul-importer:
+    image: consul-importer:1.0
+    depends_on:
+      - consul-dev
+    networks:
+      - microservices
+
   gateway:
     image: gateway:0.0.1-SNAPSHOT
     ports:
@@ -19,29 +55,29 @@ services:
       - consul-importer
     networks:
       - microservices
-  rabbitmq-dev:
-    image: rabbitmq:3.12-management
-    container_name: rabbitmq
-    ports:
-      - '5672:5672'
-      - '15672:15672'
+
+  vault_db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=Marengs
+      - MYSQL_DATABASE=vault_db
     networks:
       - microservices
-  consul-importer:
-    image: consul-importer:1.0
+
+  vault:
+    image: vault:0.0.1-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - consul-dev
+      - gateway
+      - vault_db
     networks:
       - microservices
-  consul-dev:
-    image: consul:1.15.4
-    container_name: consul
-    ports:
-      - '8500:8500'
-      - '8600:8600/udp'
-    command: 'agent -dev -node=csgoBank -client=0.0.0.0 -log-level=INFO'
-    networks:
-      - microservices
+
+
+
 networks:
   microservices:
     driver: bridge

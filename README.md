@@ -31,6 +31,7 @@
 * [ ] TODO's.
   * [ ] VaultController.
   * [x] VaultService.
+  * [ ] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
   
 ## Gateway
 
