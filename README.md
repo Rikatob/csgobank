@@ -17,7 +17,7 @@
 
 
 ### Build consul importer image
-* ``docker build -t consul-importer:1.0``
+* ``docker build -t consul-importer:1.0 .``
 
 
 ## Report

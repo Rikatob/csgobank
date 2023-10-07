@@ -16,7 +16,4 @@ logging:
 spring:
     application:
         name: transactionHistory
-management:
-    tracing:
-        sampling:
-            probability: 1.0
+

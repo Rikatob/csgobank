@@ -1,5 +1,32 @@
 services:
-
+#  react:
+#    container_name: react
+#    build:
+#      context: ../frontend
+#      dockerfile: ../frontend/Dockerfile
+#    image: react:latest
+#    ports:
+#      - "5000:5173"
+  gateway:
+    image: gateway:0.0.1-SNAPSHOT
+    ports:
+      - '8000:8000'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - rabbitmq-dev
+      - consul-importer
+    networks:
+      - microservices
+  rabbitmq-dev:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - microservices
   consul-importer:
     image: consul-importer:1.0
     depends_on:
@@ -7,7 +34,7 @@ services:
     networks:
       - microservices
   consul-dev:
-    image: consul:1.7.2
+    image: consul:1.15.4
     container_name: consul
     ports:
       - '8500:8500'
