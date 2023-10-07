@@ -8,4 +8,4 @@ spring:
         prefixes: config
 logging:
   level:
-    org.springframework.amqp.rabbit.connection.CachigConnectionFactory: WARN
+    org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN
