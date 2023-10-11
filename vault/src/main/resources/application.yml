@@ -23,10 +23,6 @@ spring:
         # Creates the database in a file
         url: jdbc:h2:file:~/vault;AUTO_SERVER=TRUE;NON_KEYWORDS=USER;
         username: sa
-    #        driver-class-name: com.mysql.cj.jdbc.Driver
-#        password: Marengs
-#        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/vault_db
-#        username: root
     flyway:
         baseline-on-migrate: true
     jpa:
