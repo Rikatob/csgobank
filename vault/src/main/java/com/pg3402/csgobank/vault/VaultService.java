@@ -21,8 +21,6 @@ public class VaultService {
     }
 
     private final TransactionEventPub transactionEventPub;
-    @Value("${transaction.validator.url}")
-    private String transactionValidatorURL;
 
 
     @Autowired

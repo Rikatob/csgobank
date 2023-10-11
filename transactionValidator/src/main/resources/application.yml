@@ -4,3 +4,15 @@ server:
 spring:
     application:
         name: transactionValidator
+    config:
+        import: "optional:consul:"
+    cloud:
+        consul:
+            config:
+                format: yaml
+                default-context: defaults
+                data-key: application.yml
+                prefixes: config
+logging:
+    level:
+        org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN

@@ -1,0 +1,28 @@
+logging:
+    level:
+        org:
+            springframework:
+                amqp:
+                    rabbit:
+                        core:
+                            RabbitAdmin: DEBUG
+                    connection.CachingConnectionFactory: WARN
+                web:
+                    servlet:
+                        DispatcherServlet: DEBUG
+    pattern:
+        level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+server:
+    port: 8083
+spring:
+    config:
+        import: "optional:consul:"
+    application:
+        name: logs
+    cloud:
+        consul:
+            config:
+                format: yaml
+                default-context: defaults
+                data-key: application.yml
+                prefixes: config
