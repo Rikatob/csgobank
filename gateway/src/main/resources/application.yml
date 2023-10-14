@@ -25,7 +25,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:5173"
+            allowedOrigins: "http://localhost:8888"
             allowedHeaders:
               - "*"
             allowedMethods:
@@ -36,10 +36,6 @@ spring:
           args:
             retries: 3
             methods: GET,POST
-management:
-  tracing:
-    sampling:
-      probability: 1.0
 
 # Uncomment the configuration below if you want to enable route matching logs
 #logging:

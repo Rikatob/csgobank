@@ -1,0 +1,32 @@
+[
+	{
+		"key": "config/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/defaults,docker/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/defaults,docker/application.yml",
+		"flags": 0,
+		"value": "c3ByaW5nOgogIHJhYmJpdG1xOgogICAgaG9zdDogcmFiYml0bXEKICBjbG91ZDoKICAgIGNvbnN1bDoKICAgICAgZGlzY292ZXJ5OgogICAgICAgIGluc3RhbmNlLWlkOiAke3NwcmluZy5hcHBsaWNhdGlvbi5uYW1lfS0ke3JhbmRvbS5pbnQoMTAwMCl9Cm1hbmFnZW1lbnQ6CiAgemlwa2luOgogICAgdHJhY2luZzoKICAgICAgZW5kcG9pbnQ6ICJodHRwOi8vemlwa2luOjk0MTEvYXBpL3YyL3NwYW5zIgogIHRyYWNpbmc6CiAgICBzYW1wbGluZzoKICAgICAgcHJvYmFiaWxpdHk6IDEuMAo="
+	},
+	{
+		"key": "config/defaults/application.yml",
+		"flags": 0,
+		"value": "bWFuYWdlbWVudDoKIHRyYWNpbmc6CiAgc2FtcGxpbmc6CiAgIHByb2JhYmlsaXR5OiAxLjA="
+	},
+	{
+		"key": "config/vault,docker/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/vault,docker/application.yml",
+		"flags": 0,
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3ZhdWx0X2RiCiAgICBkcml2ZXItY2xhc3MtbmFtZTogY29tLm15c3FsLmNqLmpkYmMuRHJpdmVyCiAgICBwYXNzd29yZDogTWFyZW5ncwogICAgdXNlcm5hbWU6IHJvb3Q="
+	}
+]

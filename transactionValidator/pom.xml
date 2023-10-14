@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pg3402.csgobank</groupId>
-    <artifactId>transactionValidator</artifactId>
+    <artifactId>transaction-validator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>transactionValidator</name>
     <description>transaction validator</description>
@@ -71,10 +71,6 @@
             <artifactId>spring-cloud-starter-consul-config</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>

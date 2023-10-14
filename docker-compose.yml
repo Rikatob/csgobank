@@ -1,9 +1,0 @@
-services:
-  react:
-    container_name: react
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    image: react:latest
-    ports:
-      - "5000:5173"

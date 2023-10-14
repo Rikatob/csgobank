@@ -1,5 +1,5 @@
 
-# TODO
+# CSGOBANK
 
 ## Commands
 
@@ -15,9 +15,28 @@
 ### Zipkin
 * ``docker run -d -p 9411:9411 openzipkin/zipkin``
 
+
+### Build consul importer image
+* ``docker build -t consul-importer:1.0 .``
+
+
+### Push image docker hub
+* Login
+  * ``docker login``
+* Change tag : 
+  * ``docker image tag gateway:0.0.1-SNAPSHOT rikatob/gateway:0.0.1-SNAPSHOT``
+* Push that image: 
+  * ``docker image push rikatob/gateway:0.0.1-SNAPSHOT``
+
+
 ## Report
 
 * [x] Prettify report with drawings and decisions about RabbitMQ.
+* [ ] Update report with process regarding:
+  * [ ] Gateway
+  * [ ] Centralised logg
+  * [ ] Docker
+* [ ] Create a "module" diagram of our planned project structure.
 
 ## Project
 
@@ -26,7 +45,11 @@
 * [ ] TODO's.
   * [ ] VaultController.
   * [x] VaultService.
-  
+  * [ ] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
+  * [ ] Use health checks to avoid that some services start before a service it is dependent on an/or spamming repuest ? 
+    * https://devops.stackexchange.com/questions/12092/docker-compose-healthcheck-for-rabbitmq?newreg=614274132fbc4f92a92ba80f6d758a76
+    * https://www.rabbitmq.com/monitoring.html#health-checks
+  * [ ] Frontend running on own server.
 ## Gateway
 
 * [x] Gateway
@@ -39,3 +62,4 @@
         * [x] Spring-cloud-starter-gateway
 * [x] Centralized Configuration.
     * [x] Consul config server. ( bootstrap.yml)
+

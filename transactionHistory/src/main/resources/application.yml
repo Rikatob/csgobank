@@ -5,6 +5,20 @@ amqp:
         transactionHistory: transactionHistory.queue
     routing:
         key: transaction.complete
+
+spring:
+    application:
+        name: transactionHistory
+    config:
+        import: "optional:consul:"
+    cloud:
+        consul:
+            config:
+                format: yaml
+                default-context: defaults
+                data-key: application.yml
+                prefixes: config
+
 logging:
     level:
         org:
@@ -13,10 +27,4 @@ logging:
                     rabbit:
                         core:
                             RabbitAdmin: DEBUG
-spring:
-    application:
-        name: transactionHistory
-management:
-    tracing:
-        sampling:
-            probability: 1.0
+                        connection.CachingConnectionFactory: WARN

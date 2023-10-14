@@ -8,23 +8,27 @@ amqp:
 server:
     port: 8082
 spring:
+    config:
+        import: "optional:consul:"
+    cloud:
+      consul:
+        config:
+            format: yaml
+            default-context: defaults
+            data-key: application.yml
+            prefixes: config
     application:
         name: vault
     datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        password: Marengs
-        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/vault_db
-        username: root
+        # Creates the database in a file
+        url: jdbc:h2:file:~/vault;AUTO_SERVER=TRUE;NON_KEYWORDS=USER;
+        username: sa
     flyway:
         baseline-on-migrate: true
     jpa:
         hibernate:
             ddl-auto: update
         show-sql: true
-transaction:
-    validator:
-        url: http://localhost:8081/transaction
-management:
-    tracing:
-        sampling:
-            probability: 1.0
+logging:
+    level:
+        org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN
