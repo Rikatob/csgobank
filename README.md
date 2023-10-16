@@ -42,6 +42,9 @@
 
 * [x] Vault publisher to transaction history.
 * [x] Restructure project package structure.
+* [ ] Float problems with int, cant be feks 0233 that indicates 0,0233.
+      Total value in vault should not be field but a method. Should it be in Vault or VaultService?
+
 * [ ] TODO's.
   * [ ] VaultController.
   * [x] VaultService.
