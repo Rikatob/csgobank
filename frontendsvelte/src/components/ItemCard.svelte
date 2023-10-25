@@ -17,7 +17,7 @@
 </script>
 
 <div id="item-card">
-    <img src="{image}" alt="AK-47 fireserpent">
+    <img src="{image}" alt="{type} {name}">
     <h1>{type} | {name} ({wearCategory})</h1>
 
     <table id="item-info">
