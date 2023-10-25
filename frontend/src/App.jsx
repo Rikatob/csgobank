@@ -22,7 +22,31 @@ function App() {
   if (loading) {
     return <div>LOADING...</div>
   }
+
   return (
+      <>
+        <h1>CSGO VAULT</h1>
+        <div className="inventory">
+          {vault.map((i) => (
+              <div className="item-card" key={i.id}>
+                <img src={i.image} alt={i.name} />
+                <div className="item-info">
+                  <label>ID</label>
+                  <br />
+                  {i.id}
+                </div>
+                <div className="item-info">
+                  <label>NAME</label>
+                  <br />
+                  {i.name}
+                </div>
+              </div>
+          ))}
+        </div>
+      </>
+  );
+}
+ /* return (
     <>
       <h1>CSGO VAULT</h1>
       <div>
@@ -42,6 +66,6 @@ function App() {
       </div>
     </>
   )
-}
+}*/
 
 export default App
