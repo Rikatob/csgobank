@@ -6,3 +6,12 @@ body {
     margin: 0;
     padding: 0;
 }
+
+/* Header styling */
+h1 {
+    color: #1a9efd;
+}
+
+th {
+    color: #1a9efd;
+}

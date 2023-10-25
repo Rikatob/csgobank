@@ -37,6 +37,8 @@
         height: 100%;
         width: 100%;
         overflow: hidden;
+        background-color: #2c303b;
+        border-radius: 10px;
     }
     img {
         width: 100%;
@@ -52,5 +54,9 @@
     }
     h1:hover {
         text-wrap: initial;
+    }
+    table {
+        border: solid black 1px;
+        width: 100%;
     }
 </style>
