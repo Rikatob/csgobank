@@ -1,29 +1,37 @@
 <script>
-    import Image from "../assets/fireserpent.png"
+    import FireSerpent from "../assets/fireserpent.png"
+    import DragonLore from "../assets/dragonLore.png"
+    import Howl from "../assets/howl.png"
 
 
-    export let weapon = "Default weapon"
-    export let skin = "Default skin"
-    export let wear = "Default wear"
+    export let id = "0";
+
+    export let floatValue = "0"
+
+    export let price = "0"
+    export let type = "Default weapon";
+    export let name = "Default skin";
+    export let wearCategory = "Default wear";
+    export let image;
 
 </script>
 
 <div id="item-card">
-    <img src="{Image}" alt="AK-47 fireserpent">
-    <h1>{weapon} | {skin} ({wear})</h1>
+    <img src="{image}" alt="AK-47 fireserpent">
+    <h1>{type} | {name} ({wearCategory})</h1>
 
     <table id="item-info">
         <tr>
             <th>ID:</th>
-            <td>2</td>
+            <td>{id}</td>
         </tr>
         <tr>
             <th>FLOAT:</th>
-            <td>0.253</td>
+            <td>0.{floatValue}</td>
         </tr>
         <tr>
             <th>PRICE:</th>
-            <td>15000</td>
+            <td>${price}</td>
         </tr>
     </table>
 
