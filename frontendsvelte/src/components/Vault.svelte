@@ -37,6 +37,8 @@
     ]
 </script>
 
+<h1>CSGO VAULT</h1>
+
 <div id="vault">
     {#each items as item}
         <ItemCard {...item}/>
@@ -49,5 +51,9 @@
         grid-auto-columns: minmax(50rem, auto);
         grid-template-columns: repeat(auto-fill, minmax(15rem,50fr));
         grid-gap: 30px;
+    }
+
+    h1 {
+        text-align: center;
     }
 </style>
