@@ -67,6 +67,27 @@
     * [x] Consul config server. ( bootstrap.yml)
 
 
+## TODO
+
+* [ ] Login
+### Vault
+* [ ] Transfer
+* [ ] Withdraw
+* [ ] Deposit skins
+* [ ] Validate transaction
+* [ ] Validate item? (mulig)
+* [ ] Create new vault
+* [ ] List Items (get vault items)
+* [ ] Update database
+* [ ] Account
+  * [ ] Email osv (Bruker profile)
+* [ ] Lock
+* [ ] 
+
+### Items
+
+* [ ] Price history
+
 # Grading
 
 ## Required (but not sufficient) for E
@@ -88,3 +109,5 @@
 
 ## Required (but not sufficient) for A
 * [X] The project has a means of containerization – building container images from the existing services and getting such containers running and interacting with each other
+
+
