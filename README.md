@@ -66,3 +66,25 @@
 * [x] Centralized Configuration.
     * [x] Consul config server. ( bootstrap.yml)
 
+
+# Grading
+
+## Required (but not sufficient) for E
+* [ ] Use multiple services, that fulfill different functionality and communicate with each
+  other
+
+## Required (but not sufficient) for D
+* [ ] At least two of the services communicate using synchronous communication (for example, direct REST calls between two services).
+* [ ] At least two of the services communicate using asynchronous communication (for example, using Message Queue). This will be done in accordance with event-driven architecture, as discussed in class.
+
+
+## Required (but not sufficient) for C
+* [ ] The project uses a unique access point, that handled calls and routes them to appropriate services – Gateway
+* [ ] The project uses a unique access point that, in addition to routing calls, also does load balancing
+
+## Required (but not sufficient) for B
+* [ ] The project has a means of centrally controlling the health of running services – health check
+* [ ] The project has a means of centrally controlling configurations for the services – for example, using Consul
+
+## Required (but not sufficient) for A
+* [ ] The project has a means of containerization – building container images from the existing services and getting such containers running and interacting with each other
