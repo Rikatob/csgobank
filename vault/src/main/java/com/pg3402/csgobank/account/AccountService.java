@@ -3,6 +3,7 @@ package com.pg3402.csgobank.account;
 
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 
 @Service
@@ -24,5 +25,29 @@ public class AccountService {
 
     public Optional<Account> findById(long id) {
         return accountRepository.findById(id);
+    }
+
+    public Optional<Account> updateAccount(Account account)  {
+        Optional<Account> optionalAccount = accountRepository.findById(account.getId());
+
+        if (optionalAccount.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Account updatedAccount = optionalAccount.get();
+
+        for (Field declaredField : account.getClass().getDeclaredFields()) {
+            declaredField.setAccessible(true);
+            try {
+                if (declaredField.get(account) != null) {
+                    System.out.println(declaredField.get(account));
+                    declaredField.set(updatedAccount, declaredField.get(account));
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return Optional.of(accountRepository.save(updatedAccount));
     }
 }

@@ -25,6 +25,7 @@ public class AccountController {
     @PostMapping(value = "/new",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         if (accountService.exists(account) || account.getId() != 0) {
             return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
@@ -40,14 +41,24 @@ public class AccountController {
         Optional<Account> optionalAccount = accountService.findById(id);
 
         return optionalAccount
-                .map(Account -> ResponseEntity.status(HttpStatus.OK).body(Account))
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
 
     // Update account
+    @PostMapping(value = "/update",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
 
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        Optional<Account> optionalAccount = accountService.updateAccount(account);
 
+        return optionalAccount
+                .map(updatedAccount -> ResponseEntity.status(HttpStatus.OK).body(updatedAccount))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+
+    }
     // Get vaults
 
 
