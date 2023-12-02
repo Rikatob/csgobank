@@ -1,10 +1,13 @@
 package com.pg3402.csgobank.account;
 
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -30,5 +33,22 @@ public class AccountController {
         return new ResponseEntity<>(account, HttpStatus.OK);
 
     }
+
+    // Get account
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Account> getAccount(@PathVariable long id) {
+        Optional<Account> optionalAccount = accountService.findById(id);
+
+        return optionalAccount
+                .map(Account -> ResponseEntity.status(HttpStatus.OK).body(Account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+
+    // Update account
+
+
+    // Get vaults
+
 
 }

@@ -3,6 +3,8 @@ package com.pg3402.csgobank.account;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountService {
 
@@ -18,5 +20,9 @@ public class AccountService {
 
     public boolean exists(Account account) {
         return accountRepository.findByEmail(account.getEmail()).isPresent();
+    }
+
+    public Optional<Account> findById(long id) {
+        return accountRepository.findById(id);
     }
 }

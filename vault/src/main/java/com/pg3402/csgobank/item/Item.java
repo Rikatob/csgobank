@@ -24,10 +24,13 @@ public class Item implements Serializable {
 
     @Column(name = "type", columnDefinition = "varchar(20)")
     private String type;
+
     @Column(name = "name", columnDefinition = "varchar(20)")
     private String name;
+
     @Column(name = "float_value", columnDefinition = "int")
     private int floatValue;
+
     @Column(name = "price", columnDefinition = "int")
     private int price;
 
