@@ -27,6 +27,9 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
+
+    // Update all fields that is not null.
+    // Created to still be used if more fields is added to Account class.
     public Optional<Account> updateAccount(Account account)  {
         Optional<Account> optionalAccount = accountRepository.findById(account.getId());
 

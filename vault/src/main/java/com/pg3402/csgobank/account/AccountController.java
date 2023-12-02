@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.account;
 
+import com.pg3402.csgobank.vault.Vault;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -59,7 +61,14 @@ public class AccountController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
     }
-    // Get vaults
 
+
+    // Get vaults
+    @GetMapping("/{id}/vaults")
+    public ResponseEntity<List<Vault>> getVaults(@PathVariable long id) {
+        return accountService.findById(id)
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getVaults()))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 
 }
