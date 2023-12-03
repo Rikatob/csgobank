@@ -70,11 +70,12 @@ public class VaultService {
         transaction.setValidated(validateTransaction());
 
         Optional<Item> optionalItem = itemRepository.findById(transaction.getItemID());
-        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getSellerID());
+        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getBuyerID());
 
         if (transaction.isValidated() && optionalItem.isPresent() && optionalVault.isPresent()) {
 
             optionalItem.get().setVault(optionalVault.get());
+            itemRepository.save(optionalItem.get());
             transaction.setCompleted(true);
 
         } else {

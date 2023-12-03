@@ -25,7 +25,7 @@ public class TransactionController {
     @GetMapping
     public ResponseEntity<Boolean> validateTransaction(Transaction transaction) {
 
-        // buyer seller account exists.
+        // buyer seller vault exists.
         // seller has item.
 
         return ResponseEntity.status(HttpStatus.OK).body(true);
