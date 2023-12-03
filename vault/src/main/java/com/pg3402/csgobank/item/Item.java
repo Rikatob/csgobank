@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pg3402.csgobank.vault.Vault;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,20 +15,24 @@ import java.io.Serializable;
 @Entity
 public class Item implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "vault_id",nullable = false)
     private Vault vault;
 
     @Column(name = "type", columnDefinition = "varchar(20)")
     private String type;
+
     @Column(name = "name", columnDefinition = "varchar(20)")
     private String name;
+
     @Column(name = "float_value", columnDefinition = "int")
     private int floatValue;
+
     @Column(name = "price", columnDefinition = "int")
     private int price;
 

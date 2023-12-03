@@ -15,7 +15,7 @@ public class TransactionEventPub {
         this.amqpTemplate = amqpTemplate;
     }
 
-    public void transactionComplete(final Transaction transaction) {
+    public void publishTransaction(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 
         String routingKey = "transaction." + (event.isCompleted() ? "complete" : "failed");

@@ -1,6 +1,8 @@
 package com.pg3402.csgobank.vault;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pg3402.csgobank.account.Account;
 import com.pg3402.csgobank.item.Item;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,16 +19,20 @@ import java.util.List;
 public class Vault implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vault_id")
     private long id;
-    @Column(name = "owner_name", columnDefinition = "varchar(50)")
-    private String ownerName;
-    /*@OneToMany
-    @Column(name = "items")
-    private List<Item> items;*/
+
+
+    @OneToMany
+    @JsonIgnore
+    private List<Item> items;
+
     @Column(name = "total_value")
     private int totalValue;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
 }

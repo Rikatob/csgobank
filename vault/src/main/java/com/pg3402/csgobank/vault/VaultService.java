@@ -1,30 +1,42 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.account.Account;
+import com.pg3402.csgobank.account.AccountRepository;
+import com.pg3402.csgobank.item.Item;
+import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
 import com.pg3402.csgobank.transaction.TransactionEventPub;
 import com.pg3402.csgobank.transaction.TransactionValidationClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class VaultService {
 
-    public VaultService(TransactionEventPub transactionEventPub) {
-        this.transactionEventPub = transactionEventPub;
-    }
-
     private final TransactionEventPub transactionEventPub;
 
+    private final TransactionValidationClient transactionValidationClient;
+
+    private final ItemRepository itemRepository;
+
+    private final VaultRepository vaultRepository;
+
+    private final AccountRepository accountRepository;
 
     @Autowired
-    TransactionValidationClient transactionValidationClient;
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, AccountRepository accountRepository) {
+        this.transactionEventPub = transactionEventPub;
+        this.itemRepository = itemRepository;
+        this.transactionValidationClient = transactionValidationClient;
+        this.vaultRepository = vaultRepository;
+        this.accountRepository = accountRepository;
+    }
+
 
     /**
      * Starts a connection and sends a GET request to the validator.
@@ -34,26 +46,12 @@ public class VaultService {
     public Boolean validateTransaction() {
 
 
-//        WebClient.Builder builder = WebClient.builder();
-//        try {
-//
-//            return builder.build()
-//                    .get()
-//                    .uri(transactionValidatorURL)
-//                    .retrieve()
-//                    .bodyToMono(Boolean.class)
-//                    .block();
-//        } catch (Exception e) {
-//            log.warn("Could not validate transaction");
-//            e.printStackTrace();
-//            return false;
-//        }
-        log.info("Validating!!!");
+        log.info("Validating transaction");
         try {
-            ResponseEntity<Boolean> temp = transactionValidationClient.validate();
-            return temp.getBody();
+            ResponseEntity<Boolean> validation = transactionValidationClient.validate();
+            return validation.getBody();
         } catch (Exception e) {
-            log.error("Something went wrong");
+            log.error("Error when validating transaction");
             log.error(e.getMessage());
             log.error(String.valueOf(e.getCause()));
             return false;
@@ -63,22 +61,59 @@ public class VaultService {
     }
 
     /**
-     * Create transaction.
-     * Runs the validation.
+     * Takes in a transaction.
+     * Validate the transaction.
      * Publish the event.
      */
-    public void transferItem() {
-        Transaction transaction = new Transaction();
-        transaction.setItemID(100);
-        transaction.setSellerID("Amund");
-        transaction.setBuyerID("Fredrik");
+    public Transaction transferItem(Transaction transaction) {
+
         transaction.setValidated(validateTransaction());
-        if (transaction.isValidated()) {
+
+        Optional<Item> optionalItem = itemRepository.findById(transaction.getItemID());
+        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getBuyerID());
+
+        if (transaction.isValidated() && optionalItem.isPresent() && optionalVault.isPresent()) {
+
+            optionalItem.get().setVault(optionalVault.get());
+            itemRepository.save(optionalItem.get());
             transaction.setCompleted(true);
+
         } else {
             transaction.setCompleted(false);
         }
 
-        transactionEventPub.transactionComplete(transaction);
+        transactionEventPub.publishTransaction(transaction);
+
+        return transaction;
+    }
+
+    public Iterable<Item> getAllItems(Long vaultId) {
+        return itemRepository.findAllByVaultId(vaultId);
+    }
+
+    public boolean exists(long vaultId) {
+        return vaultRepository.existsById(vaultId);
+    }
+
+    public Optional<Vault> findById(long vaultId) {
+        return vaultRepository.findById(vaultId);
+    }
+
+
+    public Optional<Vault> createVault(Long accountId) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
+            return Optional.empty();
+        }
+        Vault vault = new Vault();
+        vault.setAccount(optionalAccount.get());
+
+        return Optional.of(vaultRepository.save(vault));
+    }
+
+    public Optional<Account> getOwnerOfItem(long itemId) {
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        return optionalItem.map(item -> item.getVault().getAccount());
     }
 }

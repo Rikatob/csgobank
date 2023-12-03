@@ -1,7 +1,6 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction;
 
 import lombok.Data;
-
 
 @Data
 public class Transaction {
@@ -10,5 +9,6 @@ public class Transaction {
     private Long buyerID;
     private boolean validated;
     private boolean isCompleted;
+
 
 }
