@@ -13,6 +13,6 @@ public interface TransactionValidationClient {
      *  Value = Pathen som vi skal nå
      *  method = GET/POST/PUT etc
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/transaction")
+    @RequestMapping(method = RequestMethod.GET, value = "/validate")
     ResponseEntity<Boolean> validate();
 }

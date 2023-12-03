@@ -21,7 +21,7 @@ spring:
         - id: transactionValidator
           uri: lb://transactionValidator/
           predicates:
-            - Path=/transaction
+            - Path=/validate
       globalcors:
         cors-configurations:
           '[/**]':
