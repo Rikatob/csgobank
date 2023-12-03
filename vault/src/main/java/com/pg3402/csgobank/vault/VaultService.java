@@ -1,30 +1,37 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.item.Item;
+import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
 import com.pg3402.csgobank.transaction.TransactionEventPub;
 import com.pg3402.csgobank.transaction.TransactionValidationClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class VaultService {
 
-    public VaultService(TransactionEventPub transactionEventPub) {
-        this.transactionEventPub = transactionEventPub;
-    }
-
     private final TransactionEventPub transactionEventPub;
 
+    private final TransactionValidationClient transactionValidationClient;
+
+    private final ItemRepository itemRepository;
+
+    private final VaultRepository vaultRepository;
 
     @Autowired
-    TransactionValidationClient transactionValidationClient;
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository) {
+        this.transactionEventPub = transactionEventPub;
+        this.itemRepository = itemRepository;
+        this.transactionValidationClient = transactionValidationClient;
+        this.vaultRepository = vaultRepository;
+    }
+
 
     /**
      * Starts a connection and sends a GET request to the validator.
@@ -80,5 +87,17 @@ public class VaultService {
         }
 
         transactionEventPub.transactionComplete(transaction);
+    }
+
+    public Iterable<Item> getAllItems(Long vaultId) {
+        return itemRepository.findAllByVaultId(vaultId);
+    }
+
+    public boolean exists(long vaultId) {
+        return vaultRepository.existsById(vaultId);
+    }
+
+    public Optional<Vault> findById(long vaultId) {
+        return vaultRepository.findById(vaultId);
     }
 }

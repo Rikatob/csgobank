@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pg3402.csgobank.vault.Vault;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class Item implements Serializable {
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "vault_id",nullable = false)
     private Vault vault;
 

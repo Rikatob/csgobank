@@ -15,28 +15,36 @@ import java.util.Optional;
 @RequestMapping("/vault")
 @Slf4j
 public class VaultController {
-    @Autowired
-    private ItemRepository itemRepository;
+
+    private final VaultService vaultService;
 
     @Autowired
-    private VaultRepository vaultRepository;
-    @Autowired
-    private VaultService vaultService;
-
-    // TODO: 9/9/2023  Should i make these endpoints return ResponseEntity instead because of Http status codes?? 
-    @GetMapping("/items")
-    public @ResponseBody Iterable<Item> getAllItems() {
-        return itemRepository.findAll();
+    public VaultController(VaultService vaultService) {
+        this.vaultService = vaultService;
     }
 
-    @GetMapping
-    public @ResponseBody ResponseEntity<Vault> getVault(@RequestParam(name = "id", defaultValue = "1") long id) {
-        Optional<Vault> optionalVault = vaultRepository.findById(id);
+
+    // Get a vault by ID.
+    @GetMapping("/{vaultId}")
+    public @ResponseBody ResponseEntity<Vault> getVault(@PathVariable long vaultId) {
+        Optional<Vault> optionalVault = vaultService.findById(vaultId);
 
         return optionalVault
                 .map(Vault -> ResponseEntity.status(HttpStatus.OK).body(Vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+
+    // Get all items in a vault.
+    @GetMapping("/{vaultId}/items")
+    public ResponseEntity<Iterable<Item>> getAllItems(@PathVariable long vaultId) {
+        if (!vaultService.exists(vaultId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(vaultService.getAllItems(vaultId));
+    }
+
+
 
     @GetMapping("/transfer")
     public String transferItem() {
@@ -45,12 +53,12 @@ public class VaultController {
         return "hei";
     }
 
-    @PostMapping("/new")
+   /* @PostMapping("/new")
     public Vault createVault(VaultDto vaultDto) {
         Vault vault = new Vault();
         vault.setOwnerName(vaultDto.ownerName());
         vault.setTotalValue(vaultDto.totalValue());
         return vaultRepository.save(vault);
-    }
+    }*/
 
 }

@@ -23,8 +23,6 @@ public class Vault implements Serializable {
     @Column(name = "vault_id")
     private long id;
 
-    @Column(name = "owner_name", columnDefinition = "varchar(50)")
-    private String ownerName;
 
     @OneToMany
     @JsonIgnore
