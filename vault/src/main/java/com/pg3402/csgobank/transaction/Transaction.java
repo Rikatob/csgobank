@@ -1,6 +1,8 @@
 package com.pg3402.csgobank.transaction;
 
 import lombok.Data;
+
+
 @Data
 public class Transaction {
     private Long itemID;
@@ -8,6 +10,5 @@ public class Transaction {
     private Long buyerID;
     private boolean validated;
     private boolean isCompleted;
-
 
 }

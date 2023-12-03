@@ -65,7 +65,7 @@ public class VaultService {
      * Validate the transaction.
      * Publish the event.
      */
-    public void transferItem(Transaction transaction) {
+    public Transaction transferItem(Transaction transaction) {
 
         transaction.setValidated(validateTransaction());
 
@@ -76,7 +76,9 @@ public class VaultService {
             transaction.setCompleted(false);
         }
 
-        transactionEventPub.transactionComplete(transaction);
+        transactionEventPub.publishTransaction(transaction);
+
+        return transaction;
     }
 
     public Iterable<Item> getAllItems(Long vaultId) {

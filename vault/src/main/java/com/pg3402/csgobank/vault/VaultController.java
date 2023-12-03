@@ -66,13 +66,19 @@ public class VaultController {
     // TODO log info on endpoints ???
 
 
-    @GetMapping("/transfer")
-    public ResponseEntity<Transaction> transferItem(Transaction transaction) {
+    @GetMapping(value = "/transfer",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
         log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getSellerID() + " to " + transaction.getBuyerID());
-        vaultService.transferItem(transaction);
-        log.info("OStbrød");
-        return "hei";
+
+        transaction = vaultService.transferItem(transaction);
+
+        if (transaction.isCompleted()) {
+            return ResponseEntity.status(HttpStatus.OK).body(transaction);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(transaction);
+        }
+
     }
-
-
 }
