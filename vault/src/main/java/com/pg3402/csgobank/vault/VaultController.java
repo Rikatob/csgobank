@@ -81,4 +81,12 @@ public class VaultController {
         }
 
     }
+
+    @GetMapping(value = "/item/{id}")
+    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id){
+        return vaultService.getOwnerOfItem(id)
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+    }
 }

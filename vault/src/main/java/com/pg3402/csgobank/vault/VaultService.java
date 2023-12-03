@@ -105,4 +105,9 @@ public class VaultService {
 
         return Optional.of(vaultRepository.save(vault));
     }
+
+    public Optional<Account> getOwnerOfItem(long itemId){
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        return optionalItem.map(item -> item.getVault().getAccount());
+    }
 }
