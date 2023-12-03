@@ -69,7 +69,12 @@ public class VaultService {
 
         transaction.setValidated(validateTransaction());
 
-        if (transaction.isValidated()) {
+        Optional<Item> optionalItem = itemRepository.findById(transaction.getItemID());
+        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getSellerID());
+
+        if (transaction.isValidated() && optionalItem.isPresent() && optionalVault.isPresent()) {
+
+            optionalItem.get().setVault(optionalVault.get());
             transaction.setCompleted(true);
 
         } else {
@@ -106,7 +111,7 @@ public class VaultService {
         return Optional.of(vaultRepository.save(vault));
     }
 
-    public Optional<Account> getOwnerOfItem(long itemId){
+    public Optional<Account> getOwnerOfItem(long itemId) {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         return optionalItem.map(item -> item.getVault().getAccount());
     }
