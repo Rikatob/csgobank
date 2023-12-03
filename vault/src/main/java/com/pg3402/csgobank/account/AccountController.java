@@ -30,10 +30,9 @@ public class AccountController {
 
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         if (accountService.exists(account) || account.getId() != 0) {
-            return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        accountService.save(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(account));
 
     }
 

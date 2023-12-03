@@ -1,5 +1,7 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.account.Account;
+import com.pg3402.csgobank.account.AccountRepository;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
@@ -24,12 +26,15 @@ public class VaultService {
 
     private final VaultRepository vaultRepository;
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository) {
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, AccountRepository accountRepository) {
         this.transactionEventPub = transactionEventPub;
         this.itemRepository = itemRepository;
         this.transactionValidationClient = transactionValidationClient;
         this.vaultRepository = vaultRepository;
+        this.accountRepository = accountRepository;
     }
 
 
@@ -99,5 +104,18 @@ public class VaultService {
 
     public Optional<Vault> findById(long vaultId) {
         return vaultRepository.findById(vaultId);
+    }
+
+
+    public Optional<Vault> createVault(Long accountId) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
+            return Optional.empty();
+        }
+        Vault vault = new Vault();
+        vault.setAccount(optionalAccount.get());
+
+        return Optional.of(vaultRepository.save(vault));
     }
 }
