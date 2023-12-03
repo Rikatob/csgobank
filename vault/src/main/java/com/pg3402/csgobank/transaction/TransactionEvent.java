@@ -7,8 +7,8 @@ import java.io.Serializable;
 @Value
 public class TransactionEvent implements Serializable {
 
-    int itemID;
-    String sellerID;
-    String buyerID;
+    Long itemID;
+    Long sellerID;
+    Long buyerID;
     boolean isCompleted;
 }

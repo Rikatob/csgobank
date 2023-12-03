@@ -24,6 +24,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    // Create new account.
     @PostMapping(value = "/new",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,6 +69,14 @@ public class AccountController {
         return accountService.findById(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getVaults()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    // Verify that account exists.
+    @GetMapping("verifyAccount/{accountId}")
+    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId){
+        return accountService.findById(accountId)
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(true))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));
     }
 
 }

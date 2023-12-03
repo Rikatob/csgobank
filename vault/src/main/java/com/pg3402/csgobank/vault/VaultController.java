@@ -3,6 +3,7 @@ package com.pg3402.csgobank.vault;
 import com.pg3402.csgobank.account.Account;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.ItemRepository;
+import com.pg3402.csgobank.transaction.Transaction;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,11 +63,16 @@ public class VaultController {
     }
 
 
+    // TODO log info on endpoints ???
+
+
     @GetMapping("/transfer")
-    public String transferItem() {
-        vaultService.transferItem();
+    public ResponseEntity<Transaction> transferItem(Transaction transaction) {
+        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getSellerID() + " to " + transaction.getBuyerID());
+        vaultService.transferItem(transaction);
         log.info("OStbrød");
         return "hei";
     }
+
 
 }

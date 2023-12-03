@@ -46,26 +46,12 @@ public class VaultService {
     public Boolean validateTransaction() {
 
 
-//        WebClient.Builder builder = WebClient.builder();
-//        try {
-//
-//            return builder.build()
-//                    .get()
-//                    .uri(transactionValidatorURL)
-//                    .retrieve()
-//                    .bodyToMono(Boolean.class)
-//                    .block();
-//        } catch (Exception e) {
-//            log.warn("Could not validate transaction");
-//            e.printStackTrace();
-//            return false;
-//        }
-        log.info("Validating!!!");
+        log.info("Validating transaction");
         try {
-            ResponseEntity<Boolean> temp = transactionValidationClient.validate();
-            return temp.getBody();
+            ResponseEntity<Boolean> validation = transactionValidationClient.validate();
+            return validation.getBody();
         } catch (Exception e) {
-            log.error("Something went wrong");
+            log.error("Error when validating transaction");
             log.error(e.getMessage());
             log.error(String.valueOf(e.getCause()));
             return false;
@@ -75,18 +61,17 @@ public class VaultService {
     }
 
     /**
-     * Create transaction.
-     * Runs the validation.
+     * Takes in a transaction.
+     * Validate the transaction.
      * Publish the event.
      */
-    public void transferItem() {
-        Transaction transaction = new Transaction();
-        transaction.setItemID(100);
-        transaction.setSellerID("Amund");
-        transaction.setBuyerID("Fredrik");
+    public void transferItem(Transaction transaction) {
+
         transaction.setValidated(validateTransaction());
+
         if (transaction.isValidated()) {
             transaction.setCompleted(true);
+
         } else {
             transaction.setCompleted(false);
         }
