@@ -14,5 +14,5 @@ public interface TransactionValidationClient {
      *  method = GET/POST/PUT etc
      */
     @RequestMapping(method = RequestMethod.GET, value = "/validate")
-    ResponseEntity<Boolean> validate();
+    ResponseEntity<Transaction> validate(Transaction transaction);
 }
