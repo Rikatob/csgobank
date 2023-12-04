@@ -16,10 +16,10 @@ public interface VaultClient {
     // toVault exists.
     //
     @RequestMapping(method = RequestMethod.GET,value = "/item/{itemId}/vault")
-    ResponseEntity<Long> getVaultId(@PathVariable Long itemId);
+    ResponseEntity<Long> getVaultId(@PathVariable(name = "itemId") long itemId);
 
 
-    @RequestMapping(method = RequestMethod.GET,value = "/exists/{vaulId}")
-    ResponseEntity<Boolean> checkIfVaultExists(@PathVariable Long vaulId);
+    @RequestMapping(method = RequestMethod.GET,value = "/vault/exists/{vaultId}")
+    ResponseEntity<Boolean> checkIfVaultExists(@PathVariable(name = "vaultId") long vaultId);
 
 }
