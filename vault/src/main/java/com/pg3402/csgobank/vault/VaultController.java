@@ -39,7 +39,7 @@ public class VaultController {
     public ResponseEntity<Boolean> checkIfVaultExists(@PathVariable long vaultId) {
         return vaultService.findById(vaultId)
                 .map(vault -> ResponseEntity.status(HttpStatus.OK).body(true))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.OK).body(false));
     }
 
 
