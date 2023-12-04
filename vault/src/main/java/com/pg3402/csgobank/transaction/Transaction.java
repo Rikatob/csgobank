@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class Transaction {
     private Long itemID;
-    private Long sellerID;
-    private Long buyerID;
+    private Long fromVaultId;
+    private Long toVaultId;
     private boolean validated;
     private boolean isCompleted;
 

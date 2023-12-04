@@ -23,6 +23,6 @@ public class TransactionEventPub {
     }
 
     private TransactionEvent buildEvent(final Transaction transaction) {
-        return new TransactionEvent(transaction.getItemID(), transaction.getSellerID(), transaction.getBuyerID(), transaction.isCompleted());
+        return new TransactionEvent(transaction.getItemID(), transaction.getFromVaultId(), transaction.getToVaultId(), transaction.isCompleted());
     }
 }

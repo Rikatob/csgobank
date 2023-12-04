@@ -2,13 +2,10 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.account.Account;
 import com.pg3402.csgobank.item.Item;
-import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +67,7 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
-        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getSellerID() + " to " + transaction.getBuyerID());
+        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
 
         transaction = vaultService.transferItem(transaction);
 
