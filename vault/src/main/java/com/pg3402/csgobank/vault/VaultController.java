@@ -2,13 +2,10 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.account.Account;
 import com.pg3402.csgobank.item.Item;
-import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +33,13 @@ public class VaultController {
         return optionalVault
                 .map(Vault -> ResponseEntity.status(HttpStatus.OK).body(Vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/exists/{vaultId}")
+    public ResponseEntity<Boolean> checkIfVaultExists(@PathVariable long vaultId) {
+        return vaultService.findById(vaultId)
+                .map(vault -> ResponseEntity.status(HttpStatus.OK).body(true))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.OK).body(false));
     }
 
 
@@ -70,7 +74,7 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
-        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getSellerID() + " to " + transaction.getBuyerID());
+        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
 
         transaction = vaultService.transferItem(transaction);
 
@@ -83,7 +87,7 @@ public class VaultController {
     }
 
     @GetMapping(value = "/item/{id}")
-    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id){
+    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id) {
         return vaultService.getOwnerOfItem(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/item")
+@RestController
+@RequestMapping("/item")
 public class ItemController {
 
     private final ItemService itemService;
@@ -31,7 +32,7 @@ public class ItemController {
     public ResponseEntity<Long> getVaultIdOfItem(@PathVariable long id){
         return itemService.getVaultIdOfItem(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
     }
 }

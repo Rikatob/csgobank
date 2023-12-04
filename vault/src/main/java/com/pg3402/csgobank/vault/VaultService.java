@@ -43,21 +43,11 @@ public class VaultService {
      *
      * @return Answer from the GET request (true or false), returns false also if GET request fails.
      */
-    public Boolean validateTransaction() {
-
+    public Transaction validateTransaction(Transaction transaction) {
 
         log.info("Validating transaction");
-        try {
-            ResponseEntity<Boolean> validation = transactionValidationClient.validate();
-            return validation.getBody();
-        } catch (Exception e) {
-            log.error("Error when validating transaction");
-            log.error(e.getMessage());
-            log.error(String.valueOf(e.getCause()));
-            return false;
-        }
-
-
+        ResponseEntity<Transaction> validation = transactionValidationClient.validate(transaction);
+        return validation.getBody();
     }
 
     /**
@@ -67,10 +57,10 @@ public class VaultService {
      */
     public Transaction transferItem(Transaction transaction) {
 
-        transaction.setValidated(validateTransaction());
+        transaction = validateTransaction(transaction);
 
         Optional<Item> optionalItem = itemRepository.findById(transaction.getItemID());
-        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getBuyerID());
+        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getToVaultId());
 
         if (transaction.isValidated() && optionalItem.isPresent() && optionalVault.isPresent()) {
 

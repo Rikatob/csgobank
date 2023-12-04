@@ -2,11 +2,13 @@ package com.pg3402.csgobank.transactionValidator.transaction;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Transaction {
+public class Transaction implements Serializable {
     private Long itemID;
-    private Long sellerID;
-    private Long buyerID;
+    private Long fromVaultId;
+    private Long toVaultId;
     private boolean validated;
     private boolean isCompleted;
 

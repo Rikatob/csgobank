@@ -5,13 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/validate")
 @Slf4j
 public class TransactionController {
 
@@ -22,12 +21,14 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping
-    public ResponseEntity<Boolean> validateTransaction(Transaction transaction) {
-
-        // buyer seller vault exists.
-        // seller has item.
-
-        return ResponseEntity.status(HttpStatus.OK).body(true);
+    /**
+     * @param transaction
+     * @return transaction with updated isValidated, wrapped in a ResponseEntity.
+     */
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Transaction> validateTransaction(@RequestBody Transaction transaction) {
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.validateTransaction(transaction));
     }
 }
