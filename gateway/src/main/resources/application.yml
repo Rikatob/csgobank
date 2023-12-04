@@ -17,7 +17,7 @@ spring:
         - id: vault
           uri: lb://vault/
           predicates:
-            - Path=/vault/**, /account/**
+            - Path=/vault/**, /account/**, /item/**
         - id: transactionValidator
           uri: lb://transactionValidator/
           predicates:

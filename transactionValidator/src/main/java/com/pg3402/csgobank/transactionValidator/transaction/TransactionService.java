@@ -9,8 +9,8 @@ public class TransactionService {
     public boolean validateTransaction(Transaction transaction) {
 
 
-        Long buyer = transaction.getBuyerID();
-        Long seller = transaction.getSellerID();
+        Long buyer = transaction.getToVaultId();
+        Long seller = transaction.getFromVaultId();
         Long item = transaction.getItemID();
 
         return accountExists(buyer);
