@@ -22,13 +22,12 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    /**
+     * @param transaction
+     * @return transaction with updated isValidated, wrapped in a ResponseEntity.
+     */
     @GetMapping
-    public ResponseEntity<Boolean> validateTransaction(Transaction transaction) {
-
-
-        // buyer seller vault exists.
-        // seller has item.
-
-        return ResponseEntity.status(HttpStatus.OK).body(true);
+    public ResponseEntity<Transaction> validateTransaction(Transaction transaction) {
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.validateTransaction(transaction));
     }
 }

@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface VaultClient {
 
 
-    // Which vault has item.
-    // Item --> vaultiD = vaultID --> true
 
-    @RequestMapping(method = RequestMethod.GET,value = "/item/{id}/vault")
-    ResponseEntity<Long> getVaultId(@PathVariable Long id);
+    // fromVault exists and item is in vault. OK
+    // toVault exists.
+    //
+    @RequestMapping(method = RequestMethod.GET,value = "/item/{itemId}/vault")
+    ResponseEntity<Long> getVaultId(@PathVariable Long itemId);
+
+
+    @RequestMapping(method = RequestMethod.GET,value = "/exists/{vaulId}")
+    ResponseEntity<Boolean> checkIfVaultExists(@PathVariable Long vaulId);
+
 }
