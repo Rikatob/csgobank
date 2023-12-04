@@ -35,6 +35,13 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @GetMapping("/exists/{vaultId}")
+    public ResponseEntity<Boolean> checkIfVaultExists(@PathVariable long vaultId) {
+        return vaultService.findById(vaultId)
+                .map(vault -> ResponseEntity.status(HttpStatus.OK).body(true))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.OK).body(false));
+    }
+
 
     // Get all items in a vault.
     @GetMapping("/{vaultId}/items")
@@ -80,7 +87,7 @@ public class VaultController {
     }
 
     @GetMapping(value = "/item/{id}")
-    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id){
+    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id) {
         return vaultService.getOwnerOfItem(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
