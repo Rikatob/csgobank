@@ -2,7 +2,7 @@ package com.pg3402.csgobank.vault;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pg3402.csgobank.account.Account;
+import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +33,6 @@ public class Vault implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
-    private Account account;
+    private VaultAccount vaultAccount;
 
 }
