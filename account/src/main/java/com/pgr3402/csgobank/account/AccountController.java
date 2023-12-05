@@ -60,17 +60,6 @@ public class AccountController {
 
     }
 
-
-/*
-    // Get vaults
-    @GetMapping("/{id}/vaults")
-    public ResponseEntity<List<Vault>> getVaults(@PathVariable long id) {
-        return accountService.findById(id)
-                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getVaults()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-*/
-
     // Verify that account exists.
     @GetMapping("verifyAccount/{accountId}")
     public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId){
