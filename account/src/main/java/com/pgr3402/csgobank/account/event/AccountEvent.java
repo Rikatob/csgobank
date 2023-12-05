@@ -7,5 +7,5 @@ import java.io.Serializable;
 @Value
 public class AccountEvent implements Serializable {
 
-    Long accountId;
+    long accountId;
 }

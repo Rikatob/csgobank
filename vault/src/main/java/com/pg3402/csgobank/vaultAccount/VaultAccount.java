@@ -22,7 +22,7 @@ public class VaultAccount implements Serializable {
     private long id;
 
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "vaultAccount")
     @JsonIgnore
     private List<Vault> vaults;
 }

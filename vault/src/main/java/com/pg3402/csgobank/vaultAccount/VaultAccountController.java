@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/vaultAccount")
 public class VaultAccountController {
 
 
@@ -42,6 +42,8 @@ public class VaultAccountController {
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getVaults()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+
 
 
 

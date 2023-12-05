@@ -8,7 +8,10 @@
         <artifactId>csgobank</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <groupId>com.pg3402.csgobank</groupId>
+    <artifactId>vault</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>vault</name>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -16,7 +19,6 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
     </properties>
 
-    <artifactId>vault</artifactId>
 
     <dependencyManagement>
         <dependencies>
