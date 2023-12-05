@@ -1,14 +1,12 @@
-package com.pg3402.csgobank.account;
+package com.pgr3402.csgobank.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pg3402.csgobank.vault.Vault;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +19,9 @@ public class Account implements Serializable {
     @Column(name = "account_id")
     private long id;
 
+    @Column(name= "user_name")
+    private String userName;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -30,7 +31,4 @@ public class Account implements Serializable {
     @Column(name = "email")
     private String email;
 
-  /*  @OneToMany(mappedBy = "account")
-    @JsonIgnore
-    private List<Vault> vaults;*/
 }
