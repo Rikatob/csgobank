@@ -1,7 +1,6 @@
 package com.pg3402.csgobank;
 
 import com.pg3402.csgobank.vault.AmundFact;
-import com.pg3402.csgobank.vault.VaultService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -9,11 +8,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 @EnableFeignClients
-public class CsGoBankApplication {
+public class VaultApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(CsGoBankApplication.class, args);
+		SpringApplication.run(VaultApplication.class, args);
 
 
 		// TEST for amundFact object with fields.
