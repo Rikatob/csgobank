@@ -5,6 +5,11 @@
 		"value": ""
 	},
 	{
+		"key": "config/account,docker/application.yml",
+		"flags": 0,
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2FjY291bnRfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="
+	},
+	{
 		"key": "config/defaults,docker/",
 		"flags": 0,
 		"value": ""
