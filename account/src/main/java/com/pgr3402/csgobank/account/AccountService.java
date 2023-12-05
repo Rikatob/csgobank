@@ -19,6 +19,12 @@ public class AccountService {
         this.accountEventPub = accountEventPub;
     }
 
+
+    public void deleteAccount(Account account){
+         accountRepository.delete(account);
+         accountEventPub.publishAccountEvent(account,AccountEventEnum.DELETED);
+    }
+
     public Account createAccount(Account account) {
         account = accountRepository.save(account);
         accountEventPub.publishAccountEvent(account, AccountEventEnum.CREATED);
