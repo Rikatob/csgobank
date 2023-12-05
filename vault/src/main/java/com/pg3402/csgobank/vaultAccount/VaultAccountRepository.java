@@ -7,6 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface VaultAccountRepository extends CrudRepository<VaultAccount,Long> {
-    Optional<VaultAccount> findByEmail(String email);
 
 }

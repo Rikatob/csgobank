@@ -1,4 +1,6 @@
-
+amqp:
+    exchange:
+        accounts: accounts.topic
 server:
     port: 8084
 spring:

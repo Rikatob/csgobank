@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -31,7 +30,8 @@ public class AccountController {
         if (accountService.exists(account) || account.getId() != 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(account));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
 
     }
 

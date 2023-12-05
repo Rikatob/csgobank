@@ -21,8 +21,6 @@ public class VaultAccount implements Serializable {
     @Column(name = "account_id")
     private long id;
 
-   @Column(name = "user_name")
-   private String userName;
 
     @OneToMany(mappedBy = "account")
     @JsonIgnore
