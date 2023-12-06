@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class TransactionHistoryEventHandler {
+public class TransactionEventHandler {
 
 
     @RabbitListener(queues = "${amqp.queue.transactionHistory}")
     void handleTransactionHistoryEvent(TransactionEvent event) {
+
         log.info("Buyer ID:{ {} }", event.getBuyerID());
         log.info("Seller ID:{ {} }", event.getSellerID());
         log.info("Item ID:{ {} }", event.getItemID());
