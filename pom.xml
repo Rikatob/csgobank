@@ -21,6 +21,7 @@
         <module>gateway</module>
         <module>logs</module>
         <module>account</module>
+        <module>item</module>
     </modules>
     <properties>
         <java.version>17</java.version>
