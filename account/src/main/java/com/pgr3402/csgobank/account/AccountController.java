@@ -35,6 +35,20 @@ public class AccountController {
 
     }
 
+    // Delete account.
+    @PostMapping(value = "/new",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<Account> deleteAccount(@RequestBody Account account) {
+        if (accountService.exists(account) || account.getId() != 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        accountService.deleteAccount(account);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     // Get account
     @GetMapping(value = "/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable long id) {
@@ -62,7 +76,7 @@ public class AccountController {
 
     // Verify that account exists.
     @GetMapping("verifyAccount/{accountId}")
-    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId){
+    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId) {
         return accountService.findById(accountId)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));
