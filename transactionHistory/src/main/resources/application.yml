@@ -18,7 +18,14 @@ spring:
                 default-context: defaults
                 data-key: application.yml
                 prefixes: config
-
+    datasource:
+        # Creates the database in a file
+        url: jdbc:h2:file:~/vault;AUTO_SERVER=TRUE;NON_KEYWORDS=USER;
+        username: sa
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
 logging:
     level:
         org:

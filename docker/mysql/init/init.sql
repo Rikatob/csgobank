@@ -2,4 +2,6 @@ CREATE DATABASE IF NOT EXISTS vault_db;
 
 CREATE DATABASE IF NOT EXISTS account_db;
 
+CREATE DATABASE IF NOT EXISTS transaction_history_db;
+
 

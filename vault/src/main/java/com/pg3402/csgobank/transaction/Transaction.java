@@ -11,6 +11,6 @@ public class Transaction implements Serializable {
     private Long fromVaultId;
     private Long toVaultId;
     private boolean validated;
-    private boolean isCompleted;
+    private boolean completed;
 
 }
