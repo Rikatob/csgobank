@@ -13,7 +13,7 @@ public class TransactionHistoryEventHandler {
 
 
     @RabbitListener(queues = "${amqp.queue.transactionHistory}")
-    void handleMultiplicationSolved(TransactionEvent event) {
+    void handleTransactionHistoryEvent(TransactionEvent event) {
         log.info("Buyer ID:{ {} }", event.getBuyerID());
         log.info("Seller ID:{ {} }", event.getSellerID());
         log.info("Item ID:{ {} }", event.getItemID());

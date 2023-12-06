@@ -1,6 +1,8 @@
-package com.pg3402.csgobank.account;
+package com.pgr3402.csgobank.account;
 
 
+import com.pgr3402.csgobank.account.event.AccountEventEnum;
+import com.pgr3402.csgobank.account.event.AccountEventPub;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -10,13 +12,24 @@ import java.util.Optional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final AccountEventPub accountEventPub;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, AccountEventPub accountEventPub) {
         this.accountRepository = accountRepository;
+        this.accountEventPub = accountEventPub;
     }
 
-    public Account save(Account account) {
-        return accountRepository.save(account);
+
+    public void deleteAccount(Account account){
+        long accountId = account.getId();
+         accountRepository.delete(account);
+         accountEventPub.publishAccountEvent(accountId,AccountEventEnum.DELETED);
+    }
+
+    public Account createAccount(Account account) {
+        account = accountRepository.save(account);
+        accountEventPub.publishAccountEvent(account, AccountEventEnum.CREATED);
+        return account;
     }
 
     public boolean exists(Account account) {
@@ -30,7 +43,7 @@ public class AccountService {
 
     // Update all fields that is not null.
     // Created to still be used if more fields is added to Account class.
-    public Optional<Account> updateAccount(Account account)  {
+    public Optional<Account> updateAccount(Account account) {
         Optional<Account> optionalAccount = accountRepository.findById(account.getId());
 
         if (optionalAccount.isEmpty()) {

@@ -17,11 +17,16 @@ spring:
         - id: vault
           uri: lb://vault/
           predicates:
-            - Path=/vault/**, /account/**, /item/**
+            - Path=/vault/**, /vaultAccount/**, /item/**
         - id: transactionValidator
           uri: lb://transactionValidator/
           predicates:
-            - Path=/validate
+            - Path=/validate/**
+        - id: account
+          uri: lb://account/
+          predicates:
+            - Path=/account/**
+
       globalcors:
         cors-configurations:
           '[/**]':

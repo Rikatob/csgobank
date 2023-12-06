@@ -1,10 +1,15 @@
 amqp:
     exchange:
+        account: accounts.topic
         transactions: transactions.topic
     queue:
-        transactionHistory: transactionHistory.queue
+        account: accounts.queue
+
     routing:
-        key: transaction.complete
+        key:
+            account:
+                created: account.created
+                deleted: account.deleted
 server:
     port: 8082
 spring:

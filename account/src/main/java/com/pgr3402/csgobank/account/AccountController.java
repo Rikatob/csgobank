@@ -1,14 +1,11 @@
-package com.pg3402.csgobank.account;
+package com.pgr3402.csgobank.account;
 
-import com.pg3402.csgobank.vault.Vault;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -33,8 +30,25 @@ public class AccountController {
         if (accountService.exists(account) || account.getId() != 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(account));
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
+
+    }
+
+    // Delete account.
+    @PostMapping(value = "/delete/{accountId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long accountId) {
+        Optional<Account> optionalAccount = accountService.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        accountService.deleteAccount(optionalAccount.get());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     // Get account
@@ -62,18 +76,9 @@ public class AccountController {
 
     }
 
-
-    // Get vaults
-    @GetMapping("/{id}/vaults")
-    public ResponseEntity<List<Vault>> getVaults(@PathVariable long id) {
-        return accountService.findById(id)
-                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getVaults()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
     // Verify that account exists.
     @GetMapping("verifyAccount/{accountId}")
-    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId){
+    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId) {
         return accountService.findById(accountId)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));

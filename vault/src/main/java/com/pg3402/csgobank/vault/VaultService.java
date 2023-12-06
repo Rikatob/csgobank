@@ -1,7 +1,7 @@
 package com.pg3402.csgobank.vault;
 
-import com.pg3402.csgobank.account.Account;
-import com.pg3402.csgobank.account.AccountRepository;
+import com.pg3402.csgobank.vaultAccount.VaultAccount;
+import com.pg3402.csgobank.vaultAccount.VaultAccountRepository;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.item.ItemRepository;
 import com.pg3402.csgobank.transaction.Transaction;
@@ -26,15 +26,15 @@ public class VaultService {
 
     private final VaultRepository vaultRepository;
 
-    private final AccountRepository accountRepository;
+    private final VaultAccountRepository vaultAccountRepository;
 
     @Autowired
-    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, AccountRepository accountRepository) {
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository) {
         this.transactionEventPub = transactionEventPub;
         this.itemRepository = itemRepository;
         this.transactionValidationClient = transactionValidationClient;
         this.vaultRepository = vaultRepository;
-        this.accountRepository = accountRepository;
+        this.vaultAccountRepository = vaultAccountRepository;
     }
 
 
@@ -91,19 +91,19 @@ public class VaultService {
 
 
     public Optional<Vault> createVault(Long accountId) {
-        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        Optional<VaultAccount> optionalAccount = vaultAccountRepository.findById(accountId);
 
         if (optionalAccount.isEmpty()) {
             return Optional.empty();
         }
         Vault vault = new Vault();
-        vault.setAccount(optionalAccount.get());
+        vault.setVaultAccount(optionalAccount.get());
 
         return Optional.of(vaultRepository.save(vault));
     }
 
-    public Optional<Account> getOwnerOfItem(long itemId) {
+    public Optional<VaultAccount> getOwnerOfItem(long itemId) {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
-        return optionalItem.map(item -> item.getVault().getAccount());
+        return optionalItem.map(item -> item.getVault().getVaultAccount());
     }
 }

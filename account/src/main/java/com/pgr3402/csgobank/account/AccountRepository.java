@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.account;
+package com.pgr3402.csgobank.account;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

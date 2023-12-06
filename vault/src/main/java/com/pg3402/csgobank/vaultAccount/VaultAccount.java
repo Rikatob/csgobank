@@ -1,4 +1,4 @@
-package com.pg3402.csgobank.account;
+package com.pg3402.csgobank.vaultAccount;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pg3402.csgobank.vault.Vault;
@@ -13,24 +13,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Account implements Serializable {
+@Entity(name = "vault_account")
+public class VaultAccount implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
     private long id;
 
-    @Column(name = "first_name")
-    private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email")
-    private String email;
-
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "vaultAccount")
     @JsonIgnore
     private List<Vault> vaults;
 }

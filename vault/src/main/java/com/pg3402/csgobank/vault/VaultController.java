@@ -1,6 +1,6 @@
 package com.pg3402.csgobank.vault;
 
-import com.pg3402.csgobank.account.Account;
+import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.transaction.Transaction;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +87,7 @@ public class VaultController {
     }
 
     @GetMapping(value = "/item/{id}")
-    public ResponseEntity<Account> getOwnerOfItem(@PathVariable long id) {
+    public ResponseEntity<VaultAccount> getOwnerOfItem(@PathVariable long id) {
         return vaultService.getOwnerOfItem(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());

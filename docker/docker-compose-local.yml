@@ -1,3 +1,6 @@
+volumes:
+  vault_db:
+    driver: local
 services:
   react:
     container_name: react
@@ -61,7 +64,8 @@ services:
     environment:
       - MYSQL_ROOT_USER=root
       - MYSQL_ROOT_PASSWORD=Marengs
-      - MYSQL_DATABASE=vault_db
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
     networks:
       - microservices
 
@@ -78,6 +82,17 @@ services:
 
   transactionValidator:
     image: transaction-validator:0.0.1-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - gateway
+      - rabbitmq-dev
+    networks:
+      - microservices
+
+  account:
+    image: account:0.0.1-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
