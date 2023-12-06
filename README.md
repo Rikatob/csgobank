@@ -71,14 +71,14 @@
 
 * [ ] Login
 ### Vault
-* [ ] Account
-    * [ ] Email osv (Bruker profile)
-* [ ] Create new vault
+* [x] Account
+    * [x] Email osv (Bruker profile)
+* [x] Create new vault
 * [ ] Withdraw
 * [ ] Deposit skins
-* [ ] Transfer
-* [ ] Validate transaction
-* [ ] List Items (get vault items)
+* [x] Transfer
+* [x] Validate transaction
+* [x] List Items (get vault items)
 * [ ] Update database
 * [ ] Validate item? (mulig)
 * [ ] Lock
