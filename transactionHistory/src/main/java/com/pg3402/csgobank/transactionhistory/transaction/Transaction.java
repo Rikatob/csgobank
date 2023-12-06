@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +20,13 @@ public class Transaction {
 
     @Column(name = "item_id")
     private Long itemID;
+
     @Column(name = "from_vault_id")
     private Long fromVaultId;
+
     @Column(name = "to_vault_id")
     private Long toVaultId;
-    @Column(name = "validated")
-    private boolean validated;
+
     @Column(name = "completed")
     private boolean completed;
 

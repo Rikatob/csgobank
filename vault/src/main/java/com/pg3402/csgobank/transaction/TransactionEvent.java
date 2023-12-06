@@ -1,14 +1,19 @@
 package com.pg3402.csgobank.transaction;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionEvent implements Serializable {
 
-    Long itemID;
-    Long sellerID;
-    Long buyerID;
+    Long itemId;
+    Long fromVaultId;
+    Long toVaultId;
     boolean completed;
 }
