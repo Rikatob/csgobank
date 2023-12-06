@@ -10,5 +10,5 @@ public class TransactionEvent implements Serializable {
     Long itemID;
     Long sellerID;
     Long buyerID;
-    boolean isCompleted;
+    boolean completed;
 }
