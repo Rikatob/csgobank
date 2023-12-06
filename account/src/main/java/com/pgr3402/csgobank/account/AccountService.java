@@ -21,8 +21,9 @@ public class AccountService {
 
 
     public void deleteAccount(Account account){
+        long accountId = account.getId();
          accountRepository.delete(account);
-         accountEventPub.publishAccountEvent(account,AccountEventEnum.DELETED);
+         accountEventPub.publishAccountEvent(accountId,AccountEventEnum.DELETED);
     }
 
     public Account createAccount(Account account) {

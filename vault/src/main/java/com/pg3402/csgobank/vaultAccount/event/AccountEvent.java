@@ -11,5 +11,6 @@ import java.io.Serializable;
 public class AccountEvent implements Serializable {
 
     private long accountId;
+    private AccountEventEnum eventType;
 
 }

@@ -17,7 +17,6 @@ import java.util.List;
 public class VaultAccount implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
     private long id;
 

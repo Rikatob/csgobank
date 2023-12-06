@@ -19,6 +19,11 @@ public class VaultAccountService {
         return vaultAccountRepository.save(account);
     }
 
+
+    public void delete(VaultAccount account) {
+        vaultAccountRepository.delete(account);
+    }
+
     public Optional<VaultAccount> findById(long id) {
         return vaultAccountRepository.findById(id);
     }

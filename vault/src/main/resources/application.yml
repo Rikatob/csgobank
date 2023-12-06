@@ -9,6 +9,7 @@ amqp:
         key:
             account:
                 created: account.created
+                deleted: account.deleted
 server:
     port: 8082
 spring:

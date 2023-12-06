@@ -12,19 +12,33 @@ public class AccountEventPub {
 
     @Value("${amqp.exchange.accounts}")
     private String transactionTopicExchange;
+
     public AccountEventPub(AmqpTemplate amqpTemplate) {
         this.amqpTemplate = amqpTemplate;
     }
 
     public void publishAccountEvent(final Account account, AccountEventEnum eventType) {
-        AccountEvent event = buildEvent(account);
-
-        String routingKey = "account." + eventType.toString().toLowerCase();
-
-        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
+        AccountEvent event = buildEvent(account, eventType);
+        publishEvent(event, eventType);
     }
 
-    private AccountEvent buildEvent(final Account account) {
-        return new AccountEvent(account.getId());
+    public void publishAccountEvent(final Long accountId, AccountEventEnum eventType) {
+        AccountEvent event = buildEvent(accountId, eventType);
+        publishEvent(event, eventType);
+
+    }
+
+    private void publishEvent(final AccountEvent accountEvent, AccountEventEnum eventType) {
+        String routingKey = "account." + eventType.toString().toLowerCase();
+
+        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, accountEvent);
+    }
+
+    private AccountEvent buildEvent(final Account account, AccountEventEnum eventType) {
+        return new AccountEvent(account.getId(), eventType);
+    }
+
+    private AccountEvent buildEvent(final Long accountId, AccountEventEnum eventType) {
+        return new AccountEvent(accountId, eventType);
     }
 }

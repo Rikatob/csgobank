@@ -36,16 +36,18 @@ public class AccountController {
     }
 
     // Delete account.
-    @PostMapping(value = "/new",
+    @PostMapping(value = "/delete/{accountId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public ResponseEntity<Account> deleteAccount(@RequestBody Account account) {
-        if (accountService.exists(account) || account.getId() != 0) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long accountId) {
+        Optional<Account> optionalAccount = accountService.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        accountService.deleteAccount(account);
+        accountService.deleteAccount(optionalAccount.get());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

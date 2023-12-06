@@ -29,6 +29,9 @@ public class AMQPConfiguration {
     @Value("${amqp.routing.key.account.created}")
     private String accountCreatedKey;
 
+    @Value("${amqp.routing.key.account.deleted}")
+    private String accountDeletedKey;
+
 
     @Bean
     public TopicExchange transactionHistoryExchange() {
@@ -61,6 +64,13 @@ public class AMQPConfiguration {
                 .with(accountCreatedKey);
     }
 
+    @Bean
+    public Binding accountDeletedBinding() {
+        return BindingBuilder
+                .bind(accountQueue())
+                .to(accountExchange())
+                .with(accountDeletedKey);
+    }
 
     @Bean
     public MessageHandlerMethodFactory messageHandlerMethodFactory() {
