@@ -16,20 +16,42 @@ public class Item implements Serializable {
     @Column(name = "item_id")
     private long id;
 
-    @Column(name = "type", columnDefinition = "varchar(20)")
+    @Column(name = "type")
     private String type;
 
-    @Column(name = "name", columnDefinition = "varchar(20)")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "float_value", columnDefinition = "int")
-    private int floatValue;
+    @Column(name = "float_value")
+    private String floatValue;
 
-    @Column(name = "price", columnDefinition = "int")
+    @Column(name = "price")
     private int price;
 
-    @Enumerated
-    @Column(name = "wear_category")
-    private WearCategory wearCategory;
+    /*
+-- FN 0.00 -> 0.07
+-- MW 0.07 -> 0.15
+-- FT 0.15 -> 0.37
+-- WW 0.37 -> 0.44
+-- BS 0.44 -> 1.00
+*/
+    public WearCategory getWearCategory() {
+        float floatV = Float.parseFloat(floatValue);
+
+        if(floatV < 0.07){
+            return WearCategory.FACTORY_NEW;
+        }
+        if (floatV < 0.15) {
+            return WearCategory.MINIMAL_WEAR;
+        }
+        if (floatV < 0.37) {
+            return WearCategory.FIELD_TESTED;
+        }
+        if (floatV < 0.44) {
+            return WearCategory.WELL_WORN;
+        }
+
+        return WearCategory.BATTLE_SCARRED;
+    }
 
 }
