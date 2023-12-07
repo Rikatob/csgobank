@@ -93,4 +93,11 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 
     }
+
+    @PostMapping(value = "{vaultId}/item/deposit/{itemId}")
+    public ResponseEntity<Item> depositItemToVault(@PathVariable long vaultId, @PathVariable long itemId) {
+        return vaultService.depositItem(vaultId, itemId)
+                .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 }

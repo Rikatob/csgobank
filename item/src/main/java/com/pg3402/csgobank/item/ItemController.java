@@ -20,7 +20,7 @@ ItemController {
         this.itemService = itemService;
     }
 
-    @RequestMapping(value = "/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Item> getItem(@PathVariable long id){
 
         return itemService.findById(id)

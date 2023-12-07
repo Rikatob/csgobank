@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.item.ItemService;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.vaultAccount.VaultAccountRepository;
 import com.pg3402.csgobank.item.Item;
@@ -27,14 +28,16 @@ public class VaultService {
     private final VaultRepository vaultRepository;
 
     private final VaultAccountRepository vaultAccountRepository;
+    private final ItemService itemService;
 
     @Autowired
-    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository) {
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository, ItemService itemService) {
         this.transactionEventPub = transactionEventPub;
         this.itemRepository = itemRepository;
         this.transactionValidationClient = transactionValidationClient;
         this.vaultRepository = vaultRepository;
         this.vaultAccountRepository = vaultAccountRepository;
+        this.itemService = itemService;
     }
 
 
@@ -105,5 +108,19 @@ public class VaultService {
     public Optional<VaultAccount> getOwnerOfItem(long itemId) {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         return optionalItem.map(item -> item.getVault().getVaultAccount());
+    }
+
+    public Optional<Item> depositItem(long vaultId, long itemId) {
+        Optional<Item> optionalItem = itemService.getItem(itemId);
+        Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
+
+        if(optionalItem.isEmpty() || optionalVault.isEmpty()){
+            return Optional.empty();
+        }
+        Item item = optionalItem.get();
+
+        item.setVault(optionalVault.get());
+        itemRepository.save(item);
+        return optionalItem;
     }
 }
