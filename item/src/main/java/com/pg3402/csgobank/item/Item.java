@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name = "id")
     private long id;
 
     @Column(name = "type")
