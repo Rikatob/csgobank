@@ -110,11 +110,24 @@ public class VaultService {
         return optionalItem.map(item -> item.getVault().getVaultAccount());
     }
 
+
+    /**
+     * Gets the item from item-service, save it in vault and update the totalValue in vault.
+     * Returns an empty optional IF
+     *  -> Vault is not found.
+     *  -> Item is not found.
+     *  -> Item is already existing in vault.
+     * @param vaultId
+     * @param itemId
+     * @return Optional with item requested from Item-Service.
+     */
     public Optional<Item> depositItem(long vaultId, long itemId) {
         Optional<Item> optionalItem = itemService.getItem(itemId);
+        Optional<Item> optionalVaultItem = itemRepository.findById(itemId);
         Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
 
-        if (optionalItem.isEmpty() || optionalVault.isEmpty()) {
+        if (optionalItem.isEmpty() || optionalVault.isEmpty() || optionalVaultItem.isPresent()) {
+            log.info("Deposit of itemID [" + itemId + "]" + " failed");
             return Optional.empty();
         }
         Item item = optionalItem.get();
@@ -125,14 +138,19 @@ public class VaultService {
 
         item.setVault(optionalVault.get());
         itemRepository.save(item);
+        log.info("Deposit of itemID [" + itemId + "]" + " succeeded");
         return optionalItem;
     }
 
+// TODO Withdraw does not need to get the item from itemService....
 
     /**
-     * Deletes item from item(vault) db.
-     *
+     * Gets the item from item-service, delete it in vault and update the totalValue in vault.
+     * Returns an empty optional IF
+     *  -> Vault is not found.
+     *  -> Item is not found.
      * @param itemId
+     * @param vaultId
      * @return Optional with item requested from Item-Service.
      */
     public Optional<Item> withdrawItem(long vaultId, long itemId) {
