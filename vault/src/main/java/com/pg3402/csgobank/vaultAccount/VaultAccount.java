@@ -17,7 +17,7 @@ import java.util.List;
 public class VaultAccount implements Serializable {
 
     @Id
-    @Column(name = "account_id")
+    @Column()
     private long id;
 
 

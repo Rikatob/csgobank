@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 public class Item implements Serializable {
     @Id
-    @Column(name = "item_id")
+    @Column()
     private long id;
 
     @ManyToOne

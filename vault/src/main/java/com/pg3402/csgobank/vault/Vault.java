@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,22 +25,25 @@ public class Vault implements Serializable {
     private long id;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "vault")
     @JsonIgnore
     private List<Item> items;
 
-    @Column(name = "total_value")
-    private int totalValue;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
     private VaultAccount vaultAccount;
 
-    public void updateTotalValue(VaultOperationEnum operation, int itemValue) {
-        if (operation == VaultOperationEnum.DEPOSIT) {
-            totalValue += itemValue;
-        } else if (operation == VaultOperationEnum.WITHDRAW) {
-            totalValue -= itemValue;
+
+
+    public long getTotalValue() {
+        if(items == null){
+            return 0;
         }
+        long totalValue = 0;
+        for (Item item : items) {
+            totalValue += item.getPrice();
+        }
+        return totalValue;
     }
 }

@@ -112,7 +112,7 @@ public class VaultService {
 
 
     /**
-     * Gets the item from item-service, save it in vault and update the totalValue in vault.
+     * Gets the item from item-service and save it in vault.
      * Returns an empty optional IF
      *  -> Vault is not found.
      *  -> Item is not found.
@@ -131,10 +131,6 @@ public class VaultService {
             return Optional.empty();
         }
         Item item = optionalItem.get();
-        Vault vault = optionalVault.get();
-
-        vault.updateTotalValue(VaultOperationEnum.DEPOSIT, item.getPrice());
-        vaultRepository.save(vault);
 
         item.setVault(optionalVault.get());
         itemRepository.save(item);
@@ -145,10 +141,11 @@ public class VaultService {
 // TODO Withdraw does not need to get the item from itemService....
 
     /**
-     * Gets the item from item-service, delete it in vault and update the totalValue in vault.
+     * Gets the item from item(vault) and delete it from the vault.
      * Returns an empty optional IF
      *  -> Vault is not found.
      *  -> Item is not found.
+     *  -> Vault do not contain item.
      * @param itemId
      * @param vaultId
      * @return Optional with item requested from Item-Service.
@@ -163,7 +160,11 @@ public class VaultService {
         }
 
         Item item = optionalItem.get();
-        optionalVault.get().updateTotalValue(VaultOperationEnum.WITHDRAW, item.getPrice());
+
+        if (!item.getVault().equals(optionalVault.get())){
+            log.info("Withdraw of itemID [" + itemId + "]" + " failed");
+            return Optional.empty();
+        }
 
         itemRepository.delete(item);
         log.info("Withdraw of itemID [" + itemId + "]" + " succeeded");

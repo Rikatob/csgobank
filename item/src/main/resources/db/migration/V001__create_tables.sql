@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS item
 (
-    id          INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    type        VARCHAR(20),
-    name        VARCHAR(20),
-    float_value VARCHAR(20),
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    type        VARCHAR(255),
+    name        VARCHAR(255),
+    float_value VARCHAR(255),
     price       INT
 
 );
