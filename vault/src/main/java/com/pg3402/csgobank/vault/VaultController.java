@@ -102,12 +102,12 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    // Withdraw item from vault with itemId.
+    // Withdraw item from vault with vaultId and itemId.
     // TODO should this take in vaultID as well ?? database can only consist of one of the items either way..
     // TODO Should this return Item from Item-Service ????
-    @GetMapping(value = "item/withdraw/{itemId}")
-    public ResponseEntity<Item> withdrawItem(@PathVariable long itemId) {
-        return vaultService.withdrawItem(itemId)
+    @GetMapping(value = "{vaultId}/item/withdraw/{itemId}")
+    public ResponseEntity<Item> withdrawItem(@PathVariable long vaultId,@PathVariable long itemId) {
+        return vaultService.withdrawItem(vaultId,itemId)
                 .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }

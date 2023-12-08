@@ -70,7 +70,7 @@
 ## TODO
 * [ ] Make account, transactionhistory and vault use flyway.
 * [ ] Populate databases
-* [ ] Withdraw item
+* [x] Withdraw item
 * [ ] Total value in vault.
 * [ ] Deposit check, cant be deposit if already in vault_item_db
 * [ ] Add log messages.

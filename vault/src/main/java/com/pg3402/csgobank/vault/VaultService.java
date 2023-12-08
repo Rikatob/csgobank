@@ -118,6 +118,10 @@ public class VaultService {
             return Optional.empty();
         }
         Item item = optionalItem.get();
+        Vault vault = optionalVault.get();
+
+        vault.updateTotalValue("deposit", item.getPrice());
+        vaultRepository.save(vault);
 
         item.setVault(optionalVault.get());
         itemRepository.save(item);
@@ -127,21 +131,24 @@ public class VaultService {
 
     /**
      * Deletes item from item(vault) db.
+     *
      * @param itemId
      * @return Optional with item requested from Item-Service.
      */
-    public Optional<Item> withdrawItem(long itemId) {
-
+    public Optional<Item> withdrawItem(long vaultId, long itemId) {
+        Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
         Optional<Item> optionalItem = itemRepository.findById(itemId);
 
-        if (optionalItem.isEmpty()) {
+        if (optionalItem.isEmpty() || optionalVault.isEmpty()) {
             log.info("Withdraw of itemID [" + itemId + "]" + " failed");
             return Optional.empty();
         }
 
-        itemRepository.delete(optionalItem.get());
+        Item item = optionalItem.get();
+        optionalVault.get().updateTotalValue("withdraw", item.getPrice());
+
+        itemRepository.delete(item);
         log.info("Withdraw of itemID [" + itemId + "]" + " succeeded");
-        optionalItem = itemService.getItem(itemId);
         return optionalItem;
 
     }
