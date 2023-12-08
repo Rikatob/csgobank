@@ -120,7 +120,7 @@ public class VaultService {
         Item item = optionalItem.get();
         Vault vault = optionalVault.get();
 
-        vault.updateTotalValue("deposit", item.getPrice());
+        vault.updateTotalValue(VaultOperationEnum.DEPOSIT, item.getPrice());
         vaultRepository.save(vault);
 
         item.setVault(optionalVault.get());
@@ -145,7 +145,7 @@ public class VaultService {
         }
 
         Item item = optionalItem.get();
-        optionalVault.get().updateTotalValue("withdraw", item.getPrice());
+        optionalVault.get().updateTotalValue(VaultOperationEnum.WITHDRAW, item.getPrice());
 
         itemRepository.delete(item);
         log.info("Withdraw of itemID [" + itemId + "]" + " succeeded");

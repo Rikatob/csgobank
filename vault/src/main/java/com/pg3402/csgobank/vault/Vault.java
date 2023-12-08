@@ -35,10 +35,10 @@ public class Vault implements Serializable {
     @JoinColumn(name = "account_id")
     private VaultAccount vaultAccount;
 
-    public void updateTotalValue(String operation, int itemValue) {
-        if (operation.equalsIgnoreCase("deposit")) {
+    public void updateTotalValue(VaultOperationEnum operation, int itemValue) {
+        if (operation == VaultOperationEnum.DEPOSIT) {
             totalValue += itemValue;
-        } else if (operation.equalsIgnoreCase("withdraw")) {
+        } else if (operation == VaultOperationEnum.WITHDRAW) {
             totalValue -= itemValue;
         }
     }
