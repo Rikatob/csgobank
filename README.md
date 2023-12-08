@@ -72,8 +72,9 @@
 * [ ] Populate databases
 * [x] Withdraw item
 * [x] Total value in vault.
-* [ ] Deposit check, cant be deposit if already in vault_item_db
+* [x] Deposit check, cant be deposit if already in vault_item_db
 * [ ] Add log messages.
+* [ ] Total value in vault should not be static, prob not i database at all and only with getter.
 
 
 * [ ] Login
@@ -81,8 +82,8 @@
 * [x] Account
     * [x] Email osv (Bruker profile)
 * [x] Create new vault
-* [ ] Withdraw
-* [ ] Deposit skins
+* [x] Withdraw
+* [x] Deposit skins
 * [x] Transfer
 * [x] Validate transaction
 * [x] List Items (get vault items)
