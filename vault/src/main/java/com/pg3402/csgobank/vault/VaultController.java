@@ -35,6 +35,7 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    // Check if vault exists with vaultId.
     @GetMapping("/exists/{vaultId}")
     public ResponseEntity<Boolean> checkIfVaultExists(@PathVariable long vaultId) {
         return vaultService.findById(vaultId)
@@ -43,7 +44,7 @@ public class VaultController {
     }
 
 
-    // Get all items in a vault.
+    // Get all items in a vault with vaultId.
     @GetMapping("/{vaultId}/items")
     public ResponseEntity<Iterable<Item>> getAllItems(@PathVariable long vaultId) {
         if (!vaultService.exists(vaultId)) {
@@ -53,7 +54,7 @@ public class VaultController {
     }
 
 
-    // Create new vault.
+    // Create new vault with AccountId.
     @PostMapping(value = "/new",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,9 +68,7 @@ public class VaultController {
     }
 
 
-    // TODO log info on endpoints ???
-
-
+    // Transferring item with a transaction.
     @GetMapping(value = "/transfer",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -86,6 +85,7 @@ public class VaultController {
 
     }
 
+    // Get owner of item with itemId.
     @GetMapping(value = "/item/{id}")
     public ResponseEntity<VaultAccount> getOwnerOfItem(@PathVariable long id) {
         return vaultService.getOwnerOfItem(id)
@@ -94,9 +94,20 @@ public class VaultController {
 
     }
 
+    // Deposit item to vault with vaultId and itemId.
     @PostMapping(value = "{vaultId}/item/deposit/{itemId}")
     public ResponseEntity<Item> depositItemToVault(@PathVariable long vaultId, @PathVariable long itemId) {
         return vaultService.depositItem(vaultId, itemId)
+                .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
+
+    // Withdraw item from vault with itemId.
+    // TODO should this take in vaultID as well ?? database can only consist of one of the items either way..
+    // TODO Should this return Item from Item-Service ????
+    @GetMapping(value = "item/withdraw/{itemId}")
+    public ResponseEntity<Item> withdrawItem(@PathVariable long itemId) {
+        return vaultService.withdrawItem(itemId)
                 .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }

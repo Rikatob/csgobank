@@ -114,7 +114,7 @@ public class VaultService {
         Optional<Item> optionalItem = itemService.getItem(itemId);
         Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
 
-        if(optionalItem.isEmpty() || optionalVault.isEmpty()){
+        if (optionalItem.isEmpty() || optionalVault.isEmpty()) {
             return Optional.empty();
         }
         Item item = optionalItem.get();
@@ -122,5 +122,27 @@ public class VaultService {
         item.setVault(optionalVault.get());
         itemRepository.save(item);
         return optionalItem;
+    }
+
+
+    /**
+     * Deletes item from item(vault) db.
+     * @param itemId
+     * @return Optional with item requested from Item-Service.
+     */
+    public Optional<Item> withdrawItem(long itemId) {
+
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+
+        if (optionalItem.isEmpty()) {
+            log.info("Withdraw of itemID [" + itemId + "]" + " failed");
+            return Optional.empty();
+        }
+
+        itemRepository.delete(optionalItem.get());
+        log.info("Withdraw of itemID [" + itemId + "]" + " succeeded");
+        optionalItem = itemService.getItem(itemId);
+        return optionalItem;
+
     }
 }
