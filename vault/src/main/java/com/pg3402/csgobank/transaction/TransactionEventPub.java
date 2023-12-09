@@ -38,6 +38,8 @@ public class TransactionEventPub {
         return event;
     }
 
+    // TODO:
+    //  Create listener on transactionValidator side
     public void publishTradeOffer(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 

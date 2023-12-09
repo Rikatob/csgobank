@@ -93,9 +93,11 @@ public class VaultController {
     public ResponseEntity<Transaction> createTradeOffer(@RequestBody Transaction transaction){
         log.info("Creating trade offer " + transaction);
 
+        //Only BUY and SELL is accepted
         if(transaction.getType().equals(TransactionType.TRANSFER)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
         transaction = vaultService.createTradeOffer(transaction);
 
         return ResponseEntity.status(HttpStatus.OK).body(transaction);
