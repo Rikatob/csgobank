@@ -31,4 +31,7 @@ public class Account implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column
+    private int credit;
+
 }
