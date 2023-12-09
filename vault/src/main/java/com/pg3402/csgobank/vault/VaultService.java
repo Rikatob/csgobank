@@ -80,6 +80,13 @@ public class VaultService {
         return transaction;
     }
 
+    public Transaction createTradeOffer(Transaction transaction){
+
+        transactionEventPub.publishTradeOffer(transaction);
+
+        return transaction;
+    }
+
     public Iterable<Item> getAllItems(Long vaultId) {
         return itemRepository.findAllByVaultId(vaultId);
     }

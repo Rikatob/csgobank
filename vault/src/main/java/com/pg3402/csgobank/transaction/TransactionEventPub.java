@@ -23,6 +23,25 @@ public class TransactionEventPub {
     }
 
     private TransactionEvent buildEvent(final Transaction transaction) {
-        return new TransactionEvent(transaction.getItemID(), transaction.getFromVaultId(), transaction.getToVaultId(), transaction.isCompleted());
+        TransactionEvent event = new TransactionEvent();
+
+        event.setType(transaction.getType());
+
+        event.setItemId(transaction.getItemID());
+        event.setPrice(transaction.getPrice());
+
+        event.setFromVaultId(transaction.getFromVaultId());
+        event.setToVaultId(transaction.getToVaultId());
+
+        event.setCompleted(transaction.isCompleted());
+
+        return event;
+    }
+
+    public void publishTradeOffer(final Transaction transaction) {
+        TransactionEvent event = buildEvent(transaction);
+
+        String routingKey = "transaction." + event.getType().toString();
+        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 }

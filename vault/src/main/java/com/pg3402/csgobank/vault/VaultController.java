@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.transaction.TransactionType;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.transaction.Transaction;
@@ -74,7 +75,7 @@ public class VaultController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
         log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
-
+        transaction.setType(TransactionType.TRANSFER);
         transaction = vaultService.transferItem(transaction);
 
         if (transaction.isCompleted()) {
@@ -85,6 +86,19 @@ public class VaultController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(transaction);
         }
 
+    }
+
+
+    @PostMapping(value = "/offer")
+    public ResponseEntity<Transaction> createTradeOffer(@RequestBody Transaction transaction){
+        log.info("Creating trade offer " + transaction);
+
+        if(transaction.getType().equals(TransactionType.TRANSFER)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        transaction = vaultService.createTradeOffer(transaction);
+
+        return ResponseEntity.status(HttpStatus.OK).body(transaction);
     }
 
     // Get owner of item with itemId.
