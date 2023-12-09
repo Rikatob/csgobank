@@ -33,30 +33,30 @@ public class TransactionService {
         // Vault fromVault dont exists.
         if (Objects.equals(fromVaultExistsResponse.getBody(), false)) {
             transaction.setValidated(false);
-            log.debug("Could not validate, fromVault dont exist");
+            log.info("Could not validate, fromVault dont exist");
             return transaction;
         }
         // Vault toVault dont exists.
         if (Objects.equals(toVaultExistsResponse.getBody(), false)) {
             transaction.setValidated(false);
-            log.debug("Could not validate, toVault dont exist");
+            log.info("Could not validate, toVault dont exist");
             return transaction;
         }
         // Request to get vaultId from itemId fails.
         if (itemOwnerResponse.getStatusCode() != HttpStatus.OK) {
             transaction.setValidated(false);
-            log.debug("Could not validate, request failed");
+            log.info("Could not validate, request failed");
             return transaction;
         }
         // Item is not present in the vault.
         if (!Objects.equals(itemOwnerResponse.getBody(), fromVaultId)) {
             transaction.setValidated(false);
-            log.debug("Could not validate, fromVault dont have item");
+            log.info("Could not validate, fromVault dont have item");
             return transaction;
         }
 
         transaction.setValidated(true);
-        log.debug("Transaction validation complete");
+        log.info("Transaction successfully validated");
         return transaction;
     }
 

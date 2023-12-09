@@ -48,7 +48,7 @@ public class VaultService {
      */
     public Transaction validateTransaction(Transaction transaction) {
 
-        log.info("Validating transaction");
+        log.info("Sending transaction to validation");
         ResponseEntity<Transaction> validation = transactionValidationClient.validate(transaction);
         return validation.getBody();
     }
@@ -114,14 +114,16 @@ public class VaultService {
     /**
      * Gets the item from item-service and save it in vault.
      * Returns an empty optional IF
-     *  -> Vault is not found.
-     *  -> Item is not found.
-     *  -> Item is already existing in vault.
+     * -> Vault is not found.
+     * -> Item is not found.
+     * -> Item is already existing in vault.
+     *
      * @param vaultId
      * @param itemId
      * @return Optional with item requested from Item-Service.
      */
     public Optional<Item> depositItem(long vaultId, long itemId) {
+        log.info("Starting to deposit item[" + itemId + "] into vault [" + vaultId + "]");
         Optional<Item> optionalItem = itemService.getItem(itemId);
         Optional<Item> optionalVaultItem = itemRepository.findById(itemId);
         Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
@@ -143,9 +145,10 @@ public class VaultService {
     /**
      * Gets the item from item(vault) and delete it from the vault.
      * Returns an empty optional IF
-     *  -> Vault is not found.
-     *  -> Item is not found.
-     *  -> Vault do not contain item.
+     * -> Vault is not found.
+     * -> Item is not found.
+     * -> Vault do not contain item.
+     *
      * @param itemId
      * @param vaultId
      * @return Optional with item requested from Item-Service.
@@ -161,7 +164,7 @@ public class VaultService {
 
         Item item = optionalItem.get();
 
-        if (!item.getVault().equals(optionalVault.get())){
+        if (!item.getVault().equals(optionalVault.get())) {
             log.info("Withdraw of itemID [" + itemId + "]" + " failed");
             return Optional.empty();
         }

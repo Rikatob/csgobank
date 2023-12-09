@@ -22,18 +22,18 @@ public class ItemService {
     }
 
 
-    public Optional<Item> findById(long id){
+    public Optional<Item> findById(long id) {
         return itemRepository.findById(id);
     }
 
-    public Optional<Long> getVaultIdOfItem(long id){
+    public Optional<Long> getVaultIdOfItem(long id) {
         Optional<Item> optionalItem = itemRepository.findById(id);
         return optionalItem.map(item -> item.getVault().getId());
     }
 
 
     public Optional<Item> getItem(long itemId) {
-        log.info("Get item [" + itemId+"]");
+        log.info("Retrieving item with id [" + itemId + "]");
         ResponseEntity<Item> itemResponseEntity = itemClient.getItem(itemId);
         return Optional.ofNullable(itemResponseEntity.getBody());
     }

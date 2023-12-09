@@ -78,8 +78,10 @@ public class VaultController {
         transaction = vaultService.transferItem(transaction);
 
         if (transaction.isCompleted()) {
+            log.info("Transaction complete");
             return ResponseEntity.status(HttpStatus.OK).body(transaction);
         } else {
+            log.info("Transaction failed");
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(transaction);
         }
 

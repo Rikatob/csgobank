@@ -9,7 +9,7 @@ logging:
                     connection.CachingConnectionFactory: WARN
                 web:
                     servlet:
-                        DispatcherServlet: DEBUG
+                        DispatcherServlet: INFO
     pattern:
         level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 server:

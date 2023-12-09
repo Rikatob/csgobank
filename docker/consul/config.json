@@ -7,7 +7,7 @@
 	{
 		"key": "config/account,docker/application.yml",
 		"flags": 0,
-		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2FjY291bnRfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2FjY291bnRfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdAogIGpwYTogCiAgICBvcGVuLWluLXZpZXc6IHRydWU="
 	},
 	{
 		"key": "config/defaults,docker/",
@@ -27,12 +27,12 @@
 	{
 		"key": "config/item,docker/application.yml",
 		"flags": 0,
-		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2l0ZW1fZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2l0ZW1fZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdAogIGpwYTogCiAgICBvcGVuLWluLXZpZXc6IHRydWU="
 	},
 	{
 		"key": "config/transactionHistory,docker/application.yml",
 		"flags": 0,
-		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3RyYW5zYWN0aW9uX2hpc3RvcnlfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3RyYW5zYWN0aW9uX2hpc3RvcnlfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdAogIGpwYTogCiAgICBvcGVuLWluLXZpZXc6IHRydWU="
 	},
 	{
 		"key": "config/vault,docker/",
@@ -42,6 +42,6 @@
 	{
 		"key": "config/vault,docker/application.yml",
 		"flags": 0,
-		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3ZhdWx0X2RiCiAgICBkcml2ZXItY2xhc3MtbmFtZTogY29tLm15c3FsLmNqLmpkYmMuRHJpdmVyCiAgICBwYXNzd29yZDogTWFyZW5ncwogICAgdXNlcm5hbWU6IHJvb3Q="
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3ZhdWx0X2RiCiAgICBkcml2ZXItY2xhc3MtbmFtZTogY29tLm15c3FsLmNqLmpkYmMuRHJpdmVyCiAgICBwYXNzd29yZDogTWFyZW5ncwogICAgdXNlcm5hbWU6IHJvb3QKICBqcGE6IAogICAgb3Blbi1pbi12aWV3OiB0cnVl"
 	}
 ]

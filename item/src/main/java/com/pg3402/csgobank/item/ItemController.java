@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.item;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+@Slf4j
 @RestController
 @RequestMapping("/item")
 public class
@@ -22,7 +23,7 @@ ItemController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Item> getItem(@PathVariable long id){
-
+        log.info("Delivering item with id[" + id + "]");
         return itemService.findById(id)
                 .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());

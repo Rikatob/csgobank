@@ -73,8 +73,9 @@
 * [x] Withdraw item
 * [x] Total value in vault.
 * [x] Deposit check, cant be deposit if already in vault_item_db
-* [ ] Add log messages.
 * [x] Total value in vault should not be static, prob not i database at all and only with getter.
+* [ ] Add log messages.
+* [ ] 
 
 
 * [ ] Login

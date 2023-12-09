@@ -9,9 +9,14 @@ spring:
       ribbon:
         enabled: false
     consul:
-        enabled: true
-        discovery:
-          query-passing: true
+      config:
+        format: yaml
+        default-context: defaults
+        data-key: application.yml
+        prefixes: config
+      enabled: true
+      discovery:
+        query-passing: true
     gateway:
       routes:
         - id: vault
@@ -46,6 +51,9 @@ spring:
             retries: 3
             methods: GET,POST
 
+logging:
+  level:
+    org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN
 # Uncomment the configuration below if you want to enable route matching logs
 #logging:
 #  level:
