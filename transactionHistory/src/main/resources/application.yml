@@ -20,11 +20,9 @@ spring:
                 prefixes: config
     datasource:
         # Creates the database in a file
-        url: jdbc:h2:file:~/vault;AUTO_SERVER=TRUE;NON_KEYWORDS=USER;
+        url: jdbc:h2:mem:/transaction_history;NON_KEYWORDS=USER;
         username: sa
     jpa:
-        hibernate:
-            ddl-auto: update
         show-sql: true
 logging:
     level:

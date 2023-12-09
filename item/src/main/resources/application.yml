@@ -1,11 +1,9 @@
-amqp:
-    exchange:
-        accounts: accounts.topic
+
 server:
-    port: 8084
+    port: 8085
 spring:
     application:
-        name: account
+        name: item
     config:
         import: "optional:consul:"
     cloud:
@@ -17,7 +15,7 @@ spring:
                 prefixes: config
     datasource:
         # Creates the database in a file
-        url: jdbc:h2:mem:account;NON_KEYWORDS=USER;
+        url: jdbc:h2:mem:item;NON_KEYWORDS=USER;
         username: sa
     jpa:
         show-sql: true

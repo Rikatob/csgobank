@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.item.ItemService;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.vaultAccount.VaultAccountRepository;
 import com.pg3402.csgobank.item.Item;
@@ -27,14 +28,16 @@ public class VaultService {
     private final VaultRepository vaultRepository;
 
     private final VaultAccountRepository vaultAccountRepository;
+    private final ItemService itemService;
 
     @Autowired
-    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository) {
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository, ItemService itemService) {
         this.transactionEventPub = transactionEventPub;
         this.itemRepository = itemRepository;
         this.transactionValidationClient = transactionValidationClient;
         this.vaultRepository = vaultRepository;
         this.vaultAccountRepository = vaultAccountRepository;
+        this.itemService = itemService;
     }
 
 
@@ -105,5 +108,67 @@ public class VaultService {
     public Optional<VaultAccount> getOwnerOfItem(long itemId) {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         return optionalItem.map(item -> item.getVault().getVaultAccount());
+    }
+
+
+    /**
+     * Gets the item from item-service and save it in vault.
+     * Returns an empty optional IF
+     *  -> Vault is not found.
+     *  -> Item is not found.
+     *  -> Item is already existing in vault.
+     * @param vaultId
+     * @param itemId
+     * @return Optional with item requested from Item-Service.
+     */
+    public Optional<Item> depositItem(long vaultId, long itemId) {
+        Optional<Item> optionalItem = itemService.getItem(itemId);
+        Optional<Item> optionalVaultItem = itemRepository.findById(itemId);
+        Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
+
+        if (optionalItem.isEmpty() || optionalVault.isEmpty() || optionalVaultItem.isPresent()) {
+            log.info("Deposit of itemID [" + itemId + "]" + " failed");
+            return Optional.empty();
+        }
+        Item item = optionalItem.get();
+
+        item.setVault(optionalVault.get());
+        itemRepository.save(item);
+        log.info("Deposit of itemID [" + itemId + "]" + " succeeded");
+        return optionalItem;
+    }
+
+// TODO Withdraw does not need to get the item from itemService....
+
+    /**
+     * Gets the item from item(vault) and delete it from the vault.
+     * Returns an empty optional IF
+     *  -> Vault is not found.
+     *  -> Item is not found.
+     *  -> Vault do not contain item.
+     * @param itemId
+     * @param vaultId
+     * @return Optional with item requested from Item-Service.
+     */
+    public Optional<Item> withdrawItem(long vaultId, long itemId) {
+        Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+
+        if (optionalItem.isEmpty() || optionalVault.isEmpty()) {
+            log.info("Withdraw of itemID [" + itemId + "]" + " failed");
+            return Optional.empty();
+        }
+
+        Item item = optionalItem.get();
+
+        if (!item.getVault().equals(optionalVault.get())){
+            log.info("Withdraw of itemID [" + itemId + "]" + " failed");
+            return Optional.empty();
+        }
+
+        itemRepository.delete(item);
+        log.info("Withdraw of itemID [" + itemId + "]" + " succeeded");
+        return optionalItem;
+
     }
 }

@@ -1,19 +1,24 @@
 package com.pg3402.csgobank.item;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemClient itemClient;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository, ItemClient itemClient) {
         this.itemRepository = itemRepository;
+        this.itemClient = itemClient;
     }
 
 
@@ -27,5 +32,9 @@ public class ItemService {
     }
 
 
-
+    public Optional<Item> getItem(long itemId) {
+        log.info("Get item [" + itemId+"]");
+        ResponseEntity<Item> itemResponseEntity = itemClient.getItem(itemId);
+        return Optional.ofNullable(itemResponseEntity.getBody());
+    }
 }

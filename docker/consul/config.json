@@ -25,6 +25,11 @@
 		"value": "bWFuYWdlbWVudDoKIHRyYWNpbmc6CiAgc2FtcGxpbmc6CiAgIHByb2JhYmlsaXR5OiAxLjA="
 	},
 	{
+		"key": "config/item,docker/application.yml",
+		"flags": 0,
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L2l0ZW1fZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="
+	},
+	{
 		"key": "config/transactionHistory,docker/application.yml",
 		"flags": 0,
 		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3RyYW5zYWN0aW9uX2hpc3RvcnlfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdA=="

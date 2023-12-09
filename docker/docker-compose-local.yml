@@ -116,6 +116,18 @@ services:
     networks:
       - microservices
 
+  item:
+    image: item:0.0.1-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - vault_db
+      - gateway
+      - rabbitmq-dev
+    networks:
+      - microservices
+
   logs:
     image: logs:0.0.1-SNAPSHOT
     environment:

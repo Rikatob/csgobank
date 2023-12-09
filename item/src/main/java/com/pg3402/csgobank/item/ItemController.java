@@ -1,6 +1,5 @@
 package com.pg3402.csgobank.item;
 
-import com.pg3402.csgobank.vault.Vault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/vaultItem")
-public class ItemController {
+@RequestMapping("/item")
+public class
+ItemController {
 
     private final ItemService itemService;
 
@@ -20,7 +20,7 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @RequestMapping(value = "/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Item> getItem(@PathVariable long id){
 
         return itemService.findById(id)
@@ -28,11 +28,8 @@ public class ItemController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    @GetMapping(value = "/{id}/vault")
-    public ResponseEntity<Long> getVaultIdOfItem(@PathVariable long id){
-        return itemService.getVaultIdOfItem(id)
-                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    // item exists
 
-    }
+    // verify item
+
 }

@@ -13,6 +13,8 @@ amqp:
 server:
     port: 8082
 spring:
+    application:
+        name: vault
     config:
         import: "optional:consul:"
     cloud:
@@ -22,17 +24,12 @@ spring:
             default-context: defaults
             data-key: application.yml
             prefixes: config
-    application:
-        name: vault
     datasource:
         # Creates the database in a file
-        url: jdbc:h2:file:~/vault;AUTO_SERVER=TRUE;NON_KEYWORDS=USER;
+        url: jdbc:h2:mem:vault;NON_KEYWORDS=USER;
         username: sa
-    flyway:
-        baseline-on-migrate: true
+
     jpa:
-        hibernate:
-            ddl-auto: update
         show-sql: true
 logging:
     level:

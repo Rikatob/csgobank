@@ -1,7 +1,4 @@
 package com.pg3402.csgobank.item;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pg3402.csgobank.vault.Vault;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +12,9 @@ import java.io.Serializable;
 @Entity
 public class Item implements Serializable {
     @Id
-    @Column()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "vault_id",nullable = false)
-    private Vault vault;
 
     @Column(name = "type")
     private String type;
@@ -35,14 +28,13 @@ public class Item implements Serializable {
     @Column(name = "price")
     private int price;
 
-
     /*
-    -- FN 0.00 -> 0.07
-    -- MW 0.07 -> 0.15
-    -- FT 0.15 -> 0.37
-    -- WW 0.37 -> 0.44
-    -- BS 0.44 -> 1.00
-   */
+-- FN 0.00 -> 0.07
+-- MW 0.07 -> 0.15
+-- FT 0.15 -> 0.37
+-- WW 0.37 -> 0.44
+-- BS 0.44 -> 1.00
+*/
     public WearCategory getWearCategory() {
         float floatV = Float.parseFloat(floatValue);
 
@@ -61,8 +53,5 @@ public class Item implements Serializable {
 
         return WearCategory.BATTLE_SCARRED;
     }
+
 }
-
-
-
-
