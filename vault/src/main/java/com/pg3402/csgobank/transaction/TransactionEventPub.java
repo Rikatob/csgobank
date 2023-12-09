@@ -43,7 +43,7 @@ public class TransactionEventPub {
     public void publishTradeOffer(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 
-        String routingKey = "transaction." + event.getType().toString();
+        String routingKey = "offer.created";
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 }
