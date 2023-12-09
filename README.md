@@ -74,9 +74,25 @@
 * [x] Total value in vault.
 * [x] Deposit check, cant be deposit if already in vault_item_db
 * [x] Total value in vault should not be static, prob not i database at all and only with getter.
-* [ ] Add log messages.
-* [ ] 
-
+* [ ] Add more logging.
+* [ ] Create scratchfile with all endpoints and description.
+* FRONTEND
+* ACCOUNT -> VAULT -> ITEM
+  * [ ] List all accounts
+  * [ ] Create new account.
+  * [ ] Delete account.
+  * [ ] Account
+    * [ ] List all vaults for account.
+    * [ ] Create new vault.
+    * [ ] Delete Vault.
+  * [ ] Vault
+      * [ ] List items.
+      * [ ] Withdraw item.
+      * [ ] Deposit item.
+  * [ ] Item
+    * [ ] Transfer item.
+    * [ ] Transaction history on item.
+    * [ ] Pricing history ???
 
 * [ ] Login
 ### Vault
