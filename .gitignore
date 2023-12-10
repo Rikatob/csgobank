@@ -1297,3 +1297,4 @@ build/
 /frontendsvelte/node_modules/vitefu/package.json
 /frontendsvelte/node_modules/vitefu/README.md
 /frontendsvelte/node_modules/.package-lock.json
+/frontendsvelte/.svelte-kit/
