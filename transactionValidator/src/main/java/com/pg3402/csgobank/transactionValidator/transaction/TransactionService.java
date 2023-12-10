@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -15,11 +17,13 @@ public class TransactionService {
 
     private final VaultClient vaultClient;
     private final AccountClient accountClient;
+    private final TransactionRepository transactionRepository;
 
     @Autowired
-    public TransactionService(VaultClient vaultClient, AccountClient accountClient) {
+    public TransactionService(VaultClient vaultClient, AccountClient accountClient, TransactionRepository transactionRepository) {
         this.vaultClient = vaultClient;
         this.accountClient = accountClient;
+        this.transactionRepository = transactionRepository;
     }
 
     public Transaction validateTransaction(Transaction transaction) {
@@ -92,5 +96,15 @@ public class TransactionService {
 
     private boolean accountExists(Long buyer) {
         return true;
+    }
+
+    public Optional<List<Transaction>> getIncomingTransaction(long id) {
+
+        return transactionRepository.findAllByToAccountId(id);
+    }
+
+    public Optional<List<Transaction>> getOutgoingTransaction(long id) {
+
+        return transactionRepository.findAllByFromAccountId(id);
     }
 }
