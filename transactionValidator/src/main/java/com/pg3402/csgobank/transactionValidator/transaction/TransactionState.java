@@ -1,12 +1,12 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction;
 
 public enum TransactionState {
     PENDING,
     ACCEPTED,
     DECLINED,
     COMPLETE,
-    FAILED,
     VALIDATED,
+    FAILED,
     CREATED
 
 }

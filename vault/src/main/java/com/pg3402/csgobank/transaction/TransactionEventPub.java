@@ -18,7 +18,7 @@ public class TransactionEventPub {
     public void publishTransaction(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 
-        String routingKey = "transaction." + (event.isCompleted() ? "complete" : "failed");
+        String routingKey = "transaction." + (event.getState().toString());
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 
@@ -27,13 +27,16 @@ public class TransactionEventPub {
 
         event.setType(transaction.getType());
 
-        event.setItemId(transaction.getItemID());
+        event.setItemId(transaction.getItemId());
         event.setPrice(transaction.getPrice());
 
         event.setFromVaultId(transaction.getFromVaultId());
         event.setToVaultId(transaction.getToVaultId());
 
-        event.setCompleted(transaction.isCompleted());
+        event.setState(transaction.getState());
+
+        event.setFromAccountId(transaction.getFromAccountId());
+        event.setToAccountId(transaction.getToAccountId());
 
         return event;
     }

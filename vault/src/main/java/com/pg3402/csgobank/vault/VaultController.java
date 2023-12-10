@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.transaction.TransactionState;
 import com.pg3402.csgobank.transaction.TransactionType;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
@@ -74,11 +75,11 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
-        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
+        log.info("Transferring item " + transaction.getItemId() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
         transaction.setType(TransactionType.TRANSFER);
         transaction = vaultService.transferItem(transaction);
 
-        if (transaction.isCompleted()) {
+        if (transaction.getState().equals(TransactionState.COMPLETE)) {
             log.info("Transaction complete");
             return ResponseEntity.status(HttpStatus.OK).body(transaction);
         } else {

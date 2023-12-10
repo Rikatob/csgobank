@@ -78,10 +78,17 @@ public class AccountController {
 
     // Verify that account exists.
     @GetMapping("verifyAccount/{accountId}")
-    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId) {
+    public ResponseEntity<Boolean> verifyAccount(@PathVariable Long accountId) {
         return accountService.findById(accountId)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));
+    }
+
+    @GetMapping("credit/{id}")
+    private ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
+        return accountService.findById(id)
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getCredit()))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
 }

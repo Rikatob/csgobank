@@ -16,16 +16,16 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
-    private Long transactionId;
+    private long transactionId;
 
     @Column(name = "item_id")
-    private Long itemID;
+    private long itemID;
 
     @Column(name = "from_vault_id")
-    private Long fromVaultId;
+    private long fromVaultId;
 
     @Column(name = "to_vault_id")
-    private Long toVaultId;
+    private long toVaultId;
 
     @Column(name = "completed")
     private boolean completed;

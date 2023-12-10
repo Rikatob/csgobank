@@ -7,12 +7,13 @@ import java.io.Serializable;
 
 @Data
 public class Transaction implements Serializable {
-    private Long itemID;
-    private Long fromVaultId;
-    private Long toVaultId;
+    private long itemId;
+    private long fromVaultId;
+    private long toVaultId;
+    private long fromAccountId;
+    private long toAccountId;
     private int price;
     private TransactionType type;
-    private boolean validated;
-    private boolean completed;
+    private TransactionState state;
 
 }

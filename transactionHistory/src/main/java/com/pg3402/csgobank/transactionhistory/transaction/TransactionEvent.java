@@ -12,9 +12,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class TransactionEvent implements Serializable {
 
-    private Long itemId;
-    private Long fromVaultId;
-    private Long toVaultId;
+    private long itemId;
+    private long fromVaultId;
+    private long toVaultId;
     private int price;
     private TransactionType type;
     boolean completed;

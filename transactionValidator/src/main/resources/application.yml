@@ -1,22 +1,35 @@
+amqp:
+  exchange:
+    transactions: transactions.topic
+  queue:
+    offer: offer.queue
+  routing:
+    key: offer.created
 
 server:
-    port: 8081
+  port: 8081
 spring:
-    application:
-        name: transactionValidator
-    config:
-        import: "optional:consul:"
-    cloud:
-        consul:
-            config:
-                format: yaml
-                default-context: defaults
-                data-key: application.yml
-                prefixes: config
+  application:
+    name: transactionValidator
+  config:
+    import: "optional:consul:"
+  cloud:
+    consul:
+      config:
+        format: yaml
+        default-context: defaults
+        data-key: application.yml
+        prefixes: config
+  datasource:
+    # Creates the database in a file
+    url: jdbc:h2:mem:/transaction_validator;NON_KEYWORDS=USER;
+    username: sa
+  jpa:
+    show-sql: true
 logging:
-    level:
-        org.springframework:
-            amqp.rabbit.connection.CachingConnectionFactory: WARN
-            web:
-                servlet:
-                    DispatcherServlet: INFO
+  level:
+    org.springframework:
+      amqp.rabbit.connection.CachingConnectionFactory: WARN
+      web:
+        servlet:
+          DispatcherServlet: INFO
