@@ -84,4 +84,11 @@ public class AccountController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));
     }
 
+
+    // Get all accounts.
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<Account>> getAllAccounts(){
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAccounts());
+    }
+
 }

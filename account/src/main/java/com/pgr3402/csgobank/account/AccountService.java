@@ -3,6 +3,7 @@ package com.pgr3402.csgobank.account;
 
 import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -20,10 +21,10 @@ public class AccountService {
     }
 
 
-    public void deleteAccount(Account account){
+    public void deleteAccount(Account account) {
         long accountId = account.getId();
-         accountRepository.delete(account);
-         accountEventPub.publishAccountEvent(accountId,AccountEventEnum.DELETED);
+        accountRepository.delete(account);
+        accountEventPub.publishAccountEvent(accountId, AccountEventEnum.DELETED);
     }
 
     public Account createAccount(Account account) {
@@ -65,5 +66,9 @@ public class AccountService {
         }
 
         return Optional.of(accountRepository.save(updatedAccount));
+    }
+
+    public Iterable<Account> getAllAccounts() {
+        return accountRepository.findAll();
     }
 }

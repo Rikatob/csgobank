@@ -1,22 +1,24 @@
 <script>
-    import FireSerpent from "../assets/fireserpent.png"
-    import DragonLore from "../assets/dragonLore.png"
-    import Howl from "../assets/howl.png"
+    import FireSerpent from "../lib/images/FireSerpent.png"
+    import DragonLore from "../lib/images/DragonLore.png"
+    import Howl from "../lib/images/Howl.png"
+    import { createEventDispatcher } from 'svelte';
 
 
+    const dispatch = createEventDispatcher();
     export let id = "0";
-
     export let floatValue = "0"
-
     export let price = "0"
     export let type = "Default weapon";
     export let name = "Default skin";
     export let wearCategory = "Default wear";
     export let image;
-
+    function handleClick() {
+        dispatch("clicked",id);
+    }
 </script>
 
-<div id="item-card">
+<div on:click={handleClick} id="item-card">
     <img src="{image}" alt="{type} {name}">
     <h1>{type} | {name} ({wearCategory})</h1>
 
@@ -27,7 +29,7 @@
         </tr>
         <tr>
             <th>FLOAT:</th>
-            <td>0.{floatValue}</td>
+            <td>{floatValue}</td>
         </tr>
         <tr>
             <th>PRICE:</th>

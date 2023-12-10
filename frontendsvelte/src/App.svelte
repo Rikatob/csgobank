@@ -1,10 +1,10 @@
 <script>
-    import Vault from "./components/Vault.svelte"
+    import Bank from "./components/Bank.svelte";
 </script>
 
 <main>
     <div>
-        <Vault/>
+        <Bank/>
     </div>
 
 </main>

@@ -112,4 +112,8 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Iterable<Vault>> getAllVaults(){
+        return ResponseEntity.status(HttpStatus.OK).body(vaultService.getAllVaults());
+    }
 }
