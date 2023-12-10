@@ -22,10 +22,6 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    /**
-     * @param transaction
-     * @return transaction with updated isValidated, wrapped in a ResponseEntity.
-     */
     @PostMapping(value = "/validate",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,16 +31,14 @@ public class TransactionController {
 
 
     @GetMapping(value = "/incoming/{id}")
-    public ResponseEntity<List<Transaction>> getIncomingTransaction(@PathVariable long id){
-
+    public ResponseEntity<List<Transaction>> getIncomingTransaction(@PathVariable long id) {
         return transactionService.getIncomingTransaction(id)
                 .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping(value = "/outgoing/{id}")
-    public ResponseEntity<List<Transaction>> getOutgoingTransaction(@PathVariable long id){
-
+    public ResponseEntity<List<Transaction>> getOutgoingTransaction(@PathVariable long id) {
         return transactionService.getOutgoingTransaction(id)
                 .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
