@@ -27,6 +27,8 @@ public class TransactionEventHandler {
             transaction = transactionService.validateOffer(transaction);
             if(transaction.getState().equals(TransactionState.PENDING)){
                 transactionRepository.save(transaction);
+            } else {
+                log.info(transaction + "failed");
             }
 
         } catch (final Exception e) {

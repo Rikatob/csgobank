@@ -39,24 +39,26 @@ public class TransactionService {
 
     private boolean checkTransaction(Transaction transaction) {
 
-        Long itemId = transaction.getItemId();
-        Long fromVaultId = transaction.getFromVaultId();
-        Long toVaultId = transaction.getToVaultId();
+        long itemId = transaction.getItemId();
+        long fromVaultId = transaction.getFromVaultId();
+        long toVaultId = transaction.getToVaultId();
 
         ResponseEntity<Boolean> fromVaultExistsResponse = vaultClient.checkIfVaultExists(fromVaultId);
         ResponseEntity<Boolean> toVaultExistsResponse = vaultClient.checkIfVaultExists(toVaultId);
         ResponseEntity<Long> itemOwnerResponse = vaultClient.getVaultId(itemId);
 
+        if (transaction.getType() == TransactionType.TRADE) {
+            ResponseEntity<Integer> accountCreditResponse = accountClient.getAccountCredit(transaction.getFromAccountId());
+            Integer accountCredits = accountCreditResponse.getBody();
+            if (accountCredits == null) {
+                log.info("Something went wrong credits not found");
+                return false;
+            }
+            if (accountCredits < transaction.getPrice()) {
+                log.info("Not enough credits");
+                return false;
+            }
 
-        ResponseEntity<Integer> accountCreditResponse = accountClient.getAccountCredit(transaction.getFromAccountId());
-        Integer accountCredits = accountCreditResponse.getBody();
-        if (accountCredits == null) {
-            log.info("Something went wrong credits not found");
-            return false;
-        }
-        if (accountCredits < transaction.getPrice()) {
-            log.info("Not enough credits");
-            return false;
         }
         // Vault fromVault dont exists.
         if (Objects.equals(fromVaultExistsResponse.getBody(), false)) {

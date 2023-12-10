@@ -22,6 +22,13 @@ public class TransactionEventPub {
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 
+    public void publishTradeOffer(final Transaction transaction) {
+        TransactionEvent event = buildEvent(transaction);
+
+        String routingKey = "offer.created";
+        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
+    }
+
     private TransactionEvent buildEvent(final Transaction transaction) {
         TransactionEvent event = new TransactionEvent();
 
@@ -39,14 +46,5 @@ public class TransactionEventPub {
         event.setToAccountId(transaction.getToAccountId());
 
         return event;
-    }
-
-    // TODO:
-    //  Create listener on transactionValidator side
-    public void publishTradeOffer(final Transaction transaction) {
-        TransactionEvent event = buildEvent(transaction);
-
-        String routingKey = "offer.created";
-        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 }
