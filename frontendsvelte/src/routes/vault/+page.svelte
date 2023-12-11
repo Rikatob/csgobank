@@ -4,20 +4,22 @@
     import {onMount} from "svelte";
     import VaultCard from "../../components/VaultCard.svelte";
     import {accountStore} from "../../stores.js";
+    import {vaultStore} from "../../stores.js";
 
-    const store = accountStore();
+    const storeAccount = accountStore();
+    const storeVault = vaultStore();
 
     let vaults = [];
 
 
     onMount(async function () {
-            vaults = await getVaults($store.account.id);
+            vaults = await getVaults($storeAccount.account.id);
         }
     )
 
     function onComponentClick(event) {
+        storeVault.set(event.detail);
         window.location.assign("/item/")
-
     }
 
 

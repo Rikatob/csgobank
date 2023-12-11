@@ -20,3 +20,23 @@ export function accountStore(accountId) {
         }
     }
 }
+
+export function vaultStore(vaultId) {
+    const {subscribe, set, update} = writable(vaultId);
+
+    const isBrowser = typeof window !== 'undefined'
+
+    if (isBrowser && localStorage.vault) {
+        set(JSON.parse(localStorage.vault));
+    }
+
+    return {
+        subscribe,
+        set: vaultId => {
+            if (isBrowser) {
+                localStorage.vault = JSON.stringify(vaultId);
+            }
+            set(vaultId);
+        }
+    }
+}

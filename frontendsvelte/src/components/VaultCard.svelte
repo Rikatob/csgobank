@@ -5,12 +5,19 @@
     const dispatch = createEventDispatcher()
 
     export let id = "default id";
-    export let vaultAccount = {id:0};
+    export let vaultAccount = {id: 0};
 
     export let totalValue = "0";
 
+
+    let vault = {
+        id: id,
+        vaultAccount: vaultAccount,
+        totalValue: totalValue
+    }
+
     function handleClick() {
-        dispatch("clicked", id);
+        dispatch("clicked", vault);
     }
 
 </script>
