@@ -54,6 +54,11 @@ public class TransactionService {
         ResponseEntity<Boolean> toVaultExistsResponse = vaultClient.checkIfVaultExists(toVaultId);
         ResponseEntity<Long> itemOwnerResponse = vaultClient.getVaultId(itemId);
 
+        if(transactionRepository.existsByItemId(itemId)){
+            log.info("Item in a pending transaction");
+            return false;
+        }
+
         if (transaction.getType() == TransactionType.TRADE) {
 
             Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());

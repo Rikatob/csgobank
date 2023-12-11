@@ -13,4 +13,6 @@ public interface TransactionRepository extends CrudRepository<Transaction,Long> 
 
 
     Optional<List<Transaction>> findAllByFromAccountId(long id);
+
+    boolean existsByItemId(long id);
 }
