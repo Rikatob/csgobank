@@ -122,9 +122,25 @@ public class TransactionService {
         }
 
         log.info("Transaction " + transaction + " is accepted ");
-        transactionEventPub.publishTransaction(transaction);
         transaction.setState(TransactionState.ACCEPTED);
+        transactionEventPub.publishTransaction(transaction);
+        transactionRepository.delete(transaction);
 
+
+        return Optional.of(transaction);
+    }
+
+    public Optional<Transaction> declineOffer(long transactionId){
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+
+        if (optionalTransaction.isEmpty()) {
+            log.info("Transaction not found");
+            return Optional.empty();
+        }
+
+        Transaction transaction = optionalTransaction.get();
+        transaction.setState(TransactionState.DECLINED);
+        transactionRepository.delete(transaction);
 
         return Optional.of(transaction);
     }
