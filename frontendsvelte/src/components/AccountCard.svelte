@@ -48,17 +48,18 @@
 <style>
     #account-card {
         border: black solid 2px;
-        display: inline-block;
         padding: 10px;
-        height: 100%;
-        width: 100%;
+        height: auto;
+        width: auto;
         overflow: hidden;
         background-color: #2c303b;
         border-radius: 10px;
     }
 
+
     th {
         text-align: start;
+        text-wrap: nowrap;
     }
 
     h1 {
@@ -73,6 +74,6 @@
 
     table {
         border: solid black 1px;
-        width: 100%;
+        width: auto;
     }
 </style>

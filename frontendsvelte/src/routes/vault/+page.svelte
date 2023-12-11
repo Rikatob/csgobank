@@ -39,8 +39,8 @@
         padding: 5px;
         display: grid;
         grid-auto-columns: minmax(50rem, auto);
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 50fr));
-        grid-gap: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, auto));
+        grid-gap:10px;
     }
 
 

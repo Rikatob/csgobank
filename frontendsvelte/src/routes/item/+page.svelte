@@ -2,11 +2,14 @@
     import ItemCard from "../../components/ItemCard.svelte";
     import {getItems} from "../../services/ApiClient.js";
     import {onMount} from "svelte";
+    import {vaultStore} from "../../stores.js";
+
+    const storeVault = vaultStore();
 
     let items = [];
 
     onMount(async function () {
-        items = await getItems("1");
+        items = await getItems($storeVault.vault.id);
 
 
         items.forEach(item => {
@@ -33,8 +36,8 @@
         padding: 5px;
         display: grid;
         grid-auto-columns: minmax(50rem, auto);
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 50fr));
-        grid-gap: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, auto));
+        grid-gap:10px;
     }
 
 
