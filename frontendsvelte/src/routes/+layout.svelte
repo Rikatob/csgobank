@@ -2,6 +2,6 @@
     import "../app.css"
 </script>
 <nav>
-    <a href="/">Accounts</a>
+    <a href="/">Home</a>
 </nav>
 <slot></slot>

@@ -41,6 +41,7 @@
 
 <style>
     #item-card {
+        cursor: pointer;
         border: black solid 2px;
         padding: 10px;
         height: auto;
