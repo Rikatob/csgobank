@@ -83,6 +83,26 @@ public class VaultService {
         return transaction;
     }
 
+    public void handleTransaction(Transaction transaction) {
+
+        Optional<Item> optionalItem = itemRepository.findById(transaction.getItemId());
+        Optional<Vault> optionalVault = vaultRepository.findById(transaction.getToVaultId());
+
+        if (transaction.getState().equals(TransactionState.ACCEPTED) && optionalItem.isPresent() && optionalVault.isPresent()) {
+
+            optionalItem.get().setVault(optionalVault.get());
+            itemRepository.save(optionalItem.get());
+            transaction.setState(TransactionState.COMPLETE);
+
+        } else {
+            transaction.setState(TransactionState.FAILED);
+        }
+
+        transactionEventPub.publishTransaction(transaction);
+    }
+
+
+
     public Transaction createTradeOffer(Transaction transaction) {
         setAccounts(transaction);
         log.info(transaction.toString());
@@ -199,4 +219,6 @@ public class VaultService {
             optionalVault.ifPresent(vault -> transaction.setToAccountId(vault.getVaultAccount().getId()));
         }
     }
+
+
 }

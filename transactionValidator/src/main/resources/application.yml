@@ -2,9 +2,10 @@ amqp:
   exchange:
     transactions: transactions.topic
   queue:
-    offer: offer.queue
+    transaction: transaction.queue
   routing:
-    key: offer.created
+    key: transaction.created
+
 
 server:
   port: 8081

@@ -36,10 +36,18 @@ public class TransactionEventHandler {
     private Transaction buildTransaction( TransactionEvent transactionEvent){
 
         Transaction transaction = new Transaction();
-        transaction.setItemID(transactionEvent.getItemId());
+
+        transaction.setItemId(transactionEvent.getItemId());
+        transaction.setPrice(transactionEvent.getPrice());
+
         transaction.setFromVaultId(transactionEvent.getFromVaultId());
         transaction.setToVaultId(transactionEvent.getToVaultId());
-        transaction.setCompleted(transactionEvent.isCompleted());
+
+        transaction.setFromAccountId(transactionEvent.getFromAccountId());
+        transaction.setToAccountId(transactionEvent.getToAccountId());
+
+        transaction.setType(transactionEvent.getType());
+        transaction.setState(transactionEvent.getState());
 
         return transaction;
     }

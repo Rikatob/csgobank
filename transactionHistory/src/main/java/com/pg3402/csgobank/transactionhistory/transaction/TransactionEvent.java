@@ -15,7 +15,9 @@ public class TransactionEvent implements Serializable {
     private long itemId;
     private long fromVaultId;
     private long toVaultId;
+    private long fromAccountId;
+    private long toAccountId;
     private int price;
     private TransactionType type;
-    boolean completed;
+    private TransactionState state;
 }

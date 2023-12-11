@@ -25,7 +25,7 @@ public class TransactionEventPub {
     public void publishTradeOffer(final Transaction transaction) {
         TransactionEvent event = buildEvent(transaction);
 
-        String routingKey = "offer.created";
+        String routingKey = "transaction.created";
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 

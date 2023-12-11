@@ -61,8 +61,7 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public ResponseEntity<Vault> createVault(@RequestParam Long accountId) {
-
+    public ResponseEntity<Vault> createVault(@RequestParam long accountId) {
         return vaultService.createVault(accountId)
                 .map(vault -> ResponseEntity.status(HttpStatus.CREATED).body(vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());

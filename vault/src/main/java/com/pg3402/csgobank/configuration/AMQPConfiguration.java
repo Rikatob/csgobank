@@ -33,9 +33,29 @@ public class AMQPConfiguration {
     private String accountDeletedKey;
 
 
+    @Value("${amqp.queue.transaction}")
+    private String transactionQueueName;
+
+    @Value("${amqp.routing.key.transaction.accepted}")
+    private String routingKey;
+
+
     @Bean
-    public TopicExchange transactionHistoryExchange() {
+    public TopicExchange transactionsExchange() {
         return ExchangeBuilder.topicExchange(transactionExchangeName).durable(true).build();
+    }
+    @Bean
+    public Queue transactionQueue() {
+        return QueueBuilder.durable(transactionQueueName).build();
+    }
+
+
+    @Bean
+    public Binding transactionAcceptedBinding() {
+        return BindingBuilder
+                .bind(transactionQueue())
+                .to(transactionsExchange())
+                .with(routingKey);
     }
 
     @Bean

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 @Configuration
 public class AMQPConfiguration {
 
-    @Value("${amqp.queue.offer}")
+    @Value("${amqp.queue.transaction}")
     private String queueName;
     @Value("${amqp.exchange.transactions}")
     private String exchangeName;
@@ -27,14 +28,14 @@ public class AMQPConfiguration {
     }
 
     @Bean
-    public Queue offerQueue() {
+    public Queue transactionQueue() {
         return QueueBuilder.durable(queueName).build();
     }
 
     @Bean
-    public Binding offerCreatedBinding() {
+    public Binding transactionCreatedBinding() {
         return BindingBuilder
-                .bind(offerQueue())
+                .bind(transactionQueue())
                 .to(transactionsExchange())
                 .with(routingKey);
     }
@@ -51,5 +52,10 @@ public class AMQPConfiguration {
     @Bean
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }
