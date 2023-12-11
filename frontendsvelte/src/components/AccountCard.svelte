@@ -1,5 +1,6 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import {createEventDispatcher} from 'svelte';
+
     const dispatch = createEventDispatcher();
     export let id = "0";
 
@@ -11,14 +12,20 @@
 
     export let userName = "User name";
 
+    let account = {
+        id: id,
+        email: email,
+        firstname: firstName,
+        lastName: lastName,
+        userName: userName
+    }
+
     function handleClick() {
-       dispatch("clicked",id);
+        dispatch("clicked", {account});
     }
 
 </script>
 
-<h1>CSGO BANK</h1>
-<h2>Accounts</h2>
 
 <div on:click={handleClick} id="account-card">
     <h1>{id} | {userName}</h1>

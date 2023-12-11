@@ -6,7 +6,6 @@ class ApiClient {
     static GET_ACCOUNTS = '/account/all'
     static GET_VAULTS = '/vault/all';
 
-
 }
 
 
@@ -31,8 +30,10 @@ export async function getAccounts() {
     }
 }
 
-export async function getVaults() {
-    const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_VAULTS);
+export async function getVaults(accountId) {
+
+    const vaultUrl = `/vaultAccount/${accountId}/vaults`
+    const response = await fetch(ApiClient.SERVER_URL + vaultUrl);
     if (response.ok) {
         return await response.json();
     } else {

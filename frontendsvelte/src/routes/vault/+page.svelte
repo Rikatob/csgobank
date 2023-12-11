@@ -3,18 +3,21 @@
     import {getVaults} from "../../services/ApiClient.js";
     import {onMount} from "svelte";
     import VaultCard from "../../components/VaultCard.svelte";
+    import {accountStore} from "../../stores.js";
+
+    const store = accountStore();
 
     let vaults = [];
 
 
     onMount(async function () {
-            vaults = await getVaults();
+            vaults = await getVaults($store.account.id);
         }
     )
 
     function onComponentClick(event) {
+        window.location.assign("/item/")
 
-        console.log('ACCOUNT ID:', event.detail)
     }
 
 

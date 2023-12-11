@@ -2,17 +2,19 @@
     import AccountCard from "../components/AccountCard.svelte";
     import {getAccounts} from "../services/ApiClient.js";
     import {onMount} from "svelte";
-
+    import {accountStore} from "../stores.js";
 
     let accounts = [];
+    const store = accountStore();
 
     onMount(async function () {
         accounts = await getAccounts();
     })
 
     function onComponentClick(event) {
-
-        console.log('ACCOUNT ID:', event.detail)
+        console.log(event);
+        store.set(event.detail)
+        window.location.assign("/vault/");
     }
 </script>
 
