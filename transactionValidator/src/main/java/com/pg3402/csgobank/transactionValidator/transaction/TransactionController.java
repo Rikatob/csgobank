@@ -43,4 +43,11 @@ public class TransactionController {
                 .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
+
+    @GetMapping(value = "/accept/{transactionId}")
+    public ResponseEntity<Transaction> acceptTransaction(@PathVariable long transactionId) {
+        return transactionService.acceptOffer(transactionId)
+                .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 }

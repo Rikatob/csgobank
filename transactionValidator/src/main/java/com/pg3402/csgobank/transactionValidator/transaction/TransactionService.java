@@ -1,5 +1,6 @@
 package com.pg3402.csgobank.transactionValidator.transaction;
 
+import com.pg3402.csgobank.transactionValidator.transaction.event.TransactionEventPub;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +19,14 @@ public class TransactionService {
     private final VaultClient vaultClient;
     private final AccountClient accountClient;
     private final TransactionRepository transactionRepository;
+    private final TransactionEventPub transactionEventPub;
 
     @Autowired
-    public TransactionService(VaultClient vaultClient, AccountClient accountClient, TransactionRepository transactionRepository) {
+    public TransactionService(VaultClient vaultClient, AccountClient accountClient, TransactionRepository transactionRepository, TransactionEventPub transactionEventPub) {
         this.vaultClient = vaultClient;
         this.accountClient = accountClient;
         this.transactionRepository = transactionRepository;
+        this.transactionEventPub = transactionEventPub;
     }
 
     public Transaction validateTransaction(Transaction transaction) {
@@ -52,13 +55,10 @@ public class TransactionService {
         ResponseEntity<Long> itemOwnerResponse = vaultClient.getVaultId(itemId);
 
         if (transaction.getType() == TransactionType.TRADE) {
-            ResponseEntity<Integer> accountCreditResponse = accountClient.getAccountCredit(transaction.getFromAccountId());
-            Integer accountCredits = accountCreditResponse.getBody();
-            if (accountCredits == null) {
-                log.info("Something went wrong credits not found");
-                return false;
-            }
-            if (accountCredits < transaction.getPrice()) {
+
+            Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
+
+            if (optionalInteger.orElse(0) < transaction.getPrice()) {
                 log.info("Not enough credits");
                 return false;
             }
@@ -89,22 +89,53 @@ public class TransactionService {
             return false;
         }
 
-
         log.info("Transaction successfully validated");
         return true;
     }
 
-    private boolean accountExists(Long buyer) {
-        return true;
-    }
-
     public Optional<List<Transaction>> getIncomingTransaction(long id) {
-
+        log.info("Getting all incoming transaction for AccountId: " + id);
         return transactionRepository.findAllByToAccountId(id);
     }
 
     public Optional<List<Transaction>> getOutgoingTransaction(long id) {
-
+        log.info("Getting all outgoing transaction for AccountId: " + id);
         return transactionRepository.findAllByFromAccountId(id);
+    }
+
+    public Optional<Transaction> acceptOffer(long transactionId) {
+
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+
+        if (optionalTransaction.isEmpty()) {
+            log.info("Transaction not found");
+            return Optional.empty();
+        }
+
+        Transaction transaction = optionalTransaction.get();
+
+        Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
+
+        if (optionalInteger.orElse(0) < transaction.getPrice()) {
+            log.info("Not enough credits");
+            return Optional.empty();
+        }
+
+        log.info("Transaction " + transaction + " is accepted ");
+        transactionEventPub.publishTransaction(transaction);
+        transaction.setState(TransactionState.ACCEPTED);
+
+
+        return Optional.of(transaction);
+    }
+
+    private Optional<Integer> getAccountCredits(long accountId) {
+        ResponseEntity<Integer> accountCreditResponse = accountClient.getAccountCredit(accountId);
+        Integer accountCredits = accountCreditResponse.getBody();
+        if (accountCredits == null) {
+            log.info("Something went wrong credits not found");
+            return Optional.empty();
+        }
+        return Optional.of(accountCredits);
     }
 }
