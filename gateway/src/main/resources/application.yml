@@ -35,7 +35,10 @@ spring:
           uri: lb://item/
           predicates:
             - Path=/item/**
-
+        - id: transactionHistory
+          uri: lb://transactionHistory/
+          predicates:
+            - Path=/history/**
       globalcors:
         cors-configurations:
           '[/**]':
