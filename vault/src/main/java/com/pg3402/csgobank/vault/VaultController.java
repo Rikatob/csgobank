@@ -1,5 +1,7 @@
 package com.pg3402.csgobank.vault;
 
+import com.pg3402.csgobank.transaction.TransactionState;
+import com.pg3402.csgobank.transaction.TransactionType;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.item.Item;
 import com.pg3402.csgobank.transaction.Transaction;
@@ -25,6 +27,10 @@ public class VaultController {
     }
 
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Iterable<Vault>> getAllVaults(){
+        return ResponseEntity.status(HttpStatus.OK).body(vaultService.getAllVaults());
+    }
     // Get a vault by ID.
     @GetMapping("/{vaultId}")
     public @ResponseBody ResponseEntity<Vault> getVault(@PathVariable long vaultId) {
@@ -59,8 +65,7 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public ResponseEntity<Vault> createVault(@RequestParam Long accountId) {
-
+    public ResponseEntity<Vault> createVault(@RequestParam long accountId) {
         return vaultService.createVault(accountId)
                 .map(vault -> ResponseEntity.status(HttpStatus.CREATED).body(vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
@@ -73,11 +78,12 @@ public class VaultController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
-        log.info("Transferring item " + transaction.getItemID() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
-
+        log.info("Transferring item " + transaction.getItemId() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
+        transaction.setType(TransactionType.TRANSFER);
+        transaction.setState(TransactionState.CREATED);
         transaction = vaultService.transferItem(transaction);
 
-        if (transaction.isCompleted()) {
+        if (transaction.getState().equals(TransactionState.COMPLETE)) {
             log.info("Transaction complete");
             return ResponseEntity.status(HttpStatus.OK).body(transaction);
         } else {
@@ -85,6 +91,21 @@ public class VaultController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(transaction);
         }
 
+    }
+
+
+    @PostMapping(value = "/offer")
+    public ResponseEntity<Transaction> createTradeOffer(@RequestBody Transaction transaction){
+        log.info("Creating trade offer " + transaction);
+
+        //Only TRADE is accepted
+        if(transaction.getType().equals(TransactionType.TRANSFER)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        transaction = vaultService.createTradeOffer(transaction);
+
+        return ResponseEntity.status(HttpStatus.OK).body(transaction);
     }
 
     // Get owner of item with itemId.

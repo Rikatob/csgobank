@@ -35,6 +35,11 @@
 		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3RyYW5zYWN0aW9uX2hpc3RvcnlfZGIKICAgIGRyaXZlci1jbGFzcy1uYW1lOiBjb20ubXlzcWwuY2ouamRiYy5Ecml2ZXIKICAgIHBhc3N3b3JkOiBNYXJlbmdzCiAgICB1c2VybmFtZTogcm9vdAogIGpwYTogCiAgICBvcGVuLWluLXZpZXc6IHRydWU="
 	},
 	{
+		"key": "config/transactionValidator,docker/application.yml",
+		"flags": 0,
+		"value": "c3ByaW5nOgogIGRhdGFzb3VyY2U6CiAgICB1cmw6IGpkYmM6bXlzcWw6Ly92YXVsdF9kYjozMzA2L3RyYW5zYWN0aW9uX3ZhbGlkYXRvcl9kYgogICAgZHJpdmVyLWNsYXNzLW5hbWU6IGNvbS5teXNxbC5jai5qZGJjLkRyaXZlcgogICAgcGFzc3dvcmQ6IE1hcmVuZ3MKICAgIHVzZXJuYW1lOiByb290CiAganBhOiAKICAgIG9wZW4taW4tdmlldzogdHJ1ZQ=="
+	},
+	{
 		"key": "config/vault,docker/",
 		"flags": 0,
 		"value": ""

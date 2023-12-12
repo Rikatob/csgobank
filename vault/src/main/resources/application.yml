@@ -1,36 +1,38 @@
 amqp:
-    exchange:
-        account: accounts.topic
-        transactions: transactions.topic
-    queue:
-        account: accounts.queue
-
-    routing:
-        key:
-            account:
-                created: account.created
-                deleted: account.deleted
+  exchange:
+    account: accounts.topic
+    transactions: transactions.topic
+  queue:
+    account: accounts.queue
+    transaction: accepted.queue
+  routing:
+    key:
+      transaction:
+        accepted: transaction.accepted
+      account:
+        created: account.created
+        deleted: account.deleted
 server:
-    port: 8082
+  port: 8082
 spring:
-    application:
-        name: vault
-    config:
-        import: "optional:consul:"
-    cloud:
-      consul:
-        config:
-            format: yaml
-            default-context: defaults
-            data-key: application.yml
-            prefixes: config
-    datasource:
-        # Creates the database in a file
-        url: jdbc:h2:mem:vault;NON_KEYWORDS=USER;
-        username: sa
+  application:
+    name: vault
+  config:
+    import: "optional:consul:"
+  cloud:
+    consul:
+      config:
+        format: yaml
+        default-context: defaults
+        data-key: application.yml
+        prefixes: config
+  datasource:
+    # Creates the database in a file
+    url: jdbc:h2:mem:vault;NON_KEYWORDS=USER;
+    username: sa
 
-    jpa:
-        show-sql: true
+  jpa:
+    show-sql: true
 logging:
-    level:
-        org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN
+  level:
+    org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN

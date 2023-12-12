@@ -1,30 +1,39 @@
-package com.pg3402.csgobank.transactionhistory.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction.event;
 
+import com.pg3402.csgobank.transactionValidator.transaction.Transaction;
+import com.pg3402.csgobank.transactionValidator.transaction.TransactionRepository;
+import com.pg3402.csgobank.transactionValidator.transaction.TransactionService;
+import com.pg3402.csgobank.transactionValidator.transaction.TransactionState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Slf4j
 @Service
 public class TransactionEventHandler {
-
+    private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
 
-    @Autowired
-    public TransactionEventHandler(TransactionRepository transactionRepository) {
+    public TransactionEventHandler(TransactionService transactionService, TransactionRepository transactionRepository) {
+        this.transactionService = transactionService;
         this.transactionRepository = transactionRepository;
     }
 
-    @RabbitListener(queues = "${amqp.queue.transaction}")
-    void handleTransactionEvent(TransactionEvent event) {
 
+
+    @RabbitListener(queues = "${amqp.queue.transaction}")
+    void handleTransactionHistoryEvent(TransactionEvent event) {
         try {
             Transaction transaction = buildTransaction(event);
-            transaction = transactionRepository.save(transaction);
-            log.info(transaction + " is successfully saved");
+            log.info(transaction + " is successfully received");
+            transaction = transactionService.validateOffer(transaction);
+            if(transaction.getState().equals(TransactionState.PENDING)){
+                transactionRepository.save(transaction);
+            } else {
+                log.info(transaction + "failed");
+            }
 
         } catch (final Exception e) {
             log.error("Error when trying to process TransactionEvent", e);

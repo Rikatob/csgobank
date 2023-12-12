@@ -1,9 +1,10 @@
-package com.pg3402.csgobank.transactionhistory.transaction;
+package com.pg3402.csgobank.transaction;
 
+
+import com.pg3402.csgobank.vault.VaultService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -11,20 +12,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionEventHandler {
 
-    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    public TransactionEventHandler(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
+    private final VaultService vaultService;
+
+    public TransactionEventHandler(VaultService vaultService) {
+        this.vaultService = vaultService;
     }
 
     @RabbitListener(queues = "${amqp.queue.transaction}")
-    void handleTransactionEvent(TransactionEvent event) {
-
+    void handleTransactionHistoryEvent(TransactionEvent event) {
         try {
-            Transaction transaction = buildTransaction(event);
-            transaction = transactionRepository.save(transaction);
-            log.info(transaction + " is successfully saved");
+            log.info("Transaction incoming!! handle tim!");
+          Transaction transaction = buildTransaction(event);
+
+           vaultService.handleTransaction(transaction);
 
         } catch (final Exception e) {
             log.error("Error when trying to process TransactionEvent", e);

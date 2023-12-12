@@ -6,4 +6,7 @@ CREATE DATABASE IF NOT EXISTS transaction_history_db;
 
 CREATE DATABASE IF NOT EXISTS item_db;
 
+CREATE DATABASE IF NOT EXISTS transaction_validator_db;
+
+
 

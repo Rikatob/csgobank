@@ -1,0 +1,46 @@
+
+###
+
+POST localhost:8000/account/new
+Content-Type: application/json
+
+{
+  "userName": "jalla",
+  "firstName": "talla",
+  "lastName": "malla",
+  "email": "RALLA@hotmail.com"
+}
+
+<> 2023-12-12T205519.201.json
+<> 2023-12-12T204534.201.json
+<> 2023-12-12T204443.201.json
+<> 2023-12-12T204024.201.json
+<> 2023-12-12T203604.201.json
+<> 2023-12-12T203510.201.json
+<> 2023-12-12T203351.201.json
+<> 2023-12-12T203009.201.json
+<> 2023-12-08T225726.201.json
+<> 2023-12-08T225721.503.json
+<> 2023-12-08T212334.201.json
+<> 2023-12-08T211759.201.json
+<> 2023-12-08T210914.201.json
+
+###
+POST localhost:8000/account/delete/11
+Content-Type: application/json
+
+###
+GET localhost:8000/account/1
+
+
+###
+POST localhost:8082/account/update
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Jalla"
+}
+
+###
+GET localhost:8082/account/1/vaults

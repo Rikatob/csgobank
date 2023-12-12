@@ -1,5 +1,6 @@
-package com.pg3402.csgobank.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction.event;
 
+import com.pg3402.csgobank.transactionValidator.transaction.Transaction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,14 +22,7 @@ public class TransactionEventPub {
         TransactionEvent event = buildEvent(transaction);
 
         String routingKey = "transaction." + (event.getState().toString().toLowerCase());
-        log.info(routingKey);
-        amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
-    }
-
-    public void publishTradeOffer(final Transaction transaction) {
-        TransactionEvent event = buildEvent(transaction);
-
-        String routingKey = "transaction.created";
+        log.info("Routing key: " + routingKey);
         amqpTemplate.convertAndSend(transactionTopicExchange, routingKey, event);
     }
 

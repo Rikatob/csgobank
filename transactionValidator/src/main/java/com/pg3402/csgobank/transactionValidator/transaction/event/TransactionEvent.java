@@ -1,9 +1,10 @@
-package com.pg3402.csgobank.transactionhistory.transaction;
+package com.pg3402.csgobank.transactionValidator.transaction.event;
 
+import com.pg3402.csgobank.transactionValidator.transaction.TransactionState;
+import com.pg3402.csgobank.transactionValidator.transaction.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import java.io.Serializable;
 
