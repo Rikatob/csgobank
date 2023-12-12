@@ -5,6 +5,7 @@ class ApiClient {
     static GET_ITEMS = '/vault/1/items';
     static GET_ACCOUNTS = '/account/all'
     static GET_VAULTS = '/vault/all';
+    static UPDATE_ACCOUNT = '/account/update'
 
 }
 
@@ -28,6 +29,24 @@ export async function getAccounts() {
     } else {
         throw new Error("Request failed")
     }
+}
+
+export async function updateAccount(account) {
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.UPDATE_ACCOUNT,
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(account)
+        }
+    )
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed")
+    }
+
 }
 
 export async function getVaults(accountId) {

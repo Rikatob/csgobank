@@ -1,23 +1,48 @@
 <script>
     import EditAccountCard from "../../components/EditAccountCard.svelte";
     import {onMount} from "svelte";
+    import {updateAccount} from "../../services/ApiClient.js";
+    import {accountStore} from "../../stores.js";
+
+    const storeAccount = accountStore();
 
     let account = {};
-    let userName;
-    let firstName;
-    let lastName;
-    let email;
+    let userName = "";
+    let firstName = "";
+    let lastName= "";
+    let email = "";
 
     onMount(async function () {
 
-        account = JSON.parse(localStorage.getItem("account")).account;
-        console.log(account.id);
+        account = $storeAccount.account;
+        console.log(account);
 
     })
 
     function handleUpdateClick(){
-        alert("JAJAJ")
-        console.log(userName);
+        let isUpdated = 0;
+
+        if(userName !== "" && userName.length < 200){
+            account.userName = userName;
+            isUpdated = 1;
+        }
+        if(firstName !== ""){
+            account.firstName = firstName;
+            isUpdated = 1;
+        }
+        if(lastName !== ""){
+            account.lastName = lastName;
+            isUpdated = 1;
+        }
+        if(email !== ""){
+            account.email = email;
+            isUpdated = 1;
+        }
+        if(isUpdated === 1){
+            storeAccount.set(account);
+            updateAccount(account);
+        }
+
     }
 
 

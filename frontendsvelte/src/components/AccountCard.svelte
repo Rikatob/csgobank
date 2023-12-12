@@ -15,7 +15,7 @@
     let account = {
         id: id,
         email: email,
-        firstname: firstName,
+        firstName: firstName,
         lastName: lastName,
         userName: userName
     }

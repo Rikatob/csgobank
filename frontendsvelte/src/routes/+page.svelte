@@ -12,8 +12,7 @@
     })
 
     function onComponentClick(event) {
-        console.log(event);
-        store.set(event.detail)
+        store.set(event.detail);
         window.location.assign("/vault/");
     }
 </script>
