@@ -45,6 +45,8 @@ public class VaultService {
     }
 
 
+
+
     /**
      * Starts a connection and sends a GET request to the validator.
      *
@@ -122,7 +124,9 @@ public class VaultService {
 
         return transaction;
     }
-
+    public Iterable<Vault> getAllVaults() {
+        return vaultRepository.findAll();
+    }
     public Iterable<Item> getAllItems(Long vaultId) {
         return itemRepository.findAllByVaultId(vaultId);
     }

@@ -92,5 +92,9 @@ public class AccountService {
         return transaction;
     }
 
+    public Iterable<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
+
 
 }

@@ -27,6 +27,10 @@ public class VaultController {
     }
 
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Iterable<Vault>> getAllVaults(){
+        return ResponseEntity.status(HttpStatus.OK).body(vaultService.getAllVaults());
+    }
     // Get a vault by ID.
     @GetMapping("/{vaultId}")
     public @ResponseBody ResponseEntity<Vault> getVault(@PathVariable long vaultId) {

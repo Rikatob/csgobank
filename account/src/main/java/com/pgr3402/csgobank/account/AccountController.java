@@ -22,6 +22,11 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    // Get all accounts.
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<Account>> getAllAccounts(){
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAccounts());
+    }
     // Create new account.
     @PostMapping(value = "/new",
             consumes = MediaType.APPLICATION_JSON_VALUE,
