@@ -10,18 +10,7 @@ class ApiClient {
 }
 
 
-export async function getItems(vaultId) {
-
-    let itemUrl = `/vault/${vaultId}/items`
-    const res = await fetch(ApiClient.SERVER_URL + itemUrl);
-
-    if (res.ok) {
-        return await res.json();
-    } else {
-        throw new Error("Request failed");
-    }
-}
-
+/////////////////////////////////////////  ACCOUNT  /////////////////////////////////////////
 export async function getAccounts() {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ACCOUNTS);
     if (response.ok) {
@@ -49,6 +38,27 @@ export async function updateAccount(account) {
 
 }
 
+// TODO SHOULD NOT BE A POST ??
+export async function deleteAccount(accountId) {
+    let deleteUrl = `/account/delete/${accountId}`
+    const response = await fetch(ApiClient.SERVER_URL + deleteUrl,
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+    )
+    if (response.ok) {
+        return response;
+    } else {
+        throw new Error("Request failed")
+    }
+
+}
+
+
+/////////////////////////////////////////  VAULT  /////////////////////////////////////////
 export async function getVaults(accountId) {
 
     const vaultUrl = `/vaultAccount/${accountId}/vaults`
@@ -60,7 +70,23 @@ export async function getVaults(accountId) {
     }
 }
 
-export async function getTransactions(itemId){
+
+/////////////////////////////////////////  ITEM  /////////////////////////////////////////
+export async function getItems(vaultId) {
+
+    let itemUrl = `/vault/${vaultId}/items`
+    const res = await fetch(ApiClient.SERVER_URL + itemUrl);
+
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+
+/////////////////////////////////////////  TRANSACTION-HISTORY  /////////////////////////////////////////
+export async function getTransactions(itemId) {
 
     let itemUrl = `/transactionHistory/${itemId}`
     const res = await fetch(ApiClient.SERVER_URL + itemUrl);

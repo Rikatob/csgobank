@@ -84,18 +84,16 @@
         height: 20px;
         margin: 0;
         border: black solid 1px;
-        /*border-right: black solid 1px;
-        border-left: black solid 1px;
-        border-bottom: black solid 1px;*/
+        font-weight: bold;
+        color: #525252;;
+
     }
 
     .column {
-        /*border: black solid 1px;*/
+
     }
 
     .transactionHeader {
-
-
         border-right: black solid 1px;
         border-top: black solid 1px;
         margin: 0;

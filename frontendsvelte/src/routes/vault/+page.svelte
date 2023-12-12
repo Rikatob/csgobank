@@ -5,6 +5,7 @@
     import VaultCard from "../../components/VaultCard.svelte";
     import {accountStore} from "../../stores.js";
     import {vaultStore} from "../../stores.js";
+    import {deleteAccount} from "../../services/ApiClient.js";
 
     const storeAccount = accountStore();
     const storeVault = vaultStore();
@@ -22,6 +23,15 @@
         window.location.assign("/item/")
     }
 
+    async function onDeleteBtnClick() {
+        let alertMessage = "Are you sure you want to delete this account?\nPress OK to confirm."
+
+        if (confirm(alertMessage) === true) {
+            await deleteAccount($storeAccount.account.id);
+            alert("Account with id " + $storeAccount.account.id + " is Deleted");
+            window.location.assign("/");
+        }
+    }
 
 </script>
 <!--{#if $storeAccount != null}
@@ -37,6 +47,10 @@
 
 </div>
 
+<div id="delete-btn">
+    <button on:click={onDeleteBtnClick}>Delete account</button>
+</div>
+
 <style>
     #vaults {
         padding: 5px;
@@ -46,6 +60,9 @@
         grid-gap: 10px;
     }
 
+    #delete-btn {
+        text-align: center;
+    }
 
     h1, h2 {
         text-align: center;
