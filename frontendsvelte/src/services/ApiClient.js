@@ -6,6 +6,7 @@ class ApiClient {
     static GET_ACCOUNTS = '/account/all'
     static GET_VAULTS = '/vault/all';
     static UPDATE_ACCOUNT = '/account/update'
+    static CREATE_ACCOUNT = '/account/new'
 
 }
 
@@ -55,6 +56,24 @@ export async function deleteAccount(accountId) {
         throw new Error("Request failed")
     }
 
+}
+
+
+export async function createAccount(account) {
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.CREATE_ACCOUNT,
+        {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(account)
+        });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error("Request failed")
+    }
 }
 
 
