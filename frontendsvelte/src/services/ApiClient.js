@@ -60,4 +60,16 @@ export async function getVaults(accountId) {
     }
 }
 
+export async function getTransactions(itemId){
+
+    let itemUrl = `/transactionHistory/${itemId}`
+    const res = await fetch(ApiClient.SERVER_URL + itemUrl);
+
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
 export default ApiClient;

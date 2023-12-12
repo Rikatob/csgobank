@@ -40,3 +40,23 @@ export function vaultStore(vaultId) {
         }
     }
 }
+
+export function itemStore(item) {
+    const {subscribe, set} = writable(item);
+
+    const isBrowser = typeof window !== 'undefined'
+
+    if (isBrowser && localStorage.item) {
+        set(JSON.parse(localStorage.item));
+    }
+
+    return {
+        subscribe,
+        set: item => {
+            if (isBrowser) {
+                localStorage.item = JSON.stringify(item);
+            }
+            set(item);
+        }
+    }
+}

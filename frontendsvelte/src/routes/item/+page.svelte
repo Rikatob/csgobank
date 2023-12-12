@@ -3,9 +3,10 @@
     import {getItems} from "../../services/ApiClient.js";
     import {onMount} from "svelte";
     import {vaultStore} from "../../stores.js";
+    import {itemStore} from "../../stores.js";
 
     const storeVault = vaultStore();
-
+    const storeItem = itemStore();
     let items = [];
 
     onMount(async function () {
@@ -18,7 +19,8 @@
     })
 
     function onComponentClick(event) {
-
+        storeItem.set(event.detail);
+        window.location.assign("/transactionHistory/")
         console.log('ACCOUNT ID:', event.detail)
     }
 

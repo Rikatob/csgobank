@@ -13,8 +13,18 @@
     export let name = "Default skin";
     export let wearCategory = "Default wear";
     export let image;
+
+    let item = {
+        id: id,
+        floatValue: floatValue,
+        price: price,
+        type: type,
+        name: name,
+        wearCategory: wearCategory,
+        image: image
+    }
     function handleClick() {
-        dispatch("clicked",id);
+        dispatch("clicked", {item});
     }
 </script>
 
