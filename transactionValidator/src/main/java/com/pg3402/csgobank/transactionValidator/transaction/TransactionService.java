@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class TransactionService {
             return false;
         }
 
-        if (transaction.getType() == TransactionType.TRADE) {
+        if (transaction.getType() == TransactionType.BUY || transaction.getType() == TransactionType.SELL) {
 
             Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
 
@@ -100,14 +101,24 @@ public class TransactionService {
         return true;
     }
 
-    public Optional<List<Transaction>> getIncomingTransaction(long id) {
+    public List<Transaction> getIncomingTransaction(long id) {
         log.info("Getting all incoming transaction for AccountId: " + id);
-        return transactionRepository.findAllByToAccountId(id);
+        List<Transaction> buy = transactionRepository.findAllByFromAccountIdAndType(id, TransactionType.BUY);
+        List<Transaction> sell = transactionRepository.findAllByToAccountIdAndType(id, TransactionType.SELL);
+        List<Transaction> incoming = new ArrayList<>();
+        incoming.addAll(buy);
+        incoming.addAll(sell);
+        return incoming;
     }
 
-    public Optional<List<Transaction>> getOutgoingTransaction(long id) {
+    public List<Transaction> getOutgoingTransaction(long id) {
         log.info("Getting all outgoing transaction for AccountId: " + id);
-        return transactionRepository.findAllByFromAccountId(id);
+        List<Transaction> sell = transactionRepository.findAllByFromAccountIdAndType(id, TransactionType.SELL);
+        List<Transaction> buy = transactionRepository.findAllByToAccountIdAndType(id, TransactionType.BUY);
+        List<Transaction> outgoing = new ArrayList<>();
+        outgoing.addAll(sell);
+        outgoing.addAll(buy);
+        return outgoing;
     }
 
     public Optional<Transaction> acceptOffer(long transactionId) {

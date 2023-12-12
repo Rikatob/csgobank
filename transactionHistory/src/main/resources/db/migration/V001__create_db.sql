@@ -7,6 +7,6 @@ CREATE TABLE transaction
     from_account_id BIGINT,
     to_account_id BIGINT,
     price INT,
-    type ENUM('TRANSFER', 'TRADE'),
+    type ENUM('TRANSFER', 'BUY', 'SELL'),
     item_id BIGINT
 );

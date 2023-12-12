@@ -95,7 +95,7 @@ public class VaultController {
         log.info("Creating trade offer " + transaction);
 
         //Only TRADE is accepted
-        if(!transaction.getType().equals(TransactionType.TRADE)){
+        if(transaction.getType().equals(TransactionType.TRANSFER)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 

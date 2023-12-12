@@ -87,6 +87,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
+      - vault_db
       - gateway
       - rabbitmq-dev
     networks:

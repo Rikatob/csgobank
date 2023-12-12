@@ -25,6 +25,7 @@ public class Transaction implements Serializable {
     private long toAccountId;
     @Column
     private int price;
+
     @Column
     @Enumerated(EnumType.STRING)
     private TransactionState state;

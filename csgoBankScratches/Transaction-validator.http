@@ -7,7 +7,7 @@ Content-Type: application/json
   "itemId": 15,
   "fromVaultId": 1,
   "toVaultId": 3,
-  "type": "TRADE",
+  "type": "SELL",
   "price": 1000
 }
 

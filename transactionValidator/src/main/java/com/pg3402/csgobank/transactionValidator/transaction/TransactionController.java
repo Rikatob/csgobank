@@ -32,16 +32,12 @@ public class TransactionController {
 
     @GetMapping(value = "/incoming/{id}")
     public ResponseEntity<List<Transaction>> getIncomingTransaction(@PathVariable long id) {
-        return transactionService.getIncomingTransaction(id)
-                .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.getIncomingTransaction(id));
     }
 
     @GetMapping(value = "/outgoing/{id}")
     public ResponseEntity<List<Transaction>> getOutgoingTransaction(@PathVariable long id) {
-        return transactionService.getOutgoingTransaction(id)
-                .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.getOutgoingTransaction(id));
     }
 
     @GetMapping(value = "/accept/{transactionId}")

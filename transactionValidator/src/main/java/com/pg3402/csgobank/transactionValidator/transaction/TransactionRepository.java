@@ -9,10 +9,10 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction,Long> {
     
-    Optional<List<Transaction>> findAllByToAccountId(long id);
+    List<Transaction> findAllByToAccountIdAndType(long id, TransactionType type);
 
 
-    Optional<List<Transaction>> findAllByFromAccountId(long id);
+    List<Transaction> findAllByFromAccountIdAndType(long id, TransactionType type);
 
     boolean existsByItemId(long id);
 }
