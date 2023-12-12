@@ -93,14 +93,18 @@ public class VaultService {
 
         if (transaction.getState().equals(TransactionState.ACCEPTED) && optionalItem.isPresent() && optionalVault.isPresent()) {
 
-            optionalItem.get().setVault(optionalVault.get());
-            itemRepository.save(optionalItem.get());
+
             ResponseEntity<Transaction> response = accountClient.transferCredits(transaction);
+            log.info("response" + response.toString());
 
             if (response.getBody() == null) {
                 transaction.setState(TransactionState.FAILED);
             } else {
                 transaction = response.getBody();
+                transaction.setState(TransactionState.COMPLETE);
+                optionalItem.get().setVault(optionalVault.get());
+                itemRepository.save(optionalItem.get());
+                log.info("transaction completed successfully" + transaction);
             }
         } else {
             transaction.setState(TransactionState.FAILED);

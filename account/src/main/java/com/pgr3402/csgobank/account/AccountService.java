@@ -85,6 +85,8 @@ public class AccountService {
         fromAccount.withdraw(transaction.getPrice());
         toAccount.deposit(transaction.getPrice());
 
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
 
         transaction.setState(TransactionState.COMPLETE);
         return transaction;

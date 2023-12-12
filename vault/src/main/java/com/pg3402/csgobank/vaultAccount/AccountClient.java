@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("account")
 public interface AccountClient {
 
-    @RequestMapping(method = RequestMethod.GET,value = "-/transfer/credit")
+    @RequestMapping(method = RequestMethod.POST,value = "account/transfer/credit")
     ResponseEntity<Transaction> transferCredits(@RequestBody Transaction transaction);
 }
