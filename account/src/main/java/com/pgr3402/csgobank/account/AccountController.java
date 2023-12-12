@@ -1,5 +1,6 @@
 package com.pgr3402.csgobank.account;
 
+import com.pgr3402.csgobank.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -89,6 +90,11 @@ public class AccountController {
         return accountService.findById(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getCredit()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @PostMapping("transfer/credit")
+    private ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.transferCredits(transaction));
     }
 
 }

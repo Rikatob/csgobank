@@ -3,6 +3,8 @@ package com.pgr3402.csgobank.account;
 
 import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
+import com.pgr3402.csgobank.transaction.Transaction;
+import com.pgr3402.csgobank.transaction.TransactionState;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -66,4 +68,27 @@ public class AccountService {
 
         return Optional.of(accountRepository.save(updatedAccount));
     }
+
+    public Transaction transferCredits(Transaction transaction){
+        Optional<Account> optionalFromAccount = accountRepository.findById(transaction.getFromAccountId());
+        Optional<Account> optionalToAccount = accountRepository.findById(transaction.getToAccountId());
+
+        if(optionalFromAccount.isEmpty() || optionalToAccount.isEmpty()){
+            transaction.setState(TransactionState.FAILED);
+
+            return transaction;
+        }
+
+        Account fromAccount = optionalFromAccount.get();
+        Account toAccount = optionalToAccount.get();
+
+        fromAccount.withdraw(transaction.getPrice());
+        toAccount.deposit(transaction.getPrice());
+
+
+        transaction.setState(TransactionState.COMPLETE);
+        return transaction;
+    }
+
+
 }

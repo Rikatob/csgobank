@@ -76,6 +76,7 @@ public class VaultController {
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
         log.info("Transferring item " + transaction.getItemId() + " from " + transaction.getFromVaultId() + " to " + transaction.getToVaultId());
         transaction.setType(TransactionType.TRANSFER);
+        transaction.setState(TransactionState.CREATED);
         transaction = vaultService.transferItem(transaction);
 
         if (transaction.getState().equals(TransactionState.COMPLETE)) {

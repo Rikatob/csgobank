@@ -34,4 +34,15 @@ public class Account implements Serializable {
     @Column
     private int credit;
 
+
+    public int withdraw(int amount){
+        credit -= amount;
+        return credit;
+    }
+
+    public int deposit(int amount){
+        credit += amount;
+        return credit;
+    }
+
 }

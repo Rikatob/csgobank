@@ -2,7 +2,7 @@ amqp:
   exchange:
     transactions: transactions.topic
   queue:
-    transaction: transaction.queue
+    transaction: created.queue
   routing:
     key: transaction.created
 

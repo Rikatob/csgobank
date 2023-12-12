@@ -14,7 +14,7 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 @Configuration
 public class AMQPConfiguration {
 
-    @Value("${amqp.queue.transactionHistory}")
+    @Value("${amqp.queue.transaction}")
     private String queueName;
     @Value("${amqp.exchange.transactions}")
     private String exchangeName;
@@ -22,20 +22,20 @@ public class AMQPConfiguration {
     private String routingKey;
 
     @Bean
-    public TopicExchange transactionHistoryExchange() {
+    public TopicExchange transactionExchange() {
         return ExchangeBuilder.topicExchange(exchangeName).durable(true).build();
     }
 
     @Bean
-    public Queue transactionHistoryQueue() {
+    public Queue transactionQueue() {
         return QueueBuilder.durable(queueName).build();
     }
 
     @Bean
     public Binding transactionCompleteBinding() {
         return BindingBuilder
-                .bind(transactionHistoryQueue())
-                .to(transactionHistoryExchange())
+                .bind(transactionQueue())
+                .to(transactionExchange())
                 .with(routingKey);
     }
 

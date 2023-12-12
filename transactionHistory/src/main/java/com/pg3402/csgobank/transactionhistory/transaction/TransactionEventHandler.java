@@ -18,8 +18,8 @@ public class TransactionEventHandler {
         this.transactionRepository = transactionRepository;
     }
 
-    @RabbitListener(queues = "${amqp.queue.transactionHistory}")
-    void handleTransactionHistoryEvent(TransactionEvent event) {
+    @RabbitListener(queues = "${amqp.queue.transaction}")
+    void handleTransactionEvent(TransactionEvent event) {
 
         try {
             Transaction transaction = buildTransaction(event);

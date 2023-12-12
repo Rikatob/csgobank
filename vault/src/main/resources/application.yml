@@ -4,7 +4,7 @@ amqp:
     transactions: transactions.topic
   queue:
     account: accounts.queue
-    transaction: transaction.queue
+    transaction: accepted.queue
   routing:
     key:
       transaction:

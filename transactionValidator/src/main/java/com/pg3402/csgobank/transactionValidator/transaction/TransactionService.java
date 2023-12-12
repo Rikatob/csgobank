@@ -33,6 +33,8 @@ public class TransactionService {
         log.info("Validating transaction");
         if (checkTransaction(transaction)) {
             transaction.setState(TransactionState.VALIDATED);
+        } else {
+            transaction.setState(TransactionState.FAILED);
         }
         return transaction;
     }

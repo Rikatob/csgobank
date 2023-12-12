@@ -2,6 +2,7 @@ package com.pg3402.csgobank.vault;
 
 import com.pg3402.csgobank.item.ItemService;
 import com.pg3402.csgobank.transaction.TransactionState;
+import com.pg3402.csgobank.vaultAccount.AccountClient;
 import com.pg3402.csgobank.vaultAccount.VaultAccount;
 import com.pg3402.csgobank.vaultAccount.VaultAccountRepository;
 import com.pg3402.csgobank.item.Item;
@@ -30,15 +31,17 @@ public class VaultService {
 
     private final VaultAccountRepository vaultAccountRepository;
     private final ItemService itemService;
+    private final AccountClient accountClient;
 
     @Autowired
-    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository, ItemService itemService) {
+    public VaultService(TransactionEventPub transactionEventPub, ItemRepository itemRepository, TransactionValidationClient transactionValidationClient, VaultRepository vaultRepository, VaultAccountRepository vaultAccountRepository, ItemService itemService, AccountClient accountClient) {
         this.transactionEventPub = transactionEventPub;
         this.itemRepository = itemRepository;
         this.transactionValidationClient = transactionValidationClient;
         this.vaultRepository = vaultRepository;
         this.vaultAccountRepository = vaultAccountRepository;
         this.itemService = itemService;
+        this.accountClient = accountClient;
     }
 
 
@@ -92,15 +95,19 @@ public class VaultService {
 
             optionalItem.get().setVault(optionalVault.get());
             itemRepository.save(optionalItem.get());
-            transaction.setState(TransactionState.COMPLETE);
+            ResponseEntity<Transaction> response = accountClient.transferCredits(transaction);
 
+            if (response.getBody() == null) {
+                transaction.setState(TransactionState.FAILED);
+            } else {
+                transaction = response.getBody();
+            }
         } else {
             transaction.setState(TransactionState.FAILED);
         }
 
         transactionEventPub.publishTransaction(transaction);
     }
-
 
 
     public Transaction createTradeOffer(Transaction transaction) {
@@ -208,7 +215,7 @@ public class VaultService {
     }
 
 
-    private void setAccounts(Transaction transaction){
+    private void setAccounts(Transaction transaction) {
         if (transaction.getFromAccountId() == 0) {
             Optional<Vault> optionalVault = vaultRepository.findById(transaction.getFromVaultId());
             optionalVault.ifPresent(vault -> transaction.setFromAccountId(vault.getVaultAccount().getId()));
