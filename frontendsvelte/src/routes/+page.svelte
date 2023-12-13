@@ -1,42 +1,36 @@
 <script>
-    import AccountCard from "../components/AccountCard.svelte";
-    import {getAccounts} from "../services/ApiClient.js";
-    import {onMount} from "svelte";
-    import {accountStore} from "../stores.js";
 
-    let accounts = [];
-    const store = accountStore();
-
-    onMount(async function () {
-        accounts = await getAccounts();
-    })
-
-    function onComponentClick(event) {
-        store.set(event.detail);
-        window.location.assign("/vault/");
+    function loginBtnClicked(){
+        window.location.assign("/login");
     }
+
+    function createBtnClicked(){
+        window.location.assign("/createAccount");
+    }
+
 </script>
 
 
 <h1>CSGO BANK</h1>
-<h2>Accounts</h2>
-<div id="accounts" >
+<h2>Home page</h2>
 
-    {#each accounts as account}
-        <AccountCard on:clicked={onComponentClick} {...account}/>
-    {/each}
+
+<div id="btn_div">
+    <button class="btn" on:click={loginBtnClicked}>Login</button>
+    <button class="btn" on:click={createBtnClicked}>Create account</button>
 </div>
 
 <style>
-    #accounts {
-        padding: 5px;
-        display: grid;
-        grid-auto-columns: minmax(50rem, auto);
-        grid-template-columns: repeat(auto-fill, minmax(15rem, auto));
-        grid-gap:10px;
+
+    .btn{
+        margin: 5px;
     }
-
-
+    #btn_div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30vh;
+    }
     h1, h2 {
         text-align: center;
     }

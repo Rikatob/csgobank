@@ -12,12 +12,15 @@
 
     export let userName = "User name";
 
+    export let credit = 0;
+
     let account = {
         id: id,
         email: email,
         firstName: firstName,
         lastName: lastName,
-        userName: userName
+        userName: userName,
+        credit: credit
     }
 
     function handleClick() {
@@ -41,6 +44,11 @@
         <tr>
             <th>EMAIL:</th>
             <td>{email}</td>
+        </tr>
+
+        <tr>
+            <th>CREDIT</th>
+            <td>{credit}</td>
         </tr>
     </table>
 </div>

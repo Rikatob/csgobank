@@ -34,12 +34,10 @@
     }
 
 </script>
-<!--{#if $storeAccount != null}
-    <nav><a href={"/editAccount/" + $storeAccount.account.id}>Edit account</a></nav>
-{/if}-->
+
 <nav><a href="/editAccount/">Edit account</a></nav>
 <h1>CSGO BANK</h1>
-<h2>Vaults</h2>
+<h2>{$storeAccount ? $storeAccount.account.firstName : ""}'s Vaults</h2>
 <div id="vaults">
     {#each vaults as vault}
         <VaultCard on:clicked={onComponentClick} {...vault}/>
