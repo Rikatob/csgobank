@@ -1,4 +1,8 @@
 <script>
+    import {accountStore} from "../stores.js";
+    import {deleteAccount} from "../services/ApiClient.js";
+
+    let storeAccount = accountStore();
 
     export let id = "0";
 
@@ -10,6 +14,16 @@
 
     export let userName = "User name";
 
+
+    async function onDeleteBtnClick() {
+        let alertMessage = "Are you sure you want to delete this account?\nPress OK to confirm."
+
+        if (confirm(alertMessage) === true) {
+            await deleteAccount($storeAccount.account.id);
+            alert("Account with id " + $storeAccount.account.id + " is Deleted");
+            window.location.assign("/");
+        }
+    }
 
 </script>
 
@@ -38,6 +52,10 @@
             <td>{email}</td>
         </tr>
     </table>
+</div>
+
+<div id="delete-btn">
+    <button on:click={onDeleteBtnClick}>Delete account</button>
 </div>
 
 <style>
@@ -72,5 +90,9 @@
     table {
         border: solid black 1px;
         width: auto;
+    }
+
+    #delete-btn {
+        text-align: center;
     }
 </style>
