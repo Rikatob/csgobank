@@ -6,6 +6,7 @@
     import {accountStore} from "../../stores.js";
     import {vaultStore} from "../../stores.js";
     import {deleteAccount} from "../../services/ApiClient.js";
+    import {createNewVault} from "../../services/ApiClient.js";
 
     const storeAccount = accountStore();
     const storeVault = vaultStore();
@@ -23,15 +24,12 @@
         window.location.assign("/item/")
     }
 
-    async function onDeleteBtnClick() {
-        let alertMessage = "Are you sure you want to delete this account?\nPress OK to confirm."
-
-        if (confirm(alertMessage) === true) {
-            await deleteAccount($storeAccount.account.id);
-            alert("Account with id " + $storeAccount.account.id + " is Deleted");
-            window.location.assign("/");
-        }
+    async function createVaultBtnClicked() {
+        let newVault = await createNewVault($storeAccount.account.id);
+        vaults = [...vaults, newVault];
+        alert(`New vault with id [${newVault.id}] created`);
     }
+
 
 </script>
 
@@ -45,9 +43,12 @@
 
 </div>
 
-<div id="delete-btn">
-    <button on:click={onDeleteBtnClick}>Delete account</button>
+<div id="create_btn_div">
+    <button on:click={createVaultBtnClicked}>
+    Create new vault
+    </button>
 </div>
+
 
 <style>
     #vaults {
@@ -58,11 +59,12 @@
         grid-gap: 10px;
     }
 
-    #delete-btn {
+    h1, h2 {
         text-align: center;
     }
 
-    h1, h2 {
-        text-align: center;
+    #create_btn_div{
+        display: flex;
+        justify-content: center;
     }
 </style>

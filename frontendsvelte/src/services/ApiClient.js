@@ -94,6 +94,22 @@ export async function getVaults(accountId) {
 }
 
 
+export async function createNewVault(accountId){
+
+    const newVaultUrl = `/vault/new/${accountId}`
+    const response = await fetch(ApiClient.SERVER_URL + newVaultUrl,{
+        method:'POST',
+        headers:{
+            'Content-type': 'application/json'
+        }
+    });
+    if(response.ok){
+        return await response.json();
+    } else {
+        throw new Error("Request failed")
+    }
+}
+
 /////////////////////////////////////////  ITEM  /////////////////////////////////////////
 export async function getItems(vaultId) {
 
