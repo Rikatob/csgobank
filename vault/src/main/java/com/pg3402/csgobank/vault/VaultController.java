@@ -61,11 +61,11 @@ public class VaultController {
 
 
     // Create new vault with AccountId.
-    @PostMapping(value = "/new",
+    @PostMapping(value = "new/{accountId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public ResponseEntity<Vault> createVault(@RequestParam long accountId) {
+    public ResponseEntity<Vault> createVault(@PathVariable long accountId) {
         return vaultService.createVault(accountId)
                 .map(vault -> ResponseEntity.status(HttpStatus.CREATED).body(vault))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
