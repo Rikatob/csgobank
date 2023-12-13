@@ -52,7 +52,7 @@ spring:
         - name: Retry
           args:
             retries: 3
-            methods: GET,POST
+            methods: GET,POST,DELETE
 
 logging:
   level:

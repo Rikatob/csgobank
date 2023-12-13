@@ -133,13 +133,13 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    @PostMapping(value = "delete/{vaultId}",
+    @DeleteMapping(value = "delete/{vaultId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vault> deleteVault(@PathVariable long vaultId){
-        return vaultService.deleteVault(vaultId)
-                .map(vault -> ResponseEntity.status(HttpStatus.OK).body(vault))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    public ResponseEntity<Void> deleteVault(@PathVariable long vaultId){
+        vaultService.deleteVault(vaultId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
 }
