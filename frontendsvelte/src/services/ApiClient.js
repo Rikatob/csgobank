@@ -12,6 +12,8 @@ class ApiClient {
 
 
 /////////////////////////////////////////  ACCOUNT  /////////////////////////////////////////
+
+// Get all accounts.
 export async function getAccounts() {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ACCOUNTS);
     if (response.ok) {
@@ -21,6 +23,7 @@ export async function getAccounts() {
     }
 }
 
+// Update an existing account.
 export async function updateAccount(account) {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.UPDATE_ACCOUNT,
         {
@@ -39,6 +42,7 @@ export async function updateAccount(account) {
 
 }
 
+// Delete an existing account.
 // TODO SHOULD NOT BE A POST ??
 export async function deleteAccount(accountId) {
     let deleteUrl = `/account/delete/${accountId}`
@@ -58,7 +62,7 @@ export async function deleteAccount(accountId) {
 
 }
 
-
+// Create a new account.
 export async function createAccount(account) {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.CREATE_ACCOUNT,
         {
