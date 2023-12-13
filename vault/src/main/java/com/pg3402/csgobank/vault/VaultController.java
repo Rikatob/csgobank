@@ -133,7 +133,9 @@ public class VaultController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    @PostMapping("delete/{vaultId}")
+    @PostMapping(value = "delete/{vaultId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vault> deleteVault(@PathVariable long vaultId){
         return vaultService.deleteVault(vaultId)
                 .map(vault -> ResponseEntity.status(HttpStatus.OK).body(vault))
