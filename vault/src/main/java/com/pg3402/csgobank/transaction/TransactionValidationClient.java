@@ -15,7 +15,7 @@ public interface TransactionValidationClient {
      * Value = Pathen som vi skal nå
      * method = GET/POST/PUT etc
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/validate",
+    @RequestMapping(method = RequestMethod.POST, value = "/transaction/validate",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Transaction> validate(@RequestBody Transaction transaction);

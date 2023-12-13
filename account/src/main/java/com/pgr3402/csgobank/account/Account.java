@@ -31,4 +31,18 @@ public class Account implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column
+    private int credit;
+
+
+    public int withdraw(int amount){
+        credit -= amount;
+        return credit;
+    }
+
+    public int deposit(int amount){
+        credit += amount;
+        return credit;
+    }
+
 }

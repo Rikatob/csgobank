@@ -3,7 +3,8 @@ package com.pgr3402.csgobank.account;
 
 import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
-import org.springframework.http.ResponseEntity;
+import com.pgr3402.csgobank.transaction.Transaction;
+import com.pgr3402.csgobank.transaction.TransactionState;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -21,10 +22,10 @@ public class AccountService {
     }
 
 
-    public void deleteAccount(Account account) {
+    public void deleteAccount(Account account){
         long accountId = account.getId();
-        accountRepository.delete(account);
-        accountEventPub.publishAccountEvent(accountId, AccountEventEnum.DELETED);
+         accountRepository.delete(account);
+         accountEventPub.publishAccountEvent(accountId,AccountEventEnum.DELETED);
     }
 
     public Account createAccount(Account account) {
@@ -68,7 +69,32 @@ public class AccountService {
         return Optional.of(accountRepository.save(updatedAccount));
     }
 
+    public Transaction transferCredits(Transaction transaction){
+        Optional<Account> optionalFromAccount = accountRepository.findById(transaction.getFromAccountId());
+        Optional<Account> optionalToAccount = accountRepository.findById(transaction.getToAccountId());
+
+        if(optionalFromAccount.isEmpty() || optionalToAccount.isEmpty()){
+            transaction.setState(TransactionState.FAILED);
+
+            return transaction;
+        }
+
+        Account fromAccount = optionalFromAccount.get();
+        Account toAccount = optionalToAccount.get();
+
+        fromAccount.withdraw(transaction.getPrice());
+        toAccount.deposit(transaction.getPrice());
+
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
+
+        transaction.setState(TransactionState.COMPLETE);
+        return transaction;
+    }
+
     public Iterable<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
+
+
 }

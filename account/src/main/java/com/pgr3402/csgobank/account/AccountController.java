@@ -1,5 +1,6 @@
 package com.pgr3402.csgobank.account;
 
+import com.pgr3402.csgobank.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,11 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    // Get all accounts.
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<Account>> getAllAccounts(){
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAccounts());
+    }
     // Create new account.
     @PostMapping(value = "/new",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -78,17 +84,22 @@ public class AccountController {
 
     // Verify that account exists.
     @GetMapping("verifyAccount/{accountId}")
-    public ResponseEntity<Boolean> verifyAccount(@RequestParam Long accountId) {
+    public ResponseEntity<Boolean> verifyAccount(@PathVariable Long accountId) {
         return accountService.findById(accountId)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(false));
     }
 
+    @GetMapping("credit/{id}")
+    private ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
+        return accountService.findById(id)
+                .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getCredit()))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 
-    // Get all accounts.
-    @GetMapping("/all")
-    public ResponseEntity<Iterable<Account>> getAllAccounts(){
-        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAllAccounts());
+    @PostMapping("transfer/credit")
+    private ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.transferCredits(transaction));
     }
 
 }

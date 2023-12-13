@@ -109,6 +109,18 @@
 * [ ] Lock
 * [ ] 
 
+### Money Buy/Sell
+* [ ] Buy/Sell items
+  * [ ] Item need to be sold with price
+  * [x] Account based money/credit
+  * [x] Transaction needs price
+  * [ ] Create "offer" rabbitMQ
+    * [x] Vault sends offer to RabbitMQ
+    * [ ] Validator validates offer, sets "offer" to pending
+    * [ ] User accepts/decline pending offers
+    * [ ] validator sets offer to "validated"
+    * [ ] Vault listens on rabbitMQ, validated offers happens, and sends event to history with rabbit
+  * [ ] Accept "offer" rabbitMQ
 ### Items
 
 * [ ] Price history

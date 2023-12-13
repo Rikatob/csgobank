@@ -1,9 +1,10 @@
-package com.pg3402.csgobank.transactionhistory.configuration;
+package com.pg3402.csgobank.transactionValidator.configuration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class AMQPConfiguration {
     private String routingKey;
 
     @Bean
-    public TopicExchange transactionExchange() {
+    public TopicExchange transactionsExchange() {
         return ExchangeBuilder.topicExchange(exchangeName).durable(true).build();
     }
 
@@ -32,10 +33,10 @@ public class AMQPConfiguration {
     }
 
     @Bean
-    public Binding transactionCompleteBinding() {
+    public Binding transactionCreatedBinding() {
         return BindingBuilder
                 .bind(transactionQueue())
-                .to(transactionExchange())
+                .to(transactionsExchange())
                 .with(routingKey);
     }
 
@@ -51,5 +52,10 @@ public class AMQPConfiguration {
     @Bean
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

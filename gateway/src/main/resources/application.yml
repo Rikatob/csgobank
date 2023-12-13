@@ -26,7 +26,7 @@ spring:
         - id: transactionValidator
           uri: lb://transactionValidator/
           predicates:
-            - Path=/validate/**
+            - Path=/transaction/**
         - id: account
           uri: lb://account/
           predicates:
@@ -35,7 +35,10 @@ spring:
           uri: lb://item/
           predicates:
             - Path=/item/**
-
+        - id: transactionHistory
+          uri: lb://transactionHistory/
+          predicates:
+            - Path=/history/**
       globalcors:
         cors-configurations:
           '[/**]':

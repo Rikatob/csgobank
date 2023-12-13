@@ -13,21 +13,29 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
-    private Long transactionId;
+    private long transactionId;
 
-    @Column(name = "item_id")
-    private Long itemID;
+    @Column
+    private long itemId;
+    @Column
+    private long fromVaultId;
+    @Column
+    private long toVaultId;
+    @Column
+    private long fromAccountId;
+    @Column
+    private long toAccountId;
+    @Column
+    private int price;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TransactionState state;
 
-    @Column(name = "from_vault_id")
-    private Long fromVaultId;
-
-    @Column(name = "to_vault_id")
-    private Long toVaultId;
-
-    @Column(name = "completed")
-    private boolean completed;
-
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 }
