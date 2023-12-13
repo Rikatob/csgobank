@@ -91,15 +91,27 @@ public class AccountController {
     }
 
     @GetMapping("credit/{id}")
-    private ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
+    public ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
         return accountService.findById(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getCredit()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PostMapping("transfer/credit")
-    private ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
+    public ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
         return ResponseEntity.status(HttpStatus.OK).body(accountService.transferCredits(transaction));
+    }
+
+    @PostMapping("credit/{accountId}/deposit")
+    public ResponseEntity<Account> depositCredit(@PathVariable long accountId, @RequestBody int amount){
+        return accountService.depositCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @PostMapping("credit/{accountId}/withdraw")
+    public ResponseEntity<Account> withdrawCredit(@PathVariable long accountId, @RequestBody int amount){
+        return accountService.withdrawCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
 }

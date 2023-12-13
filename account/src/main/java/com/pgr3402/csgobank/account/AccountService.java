@@ -5,9 +5,11 @@ import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
 import com.pgr3402.csgobank.transaction.Transaction;
 import com.pgr3402.csgobank.transaction.TransactionState;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.nio.channels.FileChannel;
 import java.util.Optional;
 
 @Service
@@ -97,4 +99,32 @@ public class AccountService {
     }
 
 
+    public Optional<Account> depositCredit(long accountId, int amount) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()){
+            return Optional.empty();
+        }
+        Account account = optionalAccount.get();
+        account.deposit(amount);
+
+        return Optional.of(accountRepository.save(account));
+    }
+
+    public Optional<Account> withdrawCredit(long accountId, int amount) {
+
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()){
+            return Optional.empty();
+        }
+        Account account = optionalAccount.get();
+
+        if(account.getCredit() < amount){
+            return Optional.empty();
+        }
+        account.withdraw(amount);
+
+        return Optional.of(accountRepository.save(account));
+    }
 }
