@@ -236,4 +236,13 @@ public class VaultService {
     }
 
 
+    public Optional<Vault> deleteVault(long vaultId) {
+        Optional<Vault> optionalVault = vaultRepository.findById(vaultId);
+        if(optionalVault.isEmpty()){
+            return Optional.empty();
+        }
+        Vault vault = optionalVault.get();
+        vaultRepository.delete(vault);
+        return Optional.of(vault);
+    }
 }
