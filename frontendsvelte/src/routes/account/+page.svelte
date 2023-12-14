@@ -21,7 +21,7 @@
 
     function onComponentClick(event) {
         storeVault.set(event.detail);
-        window.location.assign("/item/")
+        window.location.assign("/account/vault/");
     }
 
     async function createVaultBtnClicked() {
@@ -34,7 +34,7 @@
 </script>
 
 <nav><a href="/editAccount/">Edit account</a></nav>
-<h1>CSGO BANK</h1>
+<h1>ACCOUNT</h1>
 <h2>{$storeAccount ? $storeAccount.account.firstName : ""}'s Vaults</h2>
 <div id="vaults">
     {#each vaults as vault}

@@ -67,7 +67,7 @@ export async function createAccount(account) {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.CREATE_ACCOUNT,
         {
             method: 'POST',
-            headers:{
+            headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(account)
@@ -82,6 +82,8 @@ export async function createAccount(account) {
 
 
 /////////////////////////////////////////  VAULT  /////////////////////////////////////////
+
+// Get all vaults in a account.
 export async function getVaults(accountId) {
 
     const vaultUrl = `/vaultAccount/${accountId}/vaults`
@@ -93,22 +95,38 @@ export async function getVaults(accountId) {
     }
 }
 
-
-export async function createNewVault(accountId){
+// Create a new vault in a account.
+export async function createNewVault(accountId) {
 
     const newVaultUrl = `/vault/new/${accountId}`
-    const response = await fetch(ApiClient.SERVER_URL + newVaultUrl,{
-        method:'POST',
-        headers:{
+    const response = await fetch(ApiClient.SERVER_URL + newVaultUrl, {
+        method: 'POST',
+        headers: {
             'Content-type': 'application/json'
         }
     });
-    if(response.ok){
+    if (response.ok) {
         return await response.json();
     } else {
         throw new Error("Request failed")
     }
 }
+
+// Delete vault i an account.
+
+export async function deleteVault(vaultId) {
+
+    const newVaultUrl = `/vault/delete/${vaultId}`
+    const response = await fetch(ApiClient.SERVER_URL + newVaultUrl, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        return response;
+    } else {
+        throw new Error("Request failed")
+    }
+}
+
 
 /////////////////////////////////////////  ITEM  /////////////////////////////////////////
 export async function getItems(vaultId) {
@@ -123,11 +141,119 @@ export async function getItems(vaultId) {
     }
 }
 
+export async function withdrawItem(vaultId, itemId) {
+
+    let withdrawUrl = `/vault/${vaultId}/item/withdraw/${itemId}`
+    const res = await fetch(ApiClient.SERVER_URL + withdrawUrl);
+
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function depositItem(vaultId, itemId) {
+
+    let depositUrl = `/vault/${vaultId}/item/deposit/${itemId}`
+    const res = await fetch(ApiClient.SERVER_URL + depositUrl,
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
+
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function transferItem(transaction) {
+
+    let transferUrl = `/vault/transfer`
+    const res = await fetch(ApiClient.SERVER_URL + transferUrl,
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(transaction)
+        });
+
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function getAllAvailableItems() {
+    return [{
+        "id": 14,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }, {
+        "id": 1,
+        "type": "AK-47",
+        "name": "FireSerpent",
+        "floatValue": "0.06008401885629",
+        "price": 4032272,
+        "wearCategory": "FACTORY_NEW",
+        "image": "../src/lib/images/FireSerpent.png"
+    }]
+}
 
 /////////////////////////////////////////  TRANSACTION-HISTORY  /////////////////////////////////////////
 export async function getTransactions(itemId) {
 
-    let itemUrl = `/transactionHistory/${itemId}`
+    let itemUrl = `/history/item/${itemId}`
     const res = await fetch(ApiClient.SERVER_URL + itemUrl);
 
     if (res.ok) {

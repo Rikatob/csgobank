@@ -8,10 +8,12 @@
 
     export let transaction = {
         transactionId: 0,
-        completed: 0,
+        state: "",
         fromVaultId: 0,
         toVaultId: 0,
-        itemId: 0
+        itemId: 0,
+        price: 0,
+        type: ""
     }
     export let headerDisplayed = false;
 
@@ -28,9 +30,9 @@
     </div>
     <div class="column">
         {#if headerDisplayed === false}
-            <p class="transactionHeader">Completed</p>
+            <p class="transactionHeader">State</p>
         {/if}
-        <p class="transactionData" >{transaction.completed}</p>
+        <p class="transactionData">{transaction.state}</p>
     </div>
     <div class="column">
         {#if headerDisplayed === false}
@@ -49,6 +51,18 @@
             <p class="transactionHeader">ItemId</p>
         {/if}
         <p class="transactionData">{transaction.itemId}</p>
+    </div>
+    <div class="column">
+        {#if headerDisplayed === false}
+            <p class="transactionHeader">Price</p>
+        {/if}
+        <p class="transactionData">{transaction.price}</p>
+    </div>
+    <div class="column">
+        {#if headerDisplayed === false}
+            <p class="transactionHeader">Type</p>
+        {/if}
+        <p class="transactionData">{transaction.type}</p>
     </div>
 
 </div>
@@ -71,7 +85,7 @@
         margin-bottom: 4px;
     }
 
-    #headerId{
+    #headerId {
 
         margin: 0;
         color: #1a9efd;
@@ -79,7 +93,8 @@
         border-top: black solid 1px;
         border-left: black solid 1px;
     }
-    #dataId{
+
+    #dataId {
         width: 20px;
         height: 20px;
         margin: 0;

@@ -1,5 +1,7 @@
 <script>
 
+
+
     function loginBtnClicked(){
         window.location.assign("/login");
     }

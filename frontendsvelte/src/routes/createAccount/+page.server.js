@@ -18,9 +18,6 @@ export const actions = {
         account.lastName = data.get('last_name');
         account.userName = data.get('user_name');
         await createAccount(account);
-
-        console.log(account);
-
         return {success: true};
     },
 

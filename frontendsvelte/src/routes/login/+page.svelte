@@ -13,7 +13,7 @@
 
     function onComponentClick(event) {
         store.set(event.detail);
-        window.location.assign("/vault/");
+        window.location.assign("/account/");
     }
 </script>
 

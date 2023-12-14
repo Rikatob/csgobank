@@ -14,6 +14,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@sveltejs/adapter-auto": "^2.1.1",
     "@sveltejs/kit": "^1.27.7"
   }
 }
