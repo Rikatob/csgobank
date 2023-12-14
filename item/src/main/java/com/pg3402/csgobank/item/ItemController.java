@@ -29,6 +29,14 @@ ItemController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Iterable<Item>> getAllItems(){
+        log.info("Delivering all items");
+        return ResponseEntity.status(HttpStatus.OK).body(itemService.getAllItems());
+    }
+
+
+
     // item exists
 
     // verify item
