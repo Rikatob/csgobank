@@ -74,7 +74,7 @@ public class VaultController {
 
 
     // Transferring item with a transaction.
-    @GetMapping(value = "/transfer",
+    @PostMapping(value = "/transfer",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> transferItem(@RequestBody Transaction transaction) {
