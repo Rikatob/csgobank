@@ -7,7 +7,7 @@ class ApiClient {
     static GET_VAULTS = '/vault/all';
     static UPDATE_ACCOUNT = '/account/update'
     static CREATE_ACCOUNT = '/account/new'
-
+    static SEND_TRADE_OFFER = '/vault/offer'
 }
 
 
@@ -264,3 +264,15 @@ export async function getTransactions(itemId) {
 }
 
 export default ApiClient;
+
+/////////////////////////////////////////  TRADE-OFFER  /////////////////////////////////////////
+
+export async function sendTradeOffer(tradeOffer) {
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.SEND_TRADE_OFFER);
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
