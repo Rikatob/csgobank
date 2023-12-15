@@ -6,6 +6,7 @@ import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
 import com.pgr3402.csgobank.transaction.Transaction;
 import com.pgr3402.csgobank.transaction.TransactionState;
+import com.pgr3402.csgobank.transaction.TransactionType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class AccountService {
         long accountId = account.getId();
         ResponseEntity<List<JsonNode>> response = vaultClient.getVault(accountId);
         List<JsonNode> vault = response.getBody();
-        if(vault == null || vault.size() > 0){
+        if (vault == null || vault.size() > 0) {
             return;
         }
         accountRepository.delete(account);
@@ -95,8 +96,14 @@ public class AccountService {
         Account fromAccount = optionalFromAccount.get();
         Account toAccount = optionalToAccount.get();
 
-        fromAccount.withdraw(transaction.getPrice());
-        toAccount.deposit(transaction.getPrice());
+        if (transaction.getType().equals(TransactionType.BUY)) {
+            fromAccount.withdraw(transaction.getPrice());
+            toAccount.deposit(transaction.getPrice());
+        } else {
+            toAccount.withdraw(transaction.getPrice());
+            fromAccount.deposit(transaction.getPrice());
+        }
+
 
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
