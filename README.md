@@ -167,8 +167,6 @@ So, our project CSGO BANK will be a secure vault, like an inventory if you will,
 to store your items and operate transactions of these items to other users. 
 
 
-
-
 ## Collaboration
 
 ### Responsibility
