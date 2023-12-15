@@ -247,7 +247,6 @@ export async function sendTradeOffer(tradeOffer) {
             },
             body: JSON.stringify(tradeOffer)
         });
-    console.log(tradeOffer);
 
     if (response.ok) {
         return await response.json();
@@ -296,6 +295,46 @@ export async function acceptTradeOffer(tradeOfferId) {
 export async function declineTradeOffer(tradeOfferId) {
     let acceptUrl = `/transaction/decline/${tradeOfferId}`;
     const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+
+    if (response.ok) {
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+/////////////////////////////////////////  CREDITS  /////////////////////////////////////////
+
+export async function depositCredits(accountId, credits) {
+    let depositUrl = `/account/credit/${accountId}/deposit`;
+
+    let response = await fetch(ApiClient.SERVER_URL + depositUrl, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(credits)
+    })
+
+    if (response.ok) {
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+
+
+}
+
+export async function withdrawCredits(accountId, credits) {
+    let withdrawUrl = `/account/credit/${accountId}/withdraw`;
+
+    let response = await fetch(ApiClient.SERVER_URL + withdrawUrl, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(credits)
+    })
 
     if (response.ok) {
         return await response.json()

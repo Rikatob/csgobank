@@ -77,17 +77,20 @@
             tradeOffer.toVaultId = $storeVault.vault.id;
         }
 
-        await sendTradeOffer(tradeOffer).catch(
-            () => {
-                alert("Failed to send trade offer");
-                error = true;
+        if (chosenPrice > $storeAccount.account.credit) {
+            alert("You dont have enough credit to create that trade");
+        } else {
+            await sendTradeOffer(tradeOffer).catch(
+                () => {
+                    alert("Failed to create trade offer");
+                    error = true;
+                }
+            );
+            if (!error) {
+                alert("Trade offer successfully sent");
+                window.location.assign("/account/vault");
             }
-        );
-        if (!error) {
-            alert("Trade offer successfully sent");
-            window.location.assign("/account/vault");
         }
-
     }
 
     function chosenActionBtnClicked(action) {
