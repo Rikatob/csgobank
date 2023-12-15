@@ -19,8 +19,8 @@
     let myVaults = [];
     let allVaults = [];
 
-    let items = [1, 2, 3, 4];
-    let vaults = [1, 2, 3, 4];
+    let items = [];
+    let vaults = [];
     let actions = ["SELL", "BUY"];
 
     let buySellBtnName = "Vault";
@@ -85,12 +85,14 @@
         );
         if (!error) {
             alert("Trade offer successfully sent");
+            window.location.assign("/account/vault");
         }
 
     }
 
     function chosenActionBtnClicked(action) {
         clearChosenOptions();
+        items = [];
         if (action === "BUY") {
             buySellBtnName = "From Vault";
             vaults = allVaults;
@@ -112,8 +114,14 @@
 
     async function chosenVaultBtnClicked(vaultId) {
 
-        let response = await getItems(vaultId);
-        items = response.map(item => item.id);
+        if (chosenAction === "BUY") {
+            let response = await getItems(vaultId);
+            items = response.map(item => item.id);
+        } else {
+            let response = await getItems($storeVault.vault.id);
+            items = response.map(item => item.id);
+        }
+
 
         chosenVault = vaultId;
     }
