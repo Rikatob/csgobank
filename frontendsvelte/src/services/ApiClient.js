@@ -325,3 +325,26 @@ export async function getOutgoingTradeOffers(accountId) {
         throw new Error("Request failed");
     }
 }
+
+export async function acceptTradeOffer (tradeOfferId){
+    let acceptUrl = `/transaction/accept/${tradeOfferId}`;
+    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+
+    if(response.ok){
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+
+export async function declineTradeOffer (tradeOfferId){
+    let acceptUrl = `/transaction/decline/${tradeOfferId}`;
+    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+
+    if(response.ok){
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+}

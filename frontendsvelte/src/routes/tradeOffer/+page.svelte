@@ -97,7 +97,7 @@
 
         } else if (action === "SELL") {
             buySellBtnName = "To Vault";
-            vaults = myVaults;
+            vaults = allVaults;
         }
 
         chosenAction = action;
