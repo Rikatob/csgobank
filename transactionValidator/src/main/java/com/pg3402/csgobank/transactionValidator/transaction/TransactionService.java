@@ -43,6 +43,8 @@ public class TransactionService {
     public Transaction validateOffer(Transaction transaction) {
         if (checkTransaction(transaction)) {
             transaction.setState(TransactionState.PENDING);
+        } else {
+            transaction.setState(TransactionState.FAILED);
         }
         return transaction;
     }
@@ -162,6 +164,7 @@ public class TransactionService {
 
         Transaction transaction = optionalTransaction.get();
         transaction.setState(TransactionState.DECLINED);
+        transactionEventPub.publishTransaction(transaction);
         transactionRepository.delete(transaction);
 
         return Optional.of(transaction);

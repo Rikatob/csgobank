@@ -15,12 +15,13 @@ import org.springframework.stereotype.Service;
 public class TransactionEventHandler {
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+    private final TransactionEventPub transactionEventPub;
 
-    public TransactionEventHandler(TransactionService transactionService, TransactionRepository transactionRepository) {
+    public TransactionEventHandler(TransactionService transactionService, TransactionRepository transactionRepository, TransactionEventPub transactionEventPub) {
         this.transactionService = transactionService;
         this.transactionRepository = transactionRepository;
+        this.transactionEventPub = transactionEventPub;
     }
-
 
 
     @RabbitListener(queues = "${amqp.queue.transaction}")
@@ -29,9 +30,10 @@ public class TransactionEventHandler {
             Transaction transaction = buildTransaction(event);
             log.info(transaction + " is successfully received");
             transaction = transactionService.validateOffer(transaction);
-            if(transaction.getState().equals(TransactionState.PENDING)){
+            if (transaction.getState().equals(TransactionState.PENDING)) {
                 transactionRepository.save(transaction);
-            } else {
+            } else if (transaction.getState().equals(TransactionState.FAILED)) {
+                transactionEventPub.publishTransaction(transaction);
                 log.info(transaction + "failed");
             }
 
@@ -42,7 +44,7 @@ public class TransactionEventHandler {
         }
     }
 
-    private Transaction buildTransaction( TransactionEvent transactionEvent){
+    private Transaction buildTransaction(TransactionEvent transactionEvent) {
 
         Transaction transaction = new Transaction();
 
