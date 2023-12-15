@@ -4,6 +4,9 @@
     import {accountStore} from "../../stores.js";
     import {sendTradeOffer} from "$services/ApiClient.js";
     import {getVaults} from "$services/ApiClient.js";
+    import {getAllVaults} from "$services/ApiClient.js";
+    import {getItems} from "$services/ApiClient.js";
+    import {onMount} from "svelte";
 
     const storeVault = vaultStore();
     const storeAccount = accountStore();
@@ -13,25 +16,48 @@
     let chosenAction = "NOT SET";
     let chosenPrice = 0;
 
+    let myVaults = [];
+    let allVaults = [];
+
     let items = [1, 2, 3, 4];
     let vaults = [1, 2, 3, 4];
     let actions = ["SELL", "BUY"];
 
+    let buySellBtnName = "Vault";
 
     let isItemDropDownOpen = false;
     let isVaultDropDownOpen = false;
     let isActionDropDownOpen = false;
 
-    function handleItemDropdown() {
-        isItemDropDownOpen = !isItemDropDownOpen;
-    }
 
-    function handleVaultDropdown() {
-        isVaultDropDownOpen = !isVaultDropDownOpen;
-    }
+    onMount(async () => {
+        let response = await getVaults($storeAccount.account.id).catch(() => {
+            console.log("Failed to get vaults on id");
+        });
+        myVaults = response.map(vault => vault.id);
 
-    function handleActionDropdown() {
-        isActionDropDownOpen = !isActionDropDownOpen;
+
+        response = await getAllVaults().catch(() => {
+            console.log("Failed to get all vaults");
+        });
+        allVaults = response
+            .filter(vault => vault.vaultAccount.id !== $storeVault.vault.vaultAccount.id)
+            .map(vault => vault.id);
+
+    })
+
+    function handleDropDown(type) {
+        switch (type) {
+            case 'item':
+                isItemDropDownOpen = !isItemDropDownOpen
+                break;
+            case 'fromVault':
+                isVaultDropDownOpen = !isVaultDropDownOpen;
+                break;
+            case 'action':
+                isActionDropDownOpen = !isActionDropDownOpen;
+                break;
+        }
     }
 
     async function sendTradeOfferBtnClicked() {
@@ -39,12 +65,17 @@
 
         let tradeOffer =
             {
-                "itemId": {chosenItem},
+                "itemId": chosenItem,
                 "fromVaultId": $storeVault.vault.id,
-                "toVaultId": {chosenVault},
-                "type": {chosenAction},
-                "price": {chosenPrice}
+                "toVaultId": chosenVault,
+                "type": chosenAction,
+                "price": chosenPrice
             }
+
+        if (chosenAction === "BUY") {
+            tradeOffer.fromVaultId = chosenVault;
+            tradeOffer.toVaultId = $storeVault.vault.id;
+        }
 
         await sendTradeOffer(tradeOffer).catch(
             () => {
@@ -58,19 +89,35 @@
 
     }
 
-    async function chosenActionBtnClicked(action) {
-
+    function chosenActionBtnClicked(action) {
+        clearChosenOptions();
         if (action === "BUY") {
-            vaults = [1, 2, 3, 4];
+            buySellBtnName = "From Vault";
+            vaults = allVaults;
 
         } else if (action === "SELL") {
-            let response = await getVaults($storeAccount.account.id);
-
-            vaults = response.map(vault => vault.id);
+            buySellBtnName = "To Vault";
+            vaults = myVaults;
         }
 
         chosenAction = action;
     }
+
+    function clearChosenOptions() {
+        chosenVault = 0;
+        chosenItem = 0;
+        chosenAction = "NOT SET";
+        chosenPrice = 0;
+    }
+
+    async function chosenVaultBtnClicked(vaultId) {
+
+        let response = await getItems(vaultId);
+        items = response.map(item => item.id);
+
+        chosenVault = vaultId;
+    }
+
 
 </script>
 
@@ -80,11 +127,11 @@
     <h2>Choices</h2>
     <table>
         <tr>
-            <th>Item:</th>
+            <th>Item ID:</th>
             <td>{chosenItem}</td>
         </tr>
         <tr>
-            <th>Vault:</th>
+            <th>From Vault ID:</th>
             <td>{chosenVault}</td>
         </tr>
         <tr>
@@ -100,7 +147,7 @@
 <div id="dropdown_menu_div">
 
     <div id="action_div">
-        <button class="dropdown_btn" on:click={handleActionDropdown}>Action</button>
+        <button class="dropdown_btn" on:click={()=>handleDropDown('action')}>Action</button>
         <div class="dropdown_content" style:visibility={isActionDropDownOpen ? 'visible' : 'hidden'}>
             <ul>
                 {#each actions as action}
@@ -113,14 +160,14 @@
     </div>
 
     <div id="vault_div">
-        <button class="dropdown_btn" on:click={handleVaultDropdown}>
-            Vault
+        <button class="dropdown_btn" on:click={()=>handleDropDown('fromVault')}>
+            {buySellBtnName}
         </button>
         <div class="dropdown_content" style:visibility={isVaultDropDownOpen ? 'visible' : 'hidden'}>
             <ul>
                 {#each vaults as vault}
                     <li>
-                        <button on:click={()=> chosenVault = vault}>{vault}</button>
+                        <button on:click={()=>chosenVaultBtnClicked(vault)}>{vault}</button>
                     </li>
                 {/each}
             </ul>
@@ -128,7 +175,7 @@
     </div>
 
     <div id="item_div">
-        <button class="dropdown_btn" on:click={handleItemDropdown}>Item</button>
+        <button class="dropdown_btn" on:click={()=>handleDropDown('item')}>Item</button>
         <div class="dropdown_content" style:visibility={isItemDropDownOpen ? 'visible' : 'hidden'}>
 
             <ul>
