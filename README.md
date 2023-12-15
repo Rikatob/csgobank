@@ -32,27 +32,27 @@
 ## Report
 
 * [x] Prettify report with drawings and decisions about RabbitMQ.
-* [ ] Update report with process regarding:
-  * [ ] Gateway
-  * [ ] Centralised logg
-  * [ ] Docker
-* [ ] Create a "module" diagram of our planned project structure.
+* [x] Update report with process regarding:
+  * [x] Gateway
+  * [X] Centralised logg
+  * [x] Docker
+* [x] Create a "module" diagram of our planned project structure.
 
 ## Project
 
 * [x] Vault publisher to transaction history.
 * [x] Restructure project package structure.
-* [ ] Float problems with int, cant be feks 0233 that indicates 0,0233.
+* [x] Float problems with int, cant be feks 0233 that indicates 0,0233.
       Total value in vault should not be field but a method. Should it be in Vault or VaultService?
 
 * [ ] TODO's.
-  * [ ] VaultController.
+  * [x] VaultController.
   * [x] VaultService.
-  * [ ] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
+  * [x] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
   * [ ] Use health checks to avoid that some services start before a service it is dependent on an/or spamming repuest ? 
     * https://devops.stackexchange.com/questions/12092/docker-compose-healthcheck-for-rabbitmq?newreg=614274132fbc4f92a92ba80f6d758a76
     * https://www.rabbitmq.com/monitoring.html#health-checks
-  * [ ] Frontend running on own server.
+  * [X] Frontend running on own server.
 ## Gateway
 
 * [x] Gateway
@@ -78,23 +78,22 @@
 * [ ] Create scratchfile with all endpoints and description.
 * FRONTEND
 * ACCOUNT -> VAULT -> ITEM
-  * [ ] List all accounts
-  * [ ] Create new account.
-  * [ ] Delete account.
-  * [ ] Account
-    * [ ] List all vaults for account.
-    * [ ] Create new vault.
-    * [ ] Delete Vault.
-  * [ ] Vault
-      * [ ] List items.
-      * [ ] Withdraw item.
-      * [ ] Deposit item.
-  * [ ] Item
-    * [ ] Transfer item.
-    * [ ] Transaction history on item.
-    * [ ] Pricing history ???
+  * [X] List all accounts
+  * [X] Create new account.
+  * [X] Delete account.
+  * [X] Account
+    * [X] List all vaults for account.
+    * [X] Create new vault.
+    * [x] Delete Vault.
+  * [x] Vault
+      * [x] List items.
+      * [x] Withdraw item.
+      * [x] Deposit item.
+  * [X] Item
+    * [x] Transfer item.
+    * [x] Transaction history on item.
 
-* [ ] Login
+
 ### Vault
 * [x] Account
     * [x] Email osv (Bruker profile)
@@ -104,23 +103,22 @@
 * [x] Transfer
 * [x] Validate transaction
 * [x] List Items (get vault items)
-* [ ] Update database
-* [ ] Validate item? (mulig)
-* [ ] Lock
-* [ ] 
+* [x Update database
+
+
 
 ### Money Buy/Sell
-* [ ] Buy/Sell items
-  * [ ] Item need to be sold with price
+* [x] Buy/Sell items
+  * [x] Item need to be sold with price
   * [x] Account based money/credit
   * [x] Transaction needs price
-  * [ ] Create "offer" rabbitMQ
+  * [x] Create "offer" rabbitMQ
     * [x] Vault sends offer to RabbitMQ
-    * [ ] Validator validates offer, sets "offer" to pending
-    * [ ] User accepts/decline pending offers
-    * [ ] validator sets offer to "validated"
-    * [ ] Vault listens on rabbitMQ, validated offers happens, and sends event to history with rabbit
-  * [ ] Accept "offer" rabbitMQ
+    * [X] Validator validates offer, sets "offer" to pending
+    * [x] User accepts/decline pending offers
+    * [X] validator sets offer to "validated"
+    * [x] Vault listens on rabbitMQ, validated offers happens, and sends event to history with rabbit
+  * [X] Accept "offer" rabbitMQ
 ### Items
 
 * [ ] Price history
@@ -166,6 +164,28 @@ Some skins are very rare and can have an insane price in real fiat currency (pun
 So, our project CSGO BANK will be a secure vault, like an inventory if you will,
 to store your items and operate transactions of these items to other users. 
 
+## User stories
+
+* As a user I want to
+  * Create an account
+  * Login/Choose account
+    * Create different vault
+    * Choose vault
+      * Deposit skins to vault.
+      * Withdraw skins from vault.
+      * Transfer skins between vaults (mine and other accounts).
+      * Create a trade offer, either buying or selling an item
+        * Accept/Decline pending offers.
+  * Display vault
+    * Display items
+    * Display info on skins.
+    * Check price of skin.
+    * Display total value of vault.
+    * Click on skin to display price history.
+    * Display transaction history on an item.
+
+
+![img.png](diagram.png)
 
 ## Collaboration
 
@@ -193,7 +213,7 @@ Services:
 
 The Transaction "logic"
 
-#### Student Fredrik
+#### Student 2012:
 Services:
  * Account
  * Item
@@ -201,24 +221,3 @@ Services:
  * Frontend
 
 
-## User stories
-
- * As a user I want to
-   * Create an account
-   * Login/Choose account
-     * Create different vault
-     * Choose vault
-       * Deposit skins to vault.
-       * Withdraw skins from vault.
-       * Transfer skins between vaults.
-       * Create a trade offer, either buying or selling a item
-         * Accept/Decline pending offers.
-   * Display vault
-     * Display items
-     * Display info on skins.
-     * Check price of skin.
-     * Display total value of vault. 
-     * Click on skin to display price history.
-     * Display transaction history on an item.
-
- ![img.png](diagram.png)
