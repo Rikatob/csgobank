@@ -102,13 +102,13 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).body(accountService.transferCredits(transaction));
     }
 
-    @PostMapping("credit/{accountId}/deposit")
+    @PostMapping(value = "credit/{accountId}/deposit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> depositCredit(@PathVariable long accountId, @RequestBody int amount){
         return accountService.depositCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    @PostMapping("credit/{accountId}/withdraw")
+    @PostMapping(value = "credit/{accountId}/withdraw", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> withdrawCredit(@PathVariable long accountId, @RequestBody int amount){
         return accountService.withdrawCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
