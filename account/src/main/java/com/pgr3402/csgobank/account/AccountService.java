@@ -96,13 +96,9 @@ public class AccountService {
         Account fromAccount = optionalFromAccount.get();
         Account toAccount = optionalToAccount.get();
 
-        if (transaction.getType().equals(TransactionType.BUY)) {
-            fromAccount.withdraw(transaction.getPrice());
-            toAccount.deposit(transaction.getPrice());
-        } else {
-            toAccount.withdraw(transaction.getPrice());
-            fromAccount.deposit(transaction.getPrice());
-        }
+
+        fromAccount.deposit(transaction.getPrice());
+        toAccount.withdraw(transaction.getPrice());
 
 
         accountRepository.save(fromAccount);
