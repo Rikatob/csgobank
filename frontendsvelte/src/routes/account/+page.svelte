@@ -7,7 +7,6 @@
     import {vaultStore} from "../../stores.js";
     import {deleteAccount} from "../../services/ApiClient.js";
     import {createNewVault} from "../../services/ApiClient.js";
-
     const storeAccount = accountStore();
     const storeVault = vaultStore();
 
@@ -30,6 +29,14 @@
         alert(`New vault with id [${newVault.id}] created`);
     }
 
+    async function incomingBtnClicked() {
+        window.location.assign("/tradeOffer/incoming");
+    }
+
+    async function outgoingBtnClicked() {
+        window.location.assign("/tradeOffer/outgoing");
+    }
+
 
 </script>
 
@@ -43,9 +50,15 @@
 
 </div>
 
-<div id="create_btn_div">
+<div id="btn_div">
     <button on:click={createVaultBtnClicked}>
-    Create new vault
+        Create new vault
+    </button>
+    <button on:click={incomingBtnClicked}>
+        Incoming trade offers
+    </button>
+    <button on:click={outgoingBtnClicked}>
+        Outgoing trade offers
     </button>
 </div>
 
@@ -63,8 +76,16 @@
         text-align: center;
     }
 
-    #create_btn_div{
+    #btn_div {
         display: flex;
         justify-content: center;
+    }
+
+    button {
+        margin-left: 10px;
+        border-radius: 5px;
+        border: none;
+        height: 20px;
+        width: 140px;
     }
 </style>

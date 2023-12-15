@@ -3,7 +3,7 @@
     import {onMount} from "svelte";
     import {itemStore} from "../../../../stores.js";
     import {vaultStore} from "../../../../stores.js";
-    import {getTransactions} from "../../../../services/ApiClient.js";
+    import {deleteAccount, getTransactions} from "../../../../services/ApiClient.js";
     import {withdrawItem} from "../../../../services/ApiClient.js";
     import {transferItem} from "../../../../services/ApiClient.js";
 
@@ -20,9 +20,14 @@
     })
 
     async function withdrawItemBtnClicked() {
-        let withdrewItem = await withdrawItem($storeVault.vault.id, $storeItem.item.id);
 
-        alert(withdrewItem + "successfully withdrew");
+        let alertMessage = "Are you sure you want to withdraw this account?\nPress OK to confirm."
+
+        if (confirm(alertMessage) === true) {
+            let withdrewItem = await withdrawItem($storeVault.vault.id, $storeItem.item.id);
+            alert(withdrewItem + "successfully withdrew");
+        }
+
     }
 
     async function transferItemBtnClicked() {

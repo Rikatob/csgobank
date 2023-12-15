@@ -3,11 +3,11 @@ class ApiClient {
     static SERVER_URL = 'http://localhost:8000';
     static GET_VAULT = '/vault';
     static GET_ITEMS = '/vault/1/items';
-    static GET_ACCOUNTS = '/account/all'
-    static GET_VAULTS = '/vault/all';
+    static GET_ALL_ACCOUNTS = '/account/all'
+    static GET_ALL_VAULTS = '/vault/all';
     static UPDATE_ACCOUNT = '/account/update'
     static CREATE_ACCOUNT = '/account/new'
-
+    static SEND_TRADE_OFFER = '/vault/offer'
 }
 
 
@@ -15,7 +15,7 @@ class ApiClient {
 
 // Get all accounts.
 export async function getAccounts() {
-    const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ACCOUNTS);
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ALL_ACCOUNTS);
     if (response.ok) {
         return await response.json();
     } else {
@@ -87,7 +87,26 @@ export async function createAccount(account) {
 export async function getVaults(accountId) {
 
     const vaultUrl = `/vaultAccount/${accountId}/vaults`
-    const response = await fetch(ApiClient.SERVER_URL + vaultUrl);
+    const response = await fetch(ApiClient.SERVER_URL + vaultUrl, {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    });
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed")
+    }
+}
+
+// Get all vaults.
+export async function getAllVaults() {
+
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ALL_VAULTS, {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    });
     if (response.ok) {
         return await response.json();
     } else {
@@ -264,3 +283,68 @@ export async function getTransactions(itemId) {
 }
 
 export default ApiClient;
+
+/////////////////////////////////////////  TRADE-OFFER  /////////////////////////////////////////
+
+export async function sendTradeOffer(tradeOffer) {
+    const response = await fetch(ApiClient.SERVER_URL + ApiClient.SEND_TRADE_OFFER,
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(tradeOffer)
+        });
+    console.log(tradeOffer);
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function getIncomingTradeOffers(accountId) {
+    let incomingUrl = `/transaction/incoming/${accountId}`;
+    const response = await fetch(ApiClient.SERVER_URL + incomingUrl);
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function getOutgoingTradeOffers(accountId) {
+    let incomingUrl = `/transaction/outgoing/${accountId}`;
+    const response = await fetch(ApiClient.SERVER_URL + incomingUrl);
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+export async function acceptTradeOffer (tradeOfferId){
+    let acceptUrl = `/transaction/accept/${tradeOfferId}`;
+    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+
+    if(response.ok){
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+}
+
+
+export async function declineTradeOffer (tradeOfferId){
+    let acceptUrl = `/transaction/decline/${tradeOfferId}`;
+    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+
+    if(response.ok){
+        return await response.json()
+    } else {
+        throw new Error("Request failed");
+    }
+}

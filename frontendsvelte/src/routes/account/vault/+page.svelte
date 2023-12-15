@@ -1,6 +1,6 @@
 <script>
     import ItemCard from "../../../components/ItemCard.svelte";
-    import {getItems} from "../../../services/ApiClient.js";
+    import {deleteAccount, getItems} from "../../../services/ApiClient.js";
     import {onMount} from "svelte";
     import {vaultStore} from "../../../stores.js";
     import {itemStore} from "../../../stores.js";
@@ -29,18 +29,25 @@
     }
 
     async function deleteVaultBtnClicked() {
-        if (items.length !== 0) {
-            alert(`Not allowed to delete vault containing items`);
-        } else {
-            await deleteVault($storeVault.vault.id);
-            alert(`Vault with id [${$storeVault.vault.id}] deleted`);
-            window.location.assign("/account/");
-        }
+        let alertMessage = "Are you sure you want to delete this vault?\nPress OK to confirm."
 
+        if (confirm(alertMessage) === true) {
+            if (items.length !== 0) {
+                alert(`Not allowed to delete vault containing items`);
+            } else {
+                await deleteVault($storeVault.vault.id);
+                alert(`Vault with id [${$storeVault.vault.id}] deleted`);
+                window.location.assign("/account/");
+            }
+        }
     }
 
     function depositItemBtnClicked() {
         window.location.assign("/account/vault/item/deposit");
+    }
+
+    function createTradeOfferBtnClicked() {
+        window.location.assign("/tradeOffer");
     }
 
 </script>
@@ -60,6 +67,9 @@
     <button on:click={depositItemBtnClicked} id="deposit_item_btn">
         Deposit item
     </button>
+    <button on:click={createTradeOfferBtnClicked} id="trade_offer_btn">
+        Create trade offer
+    </button>
 </div>
 
 <style>
@@ -73,7 +83,7 @@
 
 
     button {
-        margin: 5px;
+        margin: 7px;
     }
 
     #btn_div {
