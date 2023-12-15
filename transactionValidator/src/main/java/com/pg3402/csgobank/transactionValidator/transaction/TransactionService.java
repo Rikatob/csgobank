@@ -66,7 +66,7 @@ public class TransactionService {
             return false;
         }
 
-        if (transaction.getType() == TransactionType.BUY || transaction.getType() == TransactionType.SELL) {
+        if (transaction.getType() == TransactionType.BUY) {
 
             Optional<Integer> optionalInteger = getAccountCredits(transaction.getToAccountId());
 
