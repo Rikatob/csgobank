@@ -7,6 +7,9 @@
     import {vaultStore} from "../../stores.js";
     import {deleteAccount} from "../../services/ApiClient.js";
     import {createNewVault} from "../../services/ApiClient.js";
+    import {depositCredits} from "../../services/ApiClient.js";
+    import {withdrawCredits} from "$services/ApiClient.js";
+
     const storeAccount = accountStore();
     const storeVault = vaultStore();
 
@@ -37,6 +40,37 @@
         window.location.assign("/tradeOffer/outgoing");
     }
 
+    async function depositCreditBtnClicked() {
+        let error = false;
+        let creditToDeposit = prompt("Enter the amount you want to deposit", "0");
+
+        let response = await depositCredits($storeAccount.account.id, creditToDeposit)
+            .catch(() => {
+                alert("Failed to deposit credits");
+                error = true;
+            });
+
+        if (!error) {
+            alert("Credit successfully deposit")
+        }
+
+    }
+
+    async function withdrawCreditBtnClicked() {
+        let error = false;
+        let creditToWithdraw = prompt("Enter the amount you want to withdraw", "0");
+
+        let response = await withdrawCredits($storeAccount.account.id, creditToWithdraw)
+            .catch(() => {
+                alert("Failed to withdraw credits");
+                error = true;
+            });
+
+        if (!error) {
+            alert("Credit successfully withdrew")
+        }
+    }
+
 
 </script>
 
@@ -53,6 +87,12 @@
 <div id="btn_div">
     <button on:click={createVaultBtnClicked}>
         Create new vault
+    </button>
+    <button on:click={depositCreditBtnClicked}>
+        Deposit credit
+    </button>
+    <button on:click={withdrawCreditBtnClicked}>
+        Withdraw credit
     </button>
     <button on:click={incomingBtnClicked}>
         Incoming trade offers
