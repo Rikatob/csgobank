@@ -25,7 +25,7 @@
 
         if (confirm(alertMessage) === true) {
             let withdrewItem = await withdrawItem($storeVault.vault.id, $storeItem.item.id);
-            alert(withdrewItem + "successfully withdrew");
+            alert("Item with id [" + withdrewItem.id + "] successfully withdrew");
         }
 
     }

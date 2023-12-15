@@ -27,6 +27,7 @@
         let error = false;
 
         if (confirm(alertMessage) === true) {
+
             await depositItem($storeVault.vault.id, event.detail.item.id)
                 .catch(() => {
                     alert("Failed to deposit item");
@@ -34,15 +35,17 @@
                 });
             if (!error) {
                 alert(`Item with id [${event.detail.item.id}] successfully deposit`);
-                /*window.location.reload();*/
+                window.location.reload();
             }
+
+
         }
 
 
     }
 
 </script>
-<h1>Marketplace</h1>
+<h1>Deposit item to CSGO BANK</h1>
 <h2>Items</h2>
 
 <div id="items">
