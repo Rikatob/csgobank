@@ -28,7 +28,7 @@ public class VaultController {
 
 
     @GetMapping(value = "/all")
-    public ResponseEntity<Iterable<Vault>> getAllVaults(){
+    public ResponseEntity<Iterable<Vault>> getAllVaults() {
         return ResponseEntity.status(HttpStatus.OK).body(vaultService.getAllVaults());
     }
     // Get a vault by ID.
@@ -94,12 +94,14 @@ public class VaultController {
     }
 
 
-    @PostMapping(value = "/offer")
-    public ResponseEntity<Transaction> createTradeOffer(@RequestBody Transaction transaction){
+    @PostMapping(value = "/offer",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Transaction> createTradeOffer(@RequestBody Transaction transaction) {
         log.info("Creating trade offer " + transaction);
 
         //Only TRADE is accepted
-        if(transaction.getType().equals(TransactionType.TRANSFER)){
+        if (transaction.getType().equals(TransactionType.TRANSFER)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -127,14 +129,14 @@ public class VaultController {
 
     // Withdraw item from vault with vaultId and itemId.
     @GetMapping(value = "{vaultId}/item/withdraw/{itemId}")
-    public ResponseEntity<Item> withdrawItem(@PathVariable long vaultId,@PathVariable long itemId) {
-        return vaultService.withdrawItem(vaultId,itemId)
+    public ResponseEntity<Item> withdrawItem(@PathVariable long vaultId, @PathVariable long itemId) {
+        return vaultService.withdrawItem(vaultId, itemId)
                 .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @DeleteMapping(value = "delete/{vaultId}")
-    public ResponseEntity<Void> deleteVault(@PathVariable long vaultId){
+    public ResponseEntity<Void> deleteVault(@PathVariable long vaultId) {
         vaultService.deleteVault(vaultId);
         return ResponseEntity.status(HttpStatus.OK).build();
 
