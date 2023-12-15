@@ -151,12 +151,41 @@
 
 # Rapport
 
+## Overview
+
+CSGO is an FPS game that has a lot of items you can get with drops, unboxing, or trading.
+
+The items don’t give you any form of advantage in the game, it is only cosmetic and like a status for having the most
+“good-looking” and expensive items.
+For example, an AK-47 skin is still the default AK-47 mechanically speaking, 
+but the skin can make it look in a ton of different ways.
+Items (skins) can be for weapons, knifes, gloves,
+stickers to put on the weapons and so on.
+Some skins are very rare and can have an insane price in real fiat currency (pun intended).
+
+So, our project CSGO BANK will be a secure vault, like an inventory if you will,
+to store your items and operate transactions of these items to other users. 
+
+
+
+
 ## Collaboration
 
 ### Responsibility
-We both worked on everything more or less together, so we both had influence on what got done. but we did divide the responsibility on the logic of services
-The infrastructure (logging, tracing, gateway etc.) we both did at the same time and no clear division, both worked on one computer most of the time.
+We both worked on everything more or less together, so we both had influence on what got done.
+But we did divide the responsibility on the logic of services
+The infrastructure (logging, tracing, gateway etc.) we both did at the same time and no clear division,
+both worked on one computer most of the time.
 All decisions were made with the explicit agreement from both parties
+
+#### Major decisions
+Item service should be a "faked" API from valve (Owners of the game CS:GO). 
+If we had time, we would implement an API call to get real item data live.
+
+We wanted to focus on our application itself, 
+since deposit items and credits would require outside confirmation, bank transaction for credits, etc. 
+we chose to implement a basic version of these that don't take any confirmation from the outside.
+
 
 #### Student 2025:
 Services:
@@ -172,8 +201,6 @@ Services:
  * Item
  * Item and account part of Vault service
  * Frontend
-
-
 
 
 ## User stories

@@ -128,7 +128,7 @@ public class VaultController {
     }
 
     // Withdraw item from vault with vaultId and itemId.
-    @GetMapping(value = "{vaultId}/item/withdraw/{itemId}")
+    @PostMapping(value = "{vaultId}/item/withdraw/{itemId}")
     public ResponseEntity<Item> withdrawItem(@PathVariable long vaultId, @PathVariable long itemId) {
         return vaultService.withdrawItem(vaultId, itemId)
                 .map(item -> ResponseEntity.status(HttpStatus.OK).body(item))

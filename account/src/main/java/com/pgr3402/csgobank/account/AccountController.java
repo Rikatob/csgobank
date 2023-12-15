@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     // Delete account.
-    @PostMapping(value = "/delete/{accountId}",
+    @DeleteMapping(value = "/delete/{accountId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
