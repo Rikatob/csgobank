@@ -46,6 +46,7 @@ public class ItemService {
         Iterable<Item> allItems = itemsResponse.getBody();
         Iterable<Item> takenItems = itemRepository.findAll();
 
+
         if(allItems == null){
             log.error("Something went wrong getting all items from item service");
             return List.of();
@@ -57,6 +58,7 @@ public class ItemService {
 
         List<Item> takenItemList = new ArrayList<>();
         takenItems.forEach(takenItemList::add);
+
 
         //Remove all taken items, only the available will remain
         availableItems.removeAll(takenItemList);

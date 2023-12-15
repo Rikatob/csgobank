@@ -1,10 +1,9 @@
 class ApiClient {
 
     static SERVER_URL = 'http://localhost:8000';
-    static GET_VAULT = '/vault';
-    static GET_ITEMS = '/vault/1/items';
     static GET_ALL_ACCOUNTS = '/account/all'
     static GET_ALL_VAULTS = '/vault/all';
+    static GET_ALL_AVAILABLE_ITEMS = '/vaultItem/available'
     static UPDATE_ACCOUNT = '/account/update'
     static CREATE_ACCOUNT = '/account/new'
     static SEND_TRADE_OFFER = '/vault/offer'
@@ -210,64 +209,15 @@ export async function transferItem(transaction) {
 }
 
 export async function getAllAvailableItems() {
-    return [{
-        "id": 14,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }, {
-        "id": 1,
-        "type": "AK-47",
-        "name": "FireSerpent",
-        "floatValue": "0.06008401885629",
-        "price": 4032272,
-        "wearCategory": "FACTORY_NEW",
-        "image": "../src/lib/images/FireSerpent.png"
-    }]
+
+    let response = await fetch(ApiClient.SERVER_URL + ApiClient.GET_ALL_AVAILABLE_ITEMS);
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Request failed");
+    }
 }
+
 
 /////////////////////////////////////////  TRANSACTION-HISTORY  /////////////////////////////////////////
 export async function getTransactions(itemId) {
@@ -284,8 +234,10 @@ export async function getTransactions(itemId) {
 
 export default ApiClient;
 
+
 /////////////////////////////////////////  TRADE-OFFER  /////////////////////////////////////////
 
+// Post a trade-offer to send.
 export async function sendTradeOffer(tradeOffer) {
     const response = await fetch(ApiClient.SERVER_URL + ApiClient.SEND_TRADE_OFFER,
         {
@@ -304,6 +256,7 @@ export async function sendTradeOffer(tradeOffer) {
     }
 }
 
+// Get incoming trade-offers in an account.
 export async function getIncomingTradeOffers(accountId) {
     let incomingUrl = `/transaction/incoming/${accountId}`;
     const response = await fetch(ApiClient.SERVER_URL + incomingUrl);
@@ -315,6 +268,7 @@ export async function getIncomingTradeOffers(accountId) {
     }
 }
 
+// Get outgoing trade-offers in an account.
 export async function getOutgoingTradeOffers(accountId) {
     let incomingUrl = `/transaction/outgoing/${accountId}`;
     const response = await fetch(ApiClient.SERVER_URL + incomingUrl);
@@ -326,23 +280,24 @@ export async function getOutgoingTradeOffers(accountId) {
     }
 }
 
-export async function acceptTradeOffer (tradeOfferId){
+// Accept trade-offer with tradeOffer id (transactionId).
+export async function acceptTradeOffer(tradeOfferId) {
     let acceptUrl = `/transaction/accept/${tradeOfferId}`;
     const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
 
-    if(response.ok){
+    if (response.ok) {
         return await response.json()
     } else {
         throw new Error("Request failed");
     }
 }
 
-
-export async function declineTradeOffer (tradeOfferId){
+// Decline trade-offer with tradeOffer id (transactionId).
+export async function declineTradeOffer(tradeOfferId) {
     let acceptUrl = `/transaction/decline/${tradeOfferId}`;
     const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
 
-    if(response.ok){
+    if (response.ok) {
         return await response.json()
     } else {
         throw new Error("Request failed");
