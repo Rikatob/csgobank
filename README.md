@@ -148,3 +148,52 @@
 * [X] The project has a means of containerization – building container images from the existing services and getting such containers running and interacting with each other
 
 
+
+# Rapport
+
+## Collaboration
+
+### Responsibility
+We both worked on everything more or less together, so we both had influence on what got done. but we did divide the responsibility on the logic of services
+The infrastructure (logging, tracing, gateway etc.) we both did at the same time and no clear division, both worked on one computer most of the time.
+All decisions were made with the explicit agreement from both parties
+
+#### Student 2025:
+Services:
+ * TransactionValidator
+ * TransactionHistory
+ * Transaction part of vault service
+
+The Transaction "logic"
+
+#### Student Fredrik
+Services:
+ * Account
+ * Item
+ * Item and account part of Vault service
+ * Frontend
+
+
+
+
+## User stories
+
+ * As a user I want to
+   * Create an account
+   * Login/Choose account
+     * Create different vault
+     * Choose vault
+       * Deposit skins to vault.
+       * Withdraw skins from vault.
+       * Transfer skins between vaults.
+       * Create a trade offer, either buying or selling a item
+         * Accept/Decline pending offers.
+   * Display vault
+     * Display items
+     * Display info on skins.
+     * Check price of skin.
+     * Display total value of vault. 
+     * Click on skin to display price history.
+     * Display transaction history on an item.
+
+ ![img.png](diagram.png)
