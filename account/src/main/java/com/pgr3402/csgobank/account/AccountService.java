@@ -97,8 +97,8 @@ public class AccountService {
         Account toAccount = optionalToAccount.get();
 
 
-        fromAccount.deposit(transaction.getPrice());
         toAccount.withdraw(transaction.getPrice());
+        fromAccount.deposit(transaction.getPrice());
 
 
         accountRepository.save(fromAccount);

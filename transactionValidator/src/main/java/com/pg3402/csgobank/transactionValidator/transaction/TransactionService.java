@@ -68,7 +68,7 @@ public class TransactionService {
 
         if (transaction.getType() == TransactionType.BUY || transaction.getType() == TransactionType.SELL) {
 
-            Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
+            Optional<Integer> optionalInteger = getAccountCredits(transaction.getToAccountId());
 
             if (optionalInteger.orElse(0) < transaction.getPrice()) {
                 log.info("Not enough credits");
