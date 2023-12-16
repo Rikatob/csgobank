@@ -44,30 +44,34 @@
         let error = false;
         let creditToDeposit = prompt("Enter the amount you want to deposit", "0");
 
-        let response = await depositCredits($storeAccount.account.id, creditToDeposit)
-            .catch(() => {
-                alert("Failed to deposit credits");
-                error = true;
-            });
+        if (creditToDeposit !== null) {
+            let response = await depositCredits($storeAccount.account.id, creditToDeposit)
+                .catch(() => {
+                    alert("Failed to deposit credits");
+                    error = true;
+                });
 
-        if (!error) {
-            alert("Credit successfully deposit")
+            if (!error) {
+                alert("Credit successfully deposit")
+            }
         }
-
     }
 
     async function withdrawCreditBtnClicked() {
         let error = false;
         let creditToWithdraw = prompt("Enter the amount you want to withdraw", "0");
 
-        let response = await withdrawCredits($storeAccount.account.id, creditToWithdraw)
-            .catch(() => {
-                alert("Failed to withdraw credits");
-                error = true;
-            });
+        if (creditToWithdraw !== null) {
 
-        if (!error) {
-            alert("Credit successfully withdrew")
+            let response = await withdrawCredits($storeAccount.account.id, creditToWithdraw)
+                .catch(() => {
+                    alert("Failed to withdraw credits");
+                    error = true;
+                });
+
+            if (!error) {
+                alert("Credit successfully withdrew")
+            }
         }
     }
 
