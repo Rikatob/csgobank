@@ -42,8 +42,8 @@
 
 * [x] Vault publisher to transaction history.
 * [x] Restructure project package structure.
-* [x] Float problems with int, cant be feks 0233 that indicates 0,0233.
-      Total value in vault should not be field but a method. Should it be in Vault or VaultService?
+* [x] Float problems with int cant be feks 0233 that indicates 0,0233.
+      The Total value in vault should not be field but a method. Should it be in Vault or service?
 
 * [ ] TODO's.
   * [x] VaultController.
@@ -167,6 +167,7 @@ to store your items and operate transactions of these items to other users.
 ### Notable URLs/ports
  Zipkin: ``` http://localhost:9411 ```
  RabbitMQ: ``` http://localhost:15672 ```
+ Consul: ``` http://localhost:8500 ```
  Frontend: ``` http://localhost:8080 ```
  Gateway: ``` http://localhost:8000 ```
 ### Tracing
@@ -223,7 +224,7 @@ Takes in all logs from rabbitMQ and displays them on screen
   * Display vault
     * Display items
     * Display info on skins.
-    * Check price of skin.
+    * Check the price of skin.
     * Display total value of vault.
     * Click on skin to display price history.
     * Display transaction history on an item.
