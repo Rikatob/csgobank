@@ -43,7 +43,7 @@
         </tr>
         <tr>
             <th>PRICE:</th>
-            <td>${price}</td>
+            <td>{price}</td>
         </tr>
     </table>
 
