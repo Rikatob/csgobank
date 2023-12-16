@@ -72,7 +72,7 @@
 * [x] Populate databases
 * [x] Withdraw item
 * [x] Total value in vault.
-* [x] Deposit check, cant be deposit if already in vault_item_db
+* [x] Deposit check, cant be deposit if yet in vault_item_db
 * [x] Total value in vault should not be static, prob not i database at all and only with getter.
 * [ ] Add more logging.
 * [ ] Create scratchfile with all endpoints and description.
@@ -162,7 +162,51 @@ stickers to put on the weapons and so on.
 Some skins are very rare and can have an insane price in real fiat currency (pun intended).
 
 So, our project CSGO BANK will be a secure vault, like an inventory if you will,
-to store your items and operate transactions of these items to other users. 
+to store your items and operate transactions of these items to other users.
+
+### Notable URLs/ports
+ Zipkin: ``` http://localhost:9411 ```
+ RabbitMQ: ``` http://localhost:15672 ```
+ Frontend: ``` http://localhost:8080 ```
+ Gateway: ``` http://localhost:8000 ```
+### Tracing
+ZipKin is used to view and manage traces
+
+### Services
+
+#### Account
+The account service is where all account related stuff happens (update, create, delete, etc).
+In this service is where login would most likely be if not in its own service.
+Event on account creation and deletion is sent to RabbitMQ
+
+
+#### Item
+The item service is a small service with the intention 
+to act like an intermediary for the official API for items in CS:GO.
+This service only has a few Get endpoints for items. 
+If we had time, the official API would be used instead of a local DB of items.
+
+#### Vault
+The vault service is the "main" service. 
+The vault itself is the main part of the program, 
+so most services have communication ASYNC and SYNC with the vault service.
+Everything to do with vault happens here, creating transaction, transferring items
+Takes in accepted transactions from RabbitMQ and does the transferring of items and send out a transaction-complete event
+
+#### Transaction validator
+The transaction validator service has the single role of validating transactions. 
+It makes sure the transaction is correct and both items and credits are present before accepting any transactions.
+Simple transfer is SYNC communication with Vault.
+Transaction needing a response from the recipient is taken in trough RabbitMQ, 
+it listens to transaction-created event and sends out transaction accepted/declined events on completion 
+
+#### Transaction History
+Transaction history service is a simple service, listens for transaction-complete events and put them in a database. 
+With endpoints to access them
+
+#### Logs
+Takes in all logs from rabbitMQ and displays them on screen
+ 
 
 ## User stories
 
@@ -191,7 +235,7 @@ to store your items and operate transactions of these items to other users.
 
 ### Responsibility
 We both worked on everything more or less together, so we both had influence on what got done.
-But we did divide the responsibility on the logic of services
+But we did divide the responsibility on the logic of services.
 The infrastructure (logging, tracing, gateway etc.) we both did at the same time and no clear division,
 both worked on one computer most of the time.
 All decisions were made with the explicit agreement from both parties
