@@ -47,7 +47,7 @@ export async function deleteAccount(accountId) {
     let deleteUrl = `/account/delete/${accountId}`
     const response = await fetch(ApiClient.SERVER_URL + deleteUrl,
         {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-type': 'application/json'
             }
@@ -162,7 +162,9 @@ export async function getItems(vaultId) {
 export async function withdrawItem(vaultId, itemId) {
 
     let withdrawUrl = `/vault/${vaultId}/item/withdraw/${itemId}`
-    const res = await fetch(ApiClient.SERVER_URL + withdrawUrl);
+    const res = await fetch(ApiClient.SERVER_URL + withdrawUrl, {
+        method: 'POST'
+    });
 
     if (res.ok) {
         return await res.json();
@@ -282,7 +284,9 @@ export async function getOutgoingTradeOffers(accountId) {
 // Accept trade-offer with tradeOffer id (transactionId).
 export async function acceptTradeOffer(tradeOfferId) {
     let acceptUrl = `/transaction/accept/${tradeOfferId}`;
-    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+    const response = await fetch(ApiClient.SERVER_URL + acceptUrl, {
+        method: 'POST'
+    });
 
     if (response.ok) {
         return await response.json()
@@ -293,8 +297,10 @@ export async function acceptTradeOffer(tradeOfferId) {
 
 // Decline trade-offer with tradeOffer id (transactionId).
 export async function declineTradeOffer(tradeOfferId) {
-    let acceptUrl = `/transaction/decline/${tradeOfferId}`;
-    const response = await fetch(ApiClient.SERVER_URL + acceptUrl);
+    let declineUrl = `/transaction/decline/${tradeOfferId}`;
+    const response = await fetch(ApiClient.SERVER_URL + declineUrl, {
+        method: 'POST'
+    });
 
     if (response.ok) {
         return await response.json()

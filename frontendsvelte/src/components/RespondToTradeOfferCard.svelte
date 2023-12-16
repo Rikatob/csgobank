@@ -57,42 +57,42 @@
         }
     }
 </script>
+<div id="body">
+    {#if tradeOffers.length === 0}
+        <div id="empty_offers_div">No incoming trade offers!</div>
+    {:else}
+        {#each tradeOffers as transaction, i}
 
-{#if tradeOffers.length === 0}
-    <div id="empty_offers_div">No incoming trade offers!</div>
-{:else}
-    {#each tradeOffers as transaction, i}
-
-        {#if i > 0}
-            <TransactionCard transaction={transaction} headerDisplayed={true}/>
-            <div class="btn_div">
-                {#if acceptable}
-                    <button on:click={()=>{acceptBtnClicked(transaction.transactionId)}}>Accept trade offer</button>
-                {/if}
-                <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>Decline trade offer</button>
-            </div>
-        {:else}
-            <TransactionCard transaction={transaction} headerDisplayed={false}/>
-            <div class="btn_div">
-                {#if acceptable}
-                    <button on:click={()=>{acceptBtnClicked(transaction.transactionId)}}>
-                        Accept trade offer
-                    </button>
-                {/if}
-                {#if acceptable}
-                    <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>
-                        Decline trade offer
-                    </button>
-                {:else }
-                    <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>
-                        Cancel trade offer
-                    </button>
-                {/if}
-            </div>
-        {/if}
-    {/each}
-{/if}
-
+            {#if i > 0}
+                <TransactionCard transaction={transaction} headerDisplayed={true}/>
+                <div class="btn_div">
+                    {#if acceptable}
+                        <button on:click={()=>{acceptBtnClicked(transaction.transactionId)}}>Accept trade offer</button>
+                    {/if}
+                    <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>Decline trade offer</button>
+                </div>
+            {:else}
+                <TransactionCard transaction={transaction} headerDisplayed={false}/>
+                <div class="btn_div">
+                    {#if acceptable}
+                        <button on:click={()=>{acceptBtnClicked(transaction.transactionId)}}>
+                            Accept trade offer
+                        </button>
+                    {/if}
+                    {#if acceptable}
+                        <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>
+                            Decline trade offer
+                        </button>
+                    {:else }
+                        <button on:click={()=>{declineBtnClicked(transaction.transactionId)}}>
+                            Cancel trade offer
+                        </button>
+                    {/if}
+                </div>
+            {/if}
+        {/each}
+    {/if}
+</div>
 <style>
 
     #empty_offers_div {
@@ -102,6 +102,7 @@
 
     .btn_div {
         text-align: center;
+        margin-bottom: 20px;
     }
 
     h1, h2 {
