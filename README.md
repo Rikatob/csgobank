@@ -164,14 +164,30 @@ Some skins are very rare and can have an insane price in real fiat currency (pun
 So, our project CSGO BANK will be a secure vault, like an inventory if you will,
 to store your items and operate transactions of these items to other users.
 
-### Notable URLs/ports
- Zipkin: ``` http://localhost:9411 ```
- RabbitMQ: ``` http://localhost:15672 ```
- Consul: ``` http://localhost:8500 ```
- Frontend: ``` http://localhost:8080 ```
- Gateway: ``` http://localhost:8000 ```
-### Tracing
-ZipKin is used to view and manage traces
+## Build process
+
+We have a docker-compose that runs local images, and one that uses images from dockerhub.
+
+First time creating the containers the mysql container my take too long with the init.sql and the other services will fail at startup.
+This is only an issue when starting the compose-file for the first time
+
+We used the build-image plugin from spring-boot with maven from intellij GUI for all our services.
+Frontend: 
+``` 
+cd frontendSvelte
+docker build -t frontend:1.0 . 
+```
+consul-importer: 
+```
+cd docker\consul
+docker build -t consul-importer:1.0 .
+```
+## Notable URLs/ports
+ * Zipkin: ``` http://localhost:9411 ```
+ * RabbitMQ: ``` http://localhost:15672 ```
+ * Consul: ``` http://localhost:8500 ```
+ * Frontend: ``` http://localhost:8080 ```
+ * Gateway: ``` http://localhost:8000 ```
 
 ### Services
 
