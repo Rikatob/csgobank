@@ -55,14 +55,18 @@
 <br>
 <br>
 <h3>Transaction History</h3>
-{#each transactions as transaction, i}
-    {#if i > 0}
-        <TransactionCard transaction={transaction} headerDisplayed={true}/>
-    {:else}
-        <TransactionCard transaction={transaction} headerDisplayed={false}/>
-    {/if}
-{/each}
 
+{#if transactions.length === 0}
+    <div id="empty_history_div">Item has never been traded...</div>
+{:else}
+    {#each transactions as transaction, i}
+        {#if i > 0}
+            <TransactionCard transaction={transaction} headerDisplayed={true}/>
+        {:else}
+            <TransactionCard transaction={transaction} headerDisplayed={false}/>
+        {/if}
+    {/each}
+{/if}
 <div id="btn_div">
     <button id="withdraw_btn" on:click={withdrawItemBtnClicked}> Withdraw item</button>
     <button id="transfer_btn" on:click={transferItemBtnClicked}>Transfer item</button>
@@ -76,6 +80,11 @@
         margin: 5px;
     }
 
+    #empty_history_div {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        text-align: center;
+    }
     input {
         margin: 5px;
     }
