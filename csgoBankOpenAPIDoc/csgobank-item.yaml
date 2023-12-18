@@ -4,7 +4,7 @@ info:
   description: "csgobank API"
   version: "1.0.0"
 servers:
-  - url: "https://localhost:8000"
+  - url: "http://localhost:8000"
 
 paths:
   /item/all:

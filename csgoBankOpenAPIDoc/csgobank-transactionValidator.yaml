@@ -4,11 +4,11 @@ info:
   description: "csgobank API"
   version: "1.0.0"
 servers:
-  - url: "https://localhost:8000"
+  - url: "http://localhost:8000"
 paths:
   /transaction/accept/{transactionId}:
     post:
-      summary: "POST transaction/accept/{transactionId}"
+      summary: "Accept pending transaction"
       description: "Endpoint to accept a transaction using its ID."
       operationId: "acceptTransaction"
       parameters:
@@ -27,7 +27,7 @@ paths:
                 $ref: "#/components/schemas/Transaction"
   /transaction/decline/{transactionId}:
     post:
-      summary: "POST transaction/decline/{transactionId}"
+      summary: "Decline pending transaction"
       description: "Endpoint to decline a transaction using its ID."
       operationId: "declineTransaction"
       parameters:
@@ -46,7 +46,7 @@ paths:
                 $ref: "#/components/schemas/Transaction"
   /transaction/incoming/{id}:
     get:
-      summary: "GET transaction/incoming/{id}"
+      summary: "Get incoming transactions"
       description: "Endpoint to retrieve incoming transactions using an ID."
       operationId: "getIncomingTransaction"
       parameters:
@@ -67,7 +67,7 @@ paths:
                   $ref: "#/components/schemas/Transaction"
   /transaction/outgoing/{id}:
     get:
-      summary: "GET transaction/outgoing/{id}"
+      summary: "get outgoing transactions"
       description: "Endpoint to retrieve outgoing transactions using an ID."
       operationId: "getOutgoingTransaction"
       parameters:
@@ -88,7 +88,7 @@ paths:
                   $ref: "#/components/schemas/Transaction"
   /transaction/validate:
     post:
-      summary: "POST transaction/validate"
+      summary: "Validate transaction"
       description: "Endpoint to validate a transaction."
       operationId: "validateTransaction"
       requestBody:

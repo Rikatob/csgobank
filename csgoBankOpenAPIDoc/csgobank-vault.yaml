@@ -4,11 +4,11 @@ info:
   description: "csgobank API"
   version: "1.0.0"
 servers:
-  - url: "https://csgobank"
+  - url: "http://localhost:8000"
 paths:
   /vault/all:
     get:
-      summary: "GET vault/all"
+      summary: "Get all vaults"
       description: This endpoint allows for retrieving all vaults.
       operationId: "getAllVaults"
       responses:
@@ -20,7 +20,7 @@ paths:
                 $ref: "#/components/schemas/Vault"
   /vault/delete/{vaultId}:
     delete:
-      summary: "DELETE vault/delete/{vaultId}"
+      summary: "Delete vault with vaultId"
       operationId: "deleteVault"
       description: Allows deleting of a vault based on Vault Id
       parameters:
@@ -39,7 +39,7 @@ paths:
                 $ref: "#/components/schemas/Void"
   /vault/exists/{vaultId}:
     get:
-      summary: "GET vault/exists/{vaultId}"
+      summary: "Check if vault exists"
       operationId: "checkIfVaultExists"
       description: Endpoint for checking if a vault exist based on VaultId
       parameters:
@@ -58,7 +58,7 @@ paths:
                 type: "boolean"
   /vault/item/{id}:
     get:
-      summary: "GET vault/item/{id}"
+      summary: "Get the owner of the item"
       operationId: "getOwnerOfItem"
       description: This endpoint lets you retrieve the owner of an item
       parameters:
@@ -77,7 +77,7 @@ paths:
                 $ref: "#/components/schemas/VaultAccount"
   /vault/new/{accountId}:
     post:
-      summary: "POST vault/new/{accountId}"
+      summary: "Create new vault"
       operationId: "createVault"
       description: This endpoint lets you create a new vault for an account based on the account Id
       parameters:
@@ -96,7 +96,7 @@ paths:
                 $ref: "#/components/schemas/Vault"
   /vault/offer:
     post:
-      summary: "POST vault/offer"
+      summary: "Create a trade offer"
       operationId: "createTradeOffer"
       description: This endpoints lets you create a trade offer
       requestBody:
@@ -114,7 +114,7 @@ paths:
                 $ref: "#/components/schemas/Transaction"
   /vault/transfer:
     post:
-      summary: "POST vault/transfer"
+      summary: "Transfer an item"
       operationId: "transferItem"
       requestBody:
         content:
@@ -131,7 +131,7 @@ paths:
                 $ref: "#/components/schemas/Transaction"
   /vault/{vaultId}:
     get:
-      summary: "GET vault/{vaultId}"
+      summary: "Get a vault based on vaultId"
       operationId: "getVault"
       description: Endpoint for retrieving vault based on Id
       parameters:
@@ -150,7 +150,7 @@ paths:
                 $ref: "#/components/schemas/Vault"
   /vault/{vaultId}/item/deposit/{itemId}:
     post:
-      summary: "POST vault/{vaultId}/item/deposit/{itemId}"
+      summary: "Deposit item to vault"
       operationId: "depositItemToVault"
       description: Endpoint that let you deposit an item based on an Item Id to a vault based on the Vault Id
       parameters:
@@ -175,7 +175,7 @@ paths:
                 $ref: "#/components/schemas/Item"
   /vault/{vaultId}/item/withdraw/{itemId}:
     post:
-      summary: "POST vault/{vaultId}/item/withdraw/{itemId}"
+      summary: "Withdraw item from vault"
       operationId: "withdrawItem"
       description: Endpoint that let you withdraw an item based on an Item Id to a vault based on the Vault Id
       parameters:
@@ -200,7 +200,7 @@ paths:
                 $ref: "#/components/schemas/Item"
   /vault/{vaultId}/items:
     get:
-      summary: "GET vault/{vaultId}/items"
+      summary: "Get items from vault"
       operationId: "getAllItems"
       description: Endpoint for retrieving all items from a vault based on Vault Id
       parameters:
@@ -219,7 +219,7 @@ paths:
                 $ref: "#/components/schemas/Item"
   /vaultItem/available:
     get:
-      summary: "GET vaultItem/available"
+      summary: "Check if item is available"
       operationId: "getAllAvailableItems"
       description: Endpoint to check if an item is available
       responses:
@@ -233,7 +233,7 @@ paths:
                   $ref: "#/components/schemas/Item"
   /vaultItem/{id}:
     get:
-      summary: "GET vaultItem/{id}"
+      summary: "Get item"
       operationId: "getItem"
       description: Endpoint to get an item based on an item Id
       parameters:
@@ -252,7 +252,7 @@ paths:
                 $ref: "#/components/schemas/Item"
   /vaultItem/{id}/vault:
     get:
-      summary: "GET vaultItem/{id}/vault"
+      summary: "Get vault containing item"
       operationId: "getVaultIdOfItem"
       description: Endpoint to retrieve the vault of an item based on the Item Id
       parameters:
@@ -272,9 +272,9 @@ paths:
                 format: "int64"
   /vaultAccount/{id}:
     get:
-      summary: "GET vaultAccount/{id}"
+      summary: "Get account"
       operationId: "getAccount"
-      description: Endpoint to retrieve and account based on the account Id
+      description: Endpoint to retrieve an account based on the account Id
       parameters:
         - name: "id"
           in: "path"
@@ -291,7 +291,7 @@ paths:
                 $ref: "#/components/schemas/VaultAccount"
   /vaultAccount/{id}/vaults:
     get:
-      summary: "GET vaultAccount/{id}/vaults"
+      summary: "Get all vaults from an account"
       operationId: "getVaults"
       description: Endpoint to retrieve all the vault of a account based on account Id
       parameters:
