@@ -186,7 +186,7 @@ docker build -t consul-importer:1.0 .
  * Zipkin: ``` http://localhost:9411 ```
  * RabbitMQ: ``` http://localhost:15672 ```
  * Consul: ``` http://localhost:8500 ```
- * Frontend: ``` http://localhost:8080 ```
+ * Frontend: ``` http://localhost:8888 ```
  * Gateway: ``` http://localhost:8000 ```
 
 ### Services
