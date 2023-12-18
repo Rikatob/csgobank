@@ -1,151 +1,4 @@
 
-# CSGOBANK
-
-## Commands
-
-### MySql
-* ``docker run --name vault_db -e MYSQL_ROOT_PASSWORD=Marengs -p 3306:3306 -d mysql:latest``
-
-### Consul
-* ``consul agent -node=learnmicro -dev``
-
-### RabbitMQ
-* ``docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management``
-
-### Zipkin
-* ``docker run -d -p 9411:9411 openzipkin/zipkin``
-
-
-### Build consul importer image
-* ``docker build -t consul-importer:1.0 .``
-
-
-### Push image docker hub
-* Login
-  * ``docker login``
-* Change tag : 
-  * ``docker image tag gateway:0.0.1-SNAPSHOT rikatob/gateway:0.0.1-SNAPSHOT``
-* Push that image: 
-  * ``docker image push rikatob/gateway:0.0.1-SNAPSHOT``
-
-
-## Report
-
-* [x] Prettify report with drawings and decisions about RabbitMQ.
-* [x] Update report with process regarding:
-  * [x] Gateway
-  * [X] Centralised logg
-  * [x] Docker
-* [x] Create a "module" diagram of our planned project structure.
-
-## Project
-
-* [x] Vault publisher to transaction history.
-* [x] Restructure project package structure.
-* [x] Float problems with int cant be feks 0233 that indicates 0,0233.
-      The Total value in vault should not be field but a method. Should it be in Vault or service?
-
-* [ ] TODO's.
-  * [x] VaultController.
-  * [x] VaultService.
-  * [x] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
-  * [ ] Use health checks to avoid that some services start before a service it is dependent on an/or spamming repuest ? 
-    * https://devops.stackexchange.com/questions/12092/docker-compose-healthcheck-for-rabbitmq?newreg=614274132fbc4f92a92ba80f6d758a76
-    * https://www.rabbitmq.com/monitoring.html#health-checks
-  * [X] Frontend running on own server.
-## Gateway
-
-* [x] Gateway
-    * [x] Service Discovery
-        * [x] Spring-cloud-starter-consul-discovery (Discovery server)
-        * [x] Spring-boot-starter-actuator (Health check)
-    * [x] Load Balancer.
-        * [x] Spring-cloud-load-balancer
-    * [x] Routing.
-        * [x] Spring-cloud-starter-gateway
-* [x] Centralized Configuration.
-    * [x] Consul config server. ( bootstrap.yml)
-
-
-## TODO
-* [x] Make account, transactionhistory and vault use flyway.
-* [x] Populate databases
-* [x] Withdraw item
-* [x] Total value in vault.
-* [x] Deposit check, cant be deposit if yet in vault_item_db
-* [x] Total value in vault should not be static, prob not i database at all and only with getter.
-* [ ] Add more logging.
-* [ ] Create scratchfile with all endpoints and description.
-* FRONTEND
-* ACCOUNT -> VAULT -> ITEM
-  * [X] List all accounts
-  * [X] Create new account.
-  * [X] Delete account.
-  * [X] Account
-    * [X] List all vaults for account.
-    * [X] Create new vault.
-    * [x] Delete Vault.
-  * [x] Vault
-      * [x] List items.
-      * [x] Withdraw item.
-      * [x] Deposit item.
-  * [X] Item
-    * [x] Transfer item.
-    * [x] Transaction history on item.
-
-
-### Vault
-* [x] Account
-    * [x] Email osv (Bruker profile)
-* [x] Create new vault
-* [x] Withdraw
-* [x] Deposit skins
-* [x] Transfer
-* [x] Validate transaction
-* [x] List Items (get vault items)
-* [x Update database
-
-
-
-### Money Buy/Sell
-* [x] Buy/Sell items
-  * [x] Item need to be sold with price
-  * [x] Account based money/credit
-  * [x] Transaction needs price
-  * [x] Create "offer" rabbitMQ
-    * [x] Vault sends offer to RabbitMQ
-    * [X] Validator validates offer, sets "offer" to pending
-    * [x] User accepts/decline pending offers
-    * [X] validator sets offer to "validated"
-    * [x] Vault listens on rabbitMQ, validated offers happens, and sends event to history with rabbit
-  * [X] Accept "offer" rabbitMQ
-### Items
-
-* [ ] Price history
-
-# Grading
-
-## Required (but not sufficient) for E
-* [X] Use multiple services, that fulfill different functionality and communicate with each
-  other
-
-## Required (but not sufficient) for D
-* [x] At least two of the services communicate using synchronous communication (for example, direct REST calls between two services).
-* [x] At least two of the services communicate using asynchronous communication (for example, using Message Queue). This will be done in accordance with event-driven architecture, as discussed in class.
-
-
-## Required (but not sufficient) for C
-* [x] The project uses a unique access point, that handled calls and routes them to appropriate services – Gateway
-* [X] The project uses a unique access point that, in addition to routing calls, also does load balancing
-
-## Required (but not sufficient) for B
-* [X] The project has a means of centrally controlling the health of running services – health check
-* [X] The project has a means of centrally controlling configurations for the services – for example, using Consul
-
-## Required (but not sufficient) for A
-* [X] The project has a means of containerization – building container images from the existing services and getting such containers running and interacting with each other
-
-
 
 # Rapport
 
@@ -163,6 +16,10 @@ Some skins are very rare and can have an insane price in real fiat currency (pun
 
 So, our project CSGO BANK will be a secure vault, like an inventory if you will,
 to store your items and operate transactions of these items to other users.
+
+### Endpoint documentation
+* You will find OpenApi endpoint-documentation in /csGoBankOpenAPIDoc.
+
 
 ## Build process
 
@@ -287,4 +144,154 @@ Services:
  * Item and account part of Vault service
  * Frontend
 
+
+# Grading
+
+## Required (but not sufficient) for E
+* [X] Use multiple services, that fulfill different functionality and communicate with each
+  other
+
+## Required (but not sufficient) for D
+* [x] At least two of the services communicate using synchronous communication (for example, direct REST calls between two services).
+* [x] At least two of the services communicate using asynchronous communication (for example, using Message Queue). This will be done in accordance with event-driven architecture, as discussed in class.
+
+
+## Required (but not sufficient) for C
+* [x] The project uses a unique access point, that handled calls and routes them to appropriate services – Gateway
+* [X] The project uses a unique access point that, in addition to routing calls, also does load balancing
+
+## Required (but not sufficient) for B
+* [X] The project has a means of centrally controlling the health of running services – health check
+* [X] The project has a means of centrally controlling configurations for the services – for example, using Consul
+
+## Required (but not sufficient) for A
+* [X] The project has a means of containerization – building container images from the existing services and getting such containers running and interacting with each other
+
+
+
+
+
+# Notes during dev
+
+## Commands
+
+### MySql
+* ``docker run --name vault_db -e MYSQL_ROOT_PASSWORD=Marengs -p 3306:3306 -d mysql:latest``
+
+### Consul
+* ``consul agent -node=learnmicro -dev``
+
+### RabbitMQ
+* ``docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management``
+
+### Zipkin
+* ``docker run -d -p 9411:9411 openzipkin/zipkin``
+
+
+### Build consul importer image
+* ``docker build -t consul-importer:1.0 .``
+
+
+### Push image docker hub
+* Login
+  * ``docker login``
+* Change tag :
+  * ``docker image tag gateway:0.0.1-SNAPSHOT rikatob/gateway:0.0.1-SNAPSHOT``
+* Push that image:
+  * ``docker image push rikatob/gateway:0.0.1-SNAPSHOT``
+
+
+## Report
+
+* [x] Prettify report with drawings and decisions about RabbitMQ.
+* [x] Update report with process regarding:
+  * [x] Gateway
+  * [X] Centralised logg
+  * [x] Docker
+* [x] Create a "module" diagram of our planned project structure.
+
+## Project
+
+* [x] Vault publisher to transaction history.
+* [x] Restructure project package structure.
+* [x] Float problems with int cant be feks 0233 that indicates 0,0233.
+  The Total value in vault should not be field but a method. Should it be in Vault or service?
+
+* [ ] TODO's.
+  * [x] VaultController.
+  * [x] VaultService.
+  * [x] Change from layour to encoder logback. (https://logback.qos.ch/codes.html#layoutInsteadOfEncoder)
+  * [ ] Use health checks to avoid that some services start before a service it is dependent on an/or spamming repuest ?
+    * https://devops.stackexchange.com/questions/12092/docker-compose-healthcheck-for-rabbitmq?newreg=614274132fbc4f92a92ba80f6d758a76
+    * https://www.rabbitmq.com/monitoring.html#health-checks
+  * [X] Frontend running on own server.
+## Gateway
+
+* [x] Gateway
+  * [x] Service Discovery
+    * [x] Spring-cloud-starter-consul-discovery (Discovery server)
+    * [x] Spring-boot-starter-actuator (Health check)
+  * [x] Load Balancer.
+    * [x] Spring-cloud-load-balancer
+  * [x] Routing.
+    * [x] Spring-cloud-starter-gateway
+* [x] Centralized Configuration.
+  * [x] Consul config server. ( bootstrap.yml)
+
+
+## TODO
+* [x] Make account, transactionhistory and vault use flyway.
+* [x] Populate databases
+* [x] Withdraw item
+* [x] Total value in vault.
+* [x] Deposit check, cant be deposit if yet in vault_item_db
+* [x] Total value in vault should not be static, prob not i database at all and only with getter.
+* [ ] Add more logging.
+* [ ] Create scratchfile with all endpoints and description.
+* FRONTEND
+* ACCOUNT -> VAULT -> ITEM
+  * [X] List all accounts
+  * [X] Create new account.
+  * [X] Delete account.
+  * [X] Account
+    * [X] List all vaults for account.
+    * [X] Create new vault.
+    * [x] Delete Vault.
+  * [x] Vault
+    * [x] List items.
+    * [x] Withdraw item.
+    * [x] Deposit item.
+  * [X] Item
+    * [x] Transfer item.
+    * [x] Transaction history on item.
+
+
+### Vault
+* [x] Account
+  * [x] Email osv (Bruker profile)
+* [x] Create new vault
+* [x] Withdraw
+* [x] Deposit skins
+* [x] Transfer
+* [x] Validate transaction
+* [x] List Items (get vault items)
+* [x Update database
+
+
+
+### Money Buy/Sell
+* [x] Buy/Sell items
+  * [x] Item need to be sold with price
+  * [x] Account based money/credit
+  * [x] Transaction needs price
+  * [x] Create "offer" rabbitMQ
+    * [x] Vault sends offer to RabbitMQ
+    * [X] Validator validates offer, sets "offer" to pending
+    * [x] User accepts/decline pending offers
+    * [X] validator sets offer to "validated"
+    * [x] Vault listens on rabbitMQ, validated offers happens, and sends event to history with rabbit
+  * [X] Accept "offer" rabbitMQ
+### Items
+
+* [ ] Price history
 
