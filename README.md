@@ -182,6 +182,12 @@ consul-importer:
 cd docker\consul
 docker build -t consul-importer:1.0 .
 ```
+
+In every service
+(Vault, Item, TransactionHistory, TransactionValidator, Gateway, account and logs)
+```
+mvn spring-boot:build-image
+```
 ## Notable URLs/ports
  * Zipkin: ``` http://localhost:9411 ```
  * RabbitMQ: ``` http://localhost:15672 ```

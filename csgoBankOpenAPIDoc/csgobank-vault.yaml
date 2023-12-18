@@ -1,0 +1,383 @@
+openapi: "3.0.3"
+info:
+  title: "csgobank API"
+  description: "csgobank API"
+  version: "1.0.0"
+servers:
+  - url: "https://csgobank"
+paths:
+  /vault/all:
+    get:
+      summary: "GET vault/all"
+      description: This endpoint allows for retrieving all vaults.
+      operationId: "getAllVaults"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Vault"
+  /vault/delete/{vaultId}:
+    delete:
+      summary: "DELETE vault/delete/{vaultId}"
+      operationId: "deleteVault"
+      description: Allows deleting of a vault based on Vault Id
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+  /vault/exists/{vaultId}:
+    get:
+      summary: "GET vault/exists/{vaultId}"
+      operationId: "checkIfVaultExists"
+      description: Endpoint for checking if a vault exist based on VaultId
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /vault/item/{id}:
+    get:
+      summary: "GET vault/item/{id}"
+      operationId: "getOwnerOfItem"
+      description: This endpoint lets you retrieve the owner of an item
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VaultAccount"
+  /vault/new/{accountId}:
+    post:
+      summary: "POST vault/new/{accountId}"
+      operationId: "createVault"
+      description: This endpoint lets you create a new vault for an account based on the account Id
+      parameters:
+        - name: "accountId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vault"
+  /vault/offer:
+    post:
+      summary: "POST vault/offer"
+      operationId: "createTradeOffer"
+      description: This endpoints lets you create a trade offer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+  /vault/transfer:
+    post:
+      summary: "POST vault/transfer"
+      operationId: "transferItem"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+  /vault/{vaultId}:
+    get:
+      summary: "GET vault/{vaultId}"
+      operationId: "getVault"
+      description: Endpoint for retrieving vault based on Id
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Vault"
+  /vault/{vaultId}/item/deposit/{itemId}:
+    post:
+      summary: "POST vault/{vaultId}/item/deposit/{itemId}"
+      operationId: "depositItemToVault"
+      description: Endpoint that let you deposit an item based on an Item Id to a vault based on the Vault Id
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "itemId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+  /vault/{vaultId}/item/withdraw/{itemId}:
+    post:
+      summary: "POST vault/{vaultId}/item/withdraw/{itemId}"
+      operationId: "withdrawItem"
+      description: Endpoint that let you withdraw an item based on an Item Id to a vault based on the Vault Id
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "itemId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+  /vault/{vaultId}/items:
+    get:
+      summary: "GET vault/{vaultId}/items"
+      operationId: "getAllItems"
+      description: Endpoint for retrieving all items from a vault based on Vault Id
+      parameters:
+        - name: "vaultId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+  /vaultItem/available:
+    get:
+      summary: "GET vaultItem/available"
+      operationId: "getAllAvailableItems"
+      description: Endpoint to check if an item is available
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Item"
+  /vaultItem/{id}:
+    get:
+      summary: "GET vaultItem/{id}"
+      operationId: "getItem"
+      description: Endpoint to get an item based on an item Id
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+  /vaultItem/{id}/vault:
+    get:
+      summary: "GET vaultItem/{id}/vault"
+      operationId: "getVaultIdOfItem"
+      description: Endpoint to retrieve the vault of an item based on the Item Id
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "integer"
+                format: "int64"
+  /vaultAccount/{id}:
+    get:
+      summary: "GET vaultAccount/{id}"
+      operationId: "getAccount"
+      description: Endpoint to retrieve and account based on the account Id
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VaultAccount"
+  /vaultAccount/{id}/vaults:
+    get:
+      summary: "GET vaultAccount/{id}/vaults"
+      operationId: "getVaults"
+      description: Endpoint to retrieve all the vault of a account based on account Id
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Vault"
+components:
+  schemas:
+    VaultAccount:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+    Vault:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        vaultAccount:
+          $ref: "#/components/schemas/VaultAccount"
+    Void:
+      type: "object"
+      properties: { }
+    Transaction:
+      type: "object"
+      properties:
+        itemId:
+          type: "integer"
+          format: "int64"
+        fromVaultId:
+          type: "integer"
+          format: "int64"
+        toVaultId:
+          type: "integer"
+          format: "int64"
+        fromAccountId:
+          type: "integer"
+          format: "int64"
+        toAccountId:
+          type: "integer"
+          format: "int64"
+        price:
+          type: "integer"
+          format: "int32"
+        type:
+          type: "string"
+          enum:
+            - "TRANSFER"
+            - "BUY"
+            - "SELL"
+        state:
+          type: "string"
+          enum:
+            - "PENDING"
+            - "ACCEPTED"
+            - "DECLINED"
+            - "COMPLETE"
+            - "FAILED"
+            - "VALIDATED"
+            - "CREATED"
+    Item:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        type:
+          type: "string"
+        name:
+          type: "string"
+        floatValue:
+          type: "string"
+        price:
+          type: "integer"
+          format: "int32"

@@ -1,0 +1,148 @@
+openapi: "3.0.3"
+info:
+  title: "csgobank API"
+  description: "csgobank API"
+  version: "1.0.0"
+servers:
+  - url: "https://localhost:8000"
+paths:
+  /transaction/accept/{transactionId}:
+    post:
+      summary: "POST transaction/accept/{transactionId}"
+      description: "Endpoint to accept a transaction using its ID."
+      operationId: "acceptTransaction"
+      parameters:
+        - name: "transactionId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Transaction"
+  /transaction/decline/{transactionId}:
+    post:
+      summary: "POST transaction/decline/{transactionId}"
+      description: "Endpoint to decline a transaction using its ID."
+      operationId: "declineTransaction"
+      parameters:
+        - name: "transactionId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Transaction"
+  /transaction/incoming/{id}:
+    get:
+      summary: "GET transaction/incoming/{id}"
+      description: "Endpoint to retrieve incoming transactions using an ID."
+      operationId: "getIncomingTransaction"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Transaction"
+  /transaction/outgoing/{id}:
+    get:
+      summary: "GET transaction/outgoing/{id}"
+      description: "Endpoint to retrieve outgoing transactions using an ID."
+      operationId: "getOutgoingTransaction"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Transaction"
+  /transaction/validate:
+    post:
+      summary: "POST transaction/validate"
+      description: "Endpoint to validate a transaction."
+      operationId: "validateTransaction"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+components:
+  schemas:
+    Transaction:
+      type: "object"
+      properties:
+        transactionId:
+          type: "integer"
+          format: "int64"
+        itemId:
+          type: "integer"
+          format: "int64"
+        fromVaultId:
+          type: "integer"
+          format: "int64"
+        toVaultId:
+          type: "integer"
+          format: "int64"
+        fromAccountId:
+          type: "integer"
+          format: "int64"
+        toAccountId:
+          type: "integer"
+          format: "int64"
+        price:
+          type: "integer"
+          format: "int32"
+        state:
+          type: "string"
+          enum:
+            - "PENDING"
+            - "ACCEPTED"
+            - "DECLINED"
+            - "COMPLETE"
+            - "VALIDATED"
+            - "FAILED"
+            - "CREATED"
+        type:
+          type: "string"
+          enum:
+            - "TRANSFER"
+            - "BUY"
+            - "SELL"
