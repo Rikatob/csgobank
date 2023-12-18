@@ -21,6 +21,12 @@ ItemController {
         this.itemService = itemService;
     }
 
+    /**
+     * Retrieve an item by its ID.
+     *
+     * @param id The ID of the item.
+     * @return The HTTP response containing the item with the given ID, if it exists. Returns a bad request response otherwise.
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Item> getItem(@PathVariable long id){
         log.info("Delivering item with id[" + id + "]");
