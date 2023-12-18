@@ -1,0 +1,57 @@
+openapi: "3.0.3"
+info:
+  title: "csgobank API"
+  description: "csgobank API"
+  version: "1.0.0"
+servers:
+  - url: "https://localhost:8000"
+
+paths:
+  /item/all:
+    get:
+      summary: "Get all items"
+      description: "This endpoint allows for retrieving all items from the item database"
+      operationId: "getAllItems"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+  /item/{id}:
+    get:
+      summary: "Get item by ID"
+      description: "This endpoint allows for retrieving a single item from the item database by its ID"
+      operationId: "getItem"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        type:
+          type: "string"
+        name:
+          type: "string"
+        floatValue:
+          type: "string"
+        price:
+          type: "integer"
+          format: "int32"

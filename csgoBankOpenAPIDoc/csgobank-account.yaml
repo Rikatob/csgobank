@@ -1,0 +1,274 @@
+openapi: "3.0.3"
+info:
+  title: "csgobank API"
+  description: "csgobank API"
+  version: "1.0.0"
+servers:
+  - url: "https://localhost:8000"
+paths:
+  /account/all:
+    get:
+      summary: "Retrieves all accounts"
+      description: "Endpoint to retrieve all the accounts"
+      operationId: "getAllAccounts"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /account/credit/{accountId}/deposit:
+    post:
+      summary: "Deposits into an account"
+      description: "Endpoint to deposit a certain amount into the account specified by accountId."
+      operationId: "depositCredit"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "integer"
+              format: "int32"
+        required: true
+      responses:
+        "200":
+          description: "Deposit was successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /account/credit/{accountId}/withdraw:
+    post:
+      summary: "Withdraws from an account"
+      description: "Endpoint to withdraw a certain amount from the account specified by accountId."
+      operationId: "withdrawCredit"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "integer"
+              format: "int32"
+        required: true
+      responses:
+        "200":
+          description: "Withdraw was successful "
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /account/credit/{id}:
+    get:
+      summary: "Retrieves credits for an account"
+      description: "Endpoint to retrieve the current credit balance of an account specified by id."
+      operationId: "getCreditsFromAccount"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            '*/*':
+              schema:
+                type: "integer"
+                format: "int32"
+
+  /account/delete/{accountId}:
+    delete:
+      summary: "Deletes an account"
+      description: "Endpoint to delete an account specified by accountId from the system."
+      operationId: "deleteAccount"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Account deleted successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Void"
+
+  /account/new:
+    post:
+      summary: "Creates a new account"
+      description: "Endpoint to create a new account with the required information."
+      operationId: "createAccount"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+        required: true
+      responses:
+        "200":
+          description: "New account created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /account/transfer/credit:
+    post:
+      summary: "Updates credit"
+      description: "Endpoint to update credit for an account after a transaction."
+      operationId: "updateCredit"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+        required: true
+      responses:
+        "200":
+          description: "Credit updated successfully"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  /account/update:
+    post:
+      summary: "Updates an account"
+      description: "Endpoint to update the information of an existing account."
+      operationId: "updateAccount"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+        required: true
+      responses:
+        "200":
+          description: "Account updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /account/verifyAccount/{accountId}:
+    get:
+      summary: "Verifies an account"
+      description: "Endpoint to verify the validity of an account specified by accountId."
+      operationId: "verifyAccount"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Account verification successful"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+
+  /account/{id}:
+    get:
+      summary: "Retrieves an account"
+      description: "Endpoint to retrieve the details of an account specified by id."
+      operationId: "getAccount"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Account"
+components:
+  schemas:
+    Account:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        userName:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        email:
+          type: "string"
+        credit:
+          type: "integer"
+          format: "int32"
+    Void:
+      type: "object"
+      properties: { }
+    Transaction:
+      type: "object"
+      properties:
+        transactionId:
+          type: "integer"
+          format: "int64"
+        itemId:
+          type: "integer"
+          format: "int64"
+        fromVaultId:
+          type: "integer"
+          format: "int64"
+        toVaultId:
+          type: "integer"
+          format: "int64"
+        fromAccountId:
+          type: "integer"
+          format: "int64"
+        toAccountId:
+          type: "integer"
+          format: "int64"
+        price:
+          type: "integer"
+          format: "int32"
+        state:
+          type: "string"
+          enum:
+            - "PENDING"
+            - "ACCEPTED"
+            - "DECLINED"
+            - "COMPLETE"
+            - "FAILED"
+            - "VALIDATED"
+            - "CREATED"
+        type:
+          type: "string"
+          enum:
+            - "TRANSFER"
+            - "BUY"
+            - "SELL"

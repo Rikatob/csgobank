@@ -1,0 +1,82 @@
+openapi: "3.0.3"
+info:
+  title: "csgobank API"
+  description: "csgobank API"
+  version: "1.0.0"
+servers:
+  - url: "https://localhost:8000"
+paths:
+  /history/item/{id}:
+    get:
+      summary: "Retrieves the history of an item based on its id"
+      description: "Endpoint to fetch the history of an item according to the given Id from the csgobank server."
+      operationId: "getItemHistory"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "Id corresponding to an item whose history is required"
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Transaction"
+components:
+  schemas:
+    Transaction:
+      type: "object"
+      description: "Defines the structure of a transaction"
+      properties:
+        transactionId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the transaction"
+        itemId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the item in the transaction"
+        fromVaultId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the vault from where the item is moved"
+        toVaultId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the vault where the item is moved to"
+        fromAccountId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the account from where the item is moved"
+        toAccountId:
+          type: "integer"
+          format: "int64"
+          description: "Id of the account to where the item is moved"
+        price:
+          type: "integer"
+          format: "int32"
+          description: "Price of the item"
+        state:
+          type: "string"
+          enum:
+            - "PENDING"
+            - "ACCEPTED"
+            - "DECLINED"
+            - "COMPLETE"
+            - "FAILED"
+            - "VALIDATED"
+            - "CREATED"
+          description: "State of the transaction"
+        type:
+          type: "string"
+          enum:
+            - "TRANSFER"
+            - "BUY"
+            - "SELL"
+          description: "Type of the transaction"
