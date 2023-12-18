@@ -2,14 +2,14 @@ package com.pg3402.csgobank.vault;
 
 /*@Data
 @Value*/
-public class AmundFact {
+public class CatFact {
     public String getFact() {
         return fact;
     }
 
     @Override
     public String toString() {
-        return "AmundFact{" +
+        return "CatFact{" +
                 "fact='" + fact + '\'' +
                 ", length=" + length +
                 '}';

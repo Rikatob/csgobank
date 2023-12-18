@@ -2,8 +2,8 @@ volumes:
   vault_db:
     driver: local
 services:
-  react:
-    container_name: react
+  frontent:
+    container_name: frontend
     image: rikatob/frontend:latest
     ports:
       - "8888:8888"
