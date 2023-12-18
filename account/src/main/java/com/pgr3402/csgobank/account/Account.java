@@ -35,14 +35,12 @@ public class Account implements Serializable {
     private int credit;
 
 
-    public int withdraw(int amount){
+    public void withdraw(int amount){
         credit -= amount;
-        return credit;
     }
 
-    public int deposit(int amount){
+    public void deposit(int amount){
         credit += amount;
-        return credit;
     }
 
 }

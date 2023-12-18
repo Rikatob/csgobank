@@ -1,31 +1,45 @@
 package com.pgr3402.csgobank.account;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.pgr3402.csgobank.account.event.AccountEventEnum;
 import com.pgr3402.csgobank.account.event.AccountEventPub;
 import com.pgr3402.csgobank.transaction.Transaction;
 import com.pgr3402.csgobank.transaction.TransactionState;
+import com.pgr3402.csgobank.transaction.TransactionType;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountEventPub accountEventPub;
 
-    public AccountService(AccountRepository accountRepository, AccountEventPub accountEventPub) {
+    private final VaultClient vaultClient;
+
+    public AccountService(AccountRepository accountRepository, AccountEventPub accountEventPub, VaultClient vaultClient) {
         this.accountRepository = accountRepository;
         this.accountEventPub = accountEventPub;
+        this.vaultClient = vaultClient;
     }
 
 
-    public void deleteAccount(Account account){
+    public void deleteAccount(Account account) {
         long accountId = account.getId();
-         accountRepository.delete(account);
-         accountEventPub.publishAccountEvent(accountId,AccountEventEnum.DELETED);
+        ResponseEntity<List<JsonNode>> response = vaultClient.getVault(accountId);
+        List<JsonNode> vault = response.getBody();
+        if (vault == null || vault.size() > 0) {
+            return;
+        }
+        accountRepository.delete(account);
+        accountEventPub.publishAccountEvent(accountId, AccountEventEnum.DELETED);
     }
 
     public Account createAccount(Account account) {
@@ -69,11 +83,11 @@ public class AccountService {
         return Optional.of(accountRepository.save(updatedAccount));
     }
 
-    public Transaction transferCredits(Transaction transaction){
+    public Transaction transferCredits(Transaction transaction) {
         Optional<Account> optionalFromAccount = accountRepository.findById(transaction.getFromAccountId());
         Optional<Account> optionalToAccount = accountRepository.findById(transaction.getToAccountId());
 
-        if(optionalFromAccount.isEmpty() || optionalToAccount.isEmpty()){
+        if (optionalFromAccount.isEmpty() || optionalToAccount.isEmpty()) {
             transaction.setState(TransactionState.FAILED);
 
             return transaction;
@@ -82,8 +96,10 @@ public class AccountService {
         Account fromAccount = optionalFromAccount.get();
         Account toAccount = optionalToAccount.get();
 
-        fromAccount.withdraw(transaction.getPrice());
-        toAccount.deposit(transaction.getPrice());
+
+        toAccount.withdraw(transaction.getPrice());
+        fromAccount.deposit(transaction.getPrice());
+
 
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
@@ -97,4 +113,32 @@ public class AccountService {
     }
 
 
+    public Optional<Account> depositCredit(long accountId, int amount) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
+            return Optional.empty();
+        }
+        Account account = optionalAccount.get();
+        account.deposit(amount);
+
+        return Optional.of(accountRepository.save(account));
+    }
+
+    public Optional<Account> withdrawCredit(long accountId, int amount) {
+
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (optionalAccount.isEmpty()) {
+            return Optional.empty();
+        }
+        Account account = optionalAccount.get();
+
+        if (account.getCredit() < amount) {
+            return Optional.empty();
+        }
+        account.withdraw(amount);
+
+        return Optional.of(accountRepository.save(account));
+    }
 }

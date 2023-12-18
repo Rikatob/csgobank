@@ -40,14 +40,14 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.OK).body(transactionService.getOutgoingTransaction(id));
     }
 
-    @GetMapping(value = "/accept/{transactionId}")
+    @PostMapping(value = "/accept/{transactionId}")
     public ResponseEntity<Transaction> acceptTransaction(@PathVariable long transactionId) {
         return transactionService.acceptOffer(transactionId)
                 .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    @GetMapping(value = "/decline/{transactionId}")
+    @PostMapping(value = "/decline/{transactionId}")
     public ResponseEntity<Transaction> declineTransaction(@PathVariable long transactionId) {
         return transactionService.declineOffer(transactionId)
                 .map(transactions -> ResponseEntity.status(HttpStatus.OK).body(transactions))

@@ -68,6 +68,10 @@ services:
       - ./mysql/init:/docker-entrypoint-initdb.d
     networks:
       - microservices
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
 
   vault:
     image: vault:0.0.1-SNAPSHOT
@@ -75,9 +79,10 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - gateway
-      - vault_db
       - rabbitmq-dev
+      - gateway
+      - vault_db:
+          condition: service_healthy
     networks:
       - microservices
 
@@ -87,7 +92,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - vault_db
+      - vault_db:
+          condition: service_healthy
       - gateway
       - rabbitmq-dev
     networks:
@@ -99,7 +105,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - vault_db
+      - vault_db:
+          condition: service_healthy
       - gateway
       - rabbitmq-dev
     networks:
@@ -111,7 +118,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - vault_db
+      - vault_db:
+          condition: service_healthy
       - gateway
       - rabbitmq-dev
     networks:
@@ -123,7 +131,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
     depends_on:
-      - vault_db
+      - vault_db:
+          condition: service_healthy
       - gateway
       - rabbitmq-dev
     networks:

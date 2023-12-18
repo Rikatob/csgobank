@@ -236,4 +236,8 @@ public class VaultService {
     }
 
 
+    public void deleteVault(long vaultId) {
+        vaultRepository.deleteById(vaultId);
+
+    }
 }

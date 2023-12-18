@@ -26,11 +26,11 @@ Content-Type: application/json
 <> 2023-12-08T210914.201.json
 
 ###
-POST localhost:8000/account/delete/11
+POST localhost:8000/account/delete/1
 Content-Type: application/json
 
 ###
-GET localhost:8000/account/1
+GET localhost:8000/account/3
 
 
 ###

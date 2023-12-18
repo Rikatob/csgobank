@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     // Delete account.
-    @PostMapping(value = "/delete/{accountId}",
+    @DeleteMapping(value = "/delete/{accountId}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
@@ -91,15 +91,27 @@ public class AccountController {
     }
 
     @GetMapping("credit/{id}")
-    private ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
+    public ResponseEntity<Integer> getCreditsFromAccount(@PathVariable Integer id){
         return accountService.findById(id)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).body(account.getCredit()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PostMapping("transfer/credit")
-    private ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
+    public ResponseEntity<Transaction> updateCredit(@RequestBody Transaction transaction){
         return ResponseEntity.status(HttpStatus.OK).body(accountService.transferCredits(transaction));
+    }
+
+    @PostMapping(value = "credit/{accountId}/deposit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Account> depositCredit(@PathVariable long accountId, @RequestBody int amount){
+        return accountService.depositCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @PostMapping(value = "credit/{accountId}/withdraw", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Account> withdrawCredit(@PathVariable long accountId, @RequestBody int amount){
+        return accountService.withdrawCredit(accountId, amount).map( account -> ResponseEntity.status(HttpStatus.OK).body(account))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
 }

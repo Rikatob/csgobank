@@ -1,5 +1,5 @@
 
-// CREATE A NEW TADE-OFFER.
+### Create first tradeoffer to test transaction validator endpoints
 POST http://localhost:8000/vault/offer
 Content-Type: application/json
 
@@ -11,24 +11,60 @@ Content-Type: application/json
   "price": 1000
 }
 
-<> 2023-12-12T215523.200.json
-<> 2023-12-12T215458.200.json
+### Create second tradeoffer to test transaction validator endpoints
+POST http://localhost:8000/vault/offer
+Content-Type: application/json
 
-###
-// ACCEPT TRADE OFFER WITH TRANSACTION ID.
-GET http://localhost:8000/transaction/accept/1
+{
+  "itemId": 7,
+  "fromVaultId": 3,
+  "toVaultId": 1,
+  "type": "SELL",
+  "price": 1000
+}
 
-###
-// DECLINE TRADE OFFER WITH TRANSACTION ID.
-GET http://localhost:8000/transaction/decline/1
 
-###
-// GET ALL INCOMING TRADE OFFERS WITH ACCOUNT ID.
-GET http://localhost:8000/transaction/incoming/1
 
-<> 2023-12-12T220355.200.json
-<> 2023-12-12T220230.200.json
+### GetAllIncomingTradeOffersWithAccountID : check response status is 200
+GET {{host}}/incoming/1
 
-###
-// GET ALL OUTGOING TRADE OFFERS WITH ACCOUNT ID.
-GET http://localhost:8000/transaction/outgoing/1
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+
+
+### GetAllOutgoingTradeOffersWithAccountID : check response status is 200
+GET {{host}}/outgoing/1
+
+> {%
+    client.test("Request executed successfully",  function () {
+         client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+
+
+### AcceptTradeOfferWithTransactionID : : check response status is 200
+GET {{host}}/accept/1
+
+> {%
+    client.test("Request executed successfully",  function () {
+
+            client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+
+
+### DeclineTradeOfferWithTransactionID : : check response status is 200
+GET {{host}}/decline/2
+
+> {%
+    client.test("Request executed successfully",  function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+

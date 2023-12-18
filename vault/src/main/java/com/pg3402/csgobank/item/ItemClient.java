@@ -17,4 +17,9 @@ public interface ItemClient {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Item> getItem(@PathVariable long itemId);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/item/all",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Iterable<Item>> getAllItems();
 }

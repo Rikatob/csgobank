@@ -1,0 +1,19 @@
+/* Overall page styling */
+body {
+    background-color: #171a21;
+    font-family: Arial, sans-serif;
+    color: #c1c6cf;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+h1 {
+    color: #1a9efd;
+}
+nav {
+    display: inline-block;
+}
+th {
+    color: #1a9efd;
+}

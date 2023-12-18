@@ -43,6 +43,8 @@ public class TransactionService {
     public Transaction validateOffer(Transaction transaction) {
         if (checkTransaction(transaction)) {
             transaction.setState(TransactionState.PENDING);
+        } else {
+            transaction.setState(TransactionState.FAILED);
         }
         return transaction;
     }
@@ -62,9 +64,13 @@ public class TransactionService {
             return false;
         }
 
-        if (transaction.getType() == TransactionType.BUY || transaction.getType() == TransactionType.SELL) {
+        if(transaction.getFromAccountId() == transaction.getToAccountId()){
+            return false;
+        }
 
-            Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
+        if (transaction.getType() == TransactionType.BUY) {
+
+            Optional<Integer> optionalInteger = getAccountCredits(transaction.getToAccountId());
 
             if (optionalInteger.orElse(0) < transaction.getPrice()) {
                 log.info("Not enough credits");
@@ -132,7 +138,7 @@ public class TransactionService {
 
         Transaction transaction = optionalTransaction.get();
 
-        Optional<Integer> optionalInteger = getAccountCredits(transaction.getFromAccountId());
+        Optional<Integer> optionalInteger = getAccountCredits(transaction.getToAccountId());
 
         if (optionalInteger.orElse(0) < transaction.getPrice()) {
             log.info("Not enough credits");
@@ -158,6 +164,7 @@ public class TransactionService {
 
         Transaction transaction = optionalTransaction.get();
         transaction.setState(TransactionState.DECLINED);
+        transactionEventPub.publishTransaction(transaction);
         transactionRepository.delete(transaction);
 
         return Optional.of(transaction);
